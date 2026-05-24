@@ -32,7 +32,6 @@
     display: inline-flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
   }
   .logo-wordmark {
     font-family: 'TAN Pearl', 'Cormorant Garamond', serif;
