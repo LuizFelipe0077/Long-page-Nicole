@@ -24,6 +24,7 @@
   /* Forçar cores explícitas em todos os elementos para bloquear dark mode do SO */
   section, header, footer, div, p, h1, h2, h3, h4, span, a, ul, li, blockquote, button {
     -webkit-appearance: none;
+    appearance: none;
   }
 
   /* ---- Logo ---- */
