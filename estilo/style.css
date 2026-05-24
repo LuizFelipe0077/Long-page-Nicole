@@ -28,7 +28,7 @@
 
   /* ---- Logo ---- */
   .logo-bg {
-    padding: 80px 36px 20px;
+    padding: 70px 36px 20px;
     display: inline-flex;
     flex-direction: column;
     align-items: center;
@@ -57,6 +57,12 @@
     text-align: center;
     display: block;
     white-space: nowrap;
+  }
+
+  #hero-content {
+    background: rgba(44,36,32,0.85);
+    padding: 28px 32px;
+    border-radius: 6px;
   }
 
   /* ---- Pulse elegante ---- */
