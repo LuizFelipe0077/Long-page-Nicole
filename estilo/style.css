@@ -140,7 +140,7 @@
   .text-offwhite-force { color: #faf8f5 !important; }
   .text-nude-force { color: #e8ddd4 !important; }
   .text-nudedark-force { color: #c9b8aa !important; }
-
+  
   /* Bounce animation para iOS */
   @-webkit-keyframes bounce {
     0%, 100% { -webkit-transform: translateY(0); transform: translateY(0); }
