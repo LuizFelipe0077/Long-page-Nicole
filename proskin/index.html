@@ -57,6 +57,7 @@ body {
   overflow-x: hidden;
   width: 100%;
   max-width: 100vw;
+  padding-top: var(--header-offset, 90px); /* compensa ann-bar + header fixos */
 }
 
 img { max-width: 100%; display: block; }
@@ -189,33 +190,48 @@ section.s-tight { padding: 4rem 0; }
   text-align: center;
   padding: 0.6rem 1rem;
   font-family: 'Jost', sans-serif;
-  font-size: 0.68rem;
+  font-size: 0.62rem;
   font-weight: 400;
   letter-spacing: 0.18em;
   text-transform: uppercase;
 }
 
 /* ═══════════════════════════════════════
-   HEADER / NAV
+   HEADER / NAV — fixed, igual ao projeto de referência
 ═══════════════════════════════════════ */
+.ann-bar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 201;
+  transition: transform 0.38s cubic-bezier(0.4,0,0.2,1);
+}
+.ann-bar.hidden { transform: translateY(-100%); }
+
 #site-header {
-  position: sticky;
-  top: 0;
+  position: fixed;
+  top: 0; left: 0; right: 0;
   z-index: 200;
+  padding: 0.85rem 1rem;
+  width: 100%;
+  background: transparent;
+  border-bottom: 0.5px solid transparent;
+  transition: top 0.38s cubic-bezier(0.4,0,0.2,1),
+              padding 0.38s cubic-bezier(0.4,0,0.2,1),
+              background 0.38s cubic-bezier(0.4,0,0.2,1),
+              box-shadow 0.38s cubic-bezier(0.4,0,0.2,1),
+              border-color 0.38s cubic-bezier(0.4,0,0.2,1);
+}
+
+/* Quando ainda no topo — mostra sob a ann-bar */
+#site-header { top: var(--ann-height, 34px); }
+
+/* Ao scrollar: sobe, esconde ann-bar, ganha fundo sólido */
+#site-header.scrolled {
+  top: 0;
+  padding: 0.55rem 1rem;
   background: rgba(250,248,245,0.97);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
-  border-bottom: 0.5px solid var(--border);
-  padding: 0.85rem 1rem;
-  width: 100%;
-  left: 0;
-  right: 0;
-  transition: padding 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
-}
-
-#site-header.scrolled {
-  padding: 0.5rem 1rem;
-  background: rgba(250,248,245,1);
   box-shadow: 0 2px 24px rgba(30,17,8,0.10);
   border-bottom-color: rgba(214,202,150,0.38);
 }
@@ -374,6 +390,16 @@ section.s-tight { padding: 4rem 0; }
   min-height: 320px;
 }
 
+/* Mobile: contém os anéis para não gerar overflow nem esticar o container */
+@media (max-width: 899px) {
+  .book-wrap {
+    padding: 2.5rem 1.5rem;
+    min-height: 280px;
+    overflow: hidden;
+  }
+  .book-ring { display: none; }
+}
+
 .book-ring {
   position: absolute;
   border-radius: 50%;
@@ -386,7 +412,7 @@ section.s-tight { padding: 4rem 0; }
 
 .book {
   width: 200px;
-  min-width: 160px;
+  min-width: 200px;
   background: var(--brown);
   border-radius: 4px 10px 10px 4px;
   box-shadow: -4px 6px 40px rgba(30,17,8,0.35), 1px 1px 0 rgba(255,255,255,0.06) inset;
@@ -479,8 +505,8 @@ section.s-tight { padding: 4rem 0; }
   position: absolute;
   top: -22px;
   right: -22px;
-  width: 74px;
-  height: 74px;
+  width: 55px;
+  height: 55px;
   border-radius: 50%;
   border: 1.5px solid var(--gold);
   display: flex;
@@ -724,7 +750,7 @@ section.s-tight { padding: 4rem 0; }
   width: 100%;
   aspect-ratio: 3/4;
   background: var(--nude-dk);
-  border-radius: 6px;
+  border-radius: 10px;
   border: 0.5px solid var(--border-md);
   position: relative;
   overflow: hidden;
@@ -1558,8 +1584,9 @@ footer {
 </head>
 <body>
 
+<!-- ═══ STICKY WRAPPER (ann-bar + header fixos) ═══ -->
 <!-- ═══ ANNOUNCEMENT BAR ═══ -->
-<div class="ann-bar" role="alert" aria-live="polite">
+<div class="ann-bar" id="ann-bar" role="alert" aria-live="polite">
   Oferta Mês das Mães · Por tempo limitado
 </div>
 
@@ -2169,6 +2196,32 @@ footer {
 </footer>
 
 <script>
+/* ════════════════════════════════
+   HEADER — fixed + scrolled (padrão projeto referência)
+════════════════════════════════ */
+(function(){
+  var annBar = document.getElementById('ann-bar');
+  var hdr    = document.getElementById('site-header');
+  if (!hdr) return;
+
+  /* Mede alturas reais e ajusta variáveis CSS */
+  function measureHeights() {
+    var annH = annBar ? annBar.offsetHeight : 0;
+    var hdrH = hdr.offsetHeight;
+    document.documentElement.style.setProperty('--ann-height', annH + 'px');
+    document.documentElement.style.setProperty('--header-offset', (annH + hdrH) + 'px');
+  }
+  measureHeights();
+  window.addEventListener('resize', measureHeights, { passive: true });
+
+  /* Scroll: igual ao projeto de referência — toggle por threshold */
+  window.addEventListener('scroll', function(){
+    var scrolled = window.scrollY > 60;
+    hdr.classList.toggle('scrolled', scrolled);
+    if (annBar) annBar.classList.toggle('hidden', scrolled);
+  }, { passive: true });
+})();
+
 /* ════════════════════════════════
    FADE-UP — Intersection Observer
 ════════════════════════════════ */
