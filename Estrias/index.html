@@ -8,37 +8,34 @@
   <meta name="keywords" content="tratamento de estrias, regeneração tecidual, biomédica esteta, estética integrativa, estética regenerativa, Nicole Carvalho, Indérmis, colágeno, melanina, elastina" />
   <meta name="author" content="Dra. Nicole Carvalho - Biomédica Esteta" />
   <meta name="robots" content="index, follow" />
-  <!-- Open Graph -->
   <meta property="og:title" content="Dra. Nicole Carvalho | Biomédica Esteta – Tratamento Indérmis de Estrias" />
   <meta property="og:description" content="Transforme sua pele com o Tratamento Indérmis. Método 100% natural e eficaz, melhora de 70% a 90%. Sem pigmento, sem ácidos." />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="imagens/1.png" />
   <meta property="og:locale" content="pt_BR" />
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
 
   <style>
-    /* ===== CSS VARIABLES ===== */
+    /* ===== CSS VARIABLES — paleta #9a7548 ===== */
     :root {
-      --primary: #5d7a58;
-      --primary-light: #7a9c74;
-      --primary-dark: #3e5539;
-      --cream: #f5f0e8;
-      --cream-dark: #e8dfd0;
-      --warm-brown: #8b5e3c;
+      --primary: #9a7548;
+      --primary-light: #b89066;
+      --primary-dark: #7a5a32;
+      --cream: #f7f2eb;
+      --cream-dark: #ecddd0;
       --dark: #1a1a18;
       --mid: #3d3d3a;
       --text-body: #4a4a45;
       --text-light: #7a7a74;
       --white: #ffffff;
-      --overlay-dark: rgba(20, 18, 14, 0.62);
       --font-display: 'Cormorant Garamond', serif;
       --font-body: 'Jost', sans-serif;
       --font-accent: 'Playfair Display', serif;
       --transition: 0.38s cubic-bezier(0.4, 0, 0.2, 1);
       --radius: 2px;
+      --radius-btn: 8px;
       --radius-lg: 8px;
     }
 
@@ -76,7 +73,7 @@
     }
     .divider--center { margin: 20px auto; }
 
-    /* ===== BUTTONS ===== */
+    /* ===== BUTTONS — border-radius: 8px, mobile centrado ===== */
     .btn {
       display: inline-block;
       font-family: var(--font-body);
@@ -90,8 +87,9 @@
       background: transparent;
       cursor: pointer;
       transition: var(--transition);
-      border-radius: var(--radius);
+      border-radius: var(--radius-btn);
       white-space: nowrap;
+      text-align: center;
     }
     .btn:hover { background: var(--primary); color: var(--white); }
     .btn--solid { background: var(--primary); color: var(--white); }
@@ -149,6 +147,8 @@
       gap: 5px;
       cursor: pointer;
       padding: 4px;
+      background: none;
+      border: none;
     }
     .hamburger span {
       display: block;
@@ -201,7 +201,7 @@
         to bottom,
         rgba(20,18,14,0.28) 0%,
         rgba(20,18,14,0.18) 35%,
-        rgba(20,18,14,0.72) 100%
+        rgba(20,18,14,0.75) 100%
       );
     }
     .hero-content {
@@ -255,6 +255,7 @@
       width: 36px;
       height: 1px;
       background: var(--primary-light);
+      flex-shrink: 0;
     }
     .hero-copy {
       max-width: 560px;
@@ -307,23 +308,26 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 80px;
-      align-items: center;
+      align-items: start;
     }
+    /* Imagem 2.png — mostra a imagem inteira, sem cortar */
     .sobre-img-wrap {
       position: relative;
     }
     .sobre-img-wrap img {
       width: 100%;
-      height: 580px;
-      object-fit: cover;
+      height: auto;           /* altura automática para não cortar */
+      max-height: none;
+      object-fit: contain;    /* mostra a imagem toda */
       border-radius: var(--radius);
+      display: block;
     }
     .sobre-img-accent {
       position: absolute;
       bottom: -24px;
       right: -24px;
-      width: 180px;
-      height: 180px;
+      width: 120px;
+      height: 120px;
       border: 1.5px solid var(--primary);
       border-radius: var(--radius);
       z-index: -1;
@@ -347,7 +351,7 @@
       background: var(--primary);
       color: var(--white);
       padding: 28px 32px;
-      border-radius: var(--radius);
+      border-radius: var(--radius-lg);
       margin-top: 32px;
     }
     .sobre-highlight p {
@@ -378,7 +382,7 @@
     }
     .porque-destaque {
       max-width: 600px;
-      margin: 0 auto 0;
+      margin: 0 auto;
       font-size: 0.8rem;
       font-weight: 600;
       letter-spacing: 0.15em;
@@ -423,15 +427,18 @@
       color: var(--mid);
       font-style: italic;
     }
+    /* Imagens 20.png / 21.png — altura limitada em desktop */
     .porque-img-stack {
       display: flex;
       flex-direction: column;
+      max-height: 560px;      /* limita tamanho em telas grandes */
+      overflow: hidden;
     }
     .porque-img-stack img {
       width: 100%;
-      height: 50%;
-      object-fit: cover;
       flex: 1;
+      min-height: 0;
+      object-fit: cover;
     }
     .porque-col-right {
       padding: 48px 40px;
@@ -461,7 +468,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, rgba(20,18,14,0.85) 0%, rgba(93,122,88,0.55) 100%);
+      background: linear-gradient(135deg, rgba(20,18,14,0.85) 0%, rgba(154,117,72,0.45) 100%);
     }
     .produtos-content {
       position: relative;
@@ -495,7 +502,7 @@
       letter-spacing: 0.2em;
       text-transform: uppercase;
       padding: 10px 22px;
-      border-radius: var(--radius);
+      border-radius: var(--radius-btn);
       margin-top: 10px;
     }
 
@@ -538,7 +545,7 @@
     }
     .step-item:hover {
       border-top-color: var(--primary-light);
-      background: rgba(93,122,88,0.18);
+      background: rgba(154,117,72,0.18);
     }
     .step-num {
       font-family: var(--font-display);
@@ -577,14 +584,14 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 80px;
-      align-items: center;
+      align-items: start;
     }
     .quem-text { order: 1; }
     .quem-img { order: 2; }
     .quem-img img {
       width: 100%;
-      height: 600px;
-      object-fit: cover;
+      height: auto;
+      object-fit: contain;
       border-radius: var(--radius);
     }
     .quem-text h2 {
@@ -717,7 +724,7 @@
 
     /* ===== DEPOIMENTOS ===== */
     #depoimentos {
-      background: var(--cream);
+      background: transparent;  /* fundo transparente */
       padding: 100px 0;
     }
     .depoimentos-header {
@@ -745,6 +752,7 @@
       gap: 16px;
       transition: transform 0.55s cubic-bezier(0.4,0,0.2,1);
     }
+    /* Cada slide ocupa 1/3 desktop, 1/2 tablet, 1 mobile */
     .depo-slide {
       flex: 0 0 calc(33.333% - 11px);
     }
@@ -752,6 +760,7 @@
       width: 100%;
       border-radius: var(--radius-lg);
       object-fit: cover;
+      display: block;
     }
     .carousel-controls {
       display: flex;
@@ -892,9 +901,6 @@
       flex-shrink: 0;
       margin-top: 1px;
     }
-    .contra-visual {
-      position: relative;
-    }
     .contra-visual-bg {
       background: var(--primary);
       width: 80%;
@@ -908,7 +914,7 @@
       font-size: 0.84rem;
       line-height: 1.72;
       padding: 32px;
-      border-radius: var(--radius);
+      border-radius: var(--radius-lg);
       margin-top: 32px;
       font-weight: 300;
     }
@@ -924,16 +930,6 @@
       padding-bottom: 70px;
       border-bottom: 1px solid rgba(255,255,255,0.08);
     }
-    .contato-header h2 {
-      font-family: var(--font-display);
-      font-size: clamp(1.8rem, 4vw, 3rem);
-      font-weight: 400;
-      color: var(--white);
-      margin-bottom: 12px;
-      max-width: 620px;
-      margin: 0 auto 36px;
-      line-height: 1.2;
-    }
     .contato-title-label {
       font-size: 0.75rem;
       letter-spacing: 0.2em;
@@ -941,6 +937,15 @@
       color: var(--primary-light);
       margin-bottom: 16px;
       display: block;
+    }
+    .contato-header h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 400;
+      color: var(--white);
+      max-width: 620px;
+      margin: 0 auto 36px;
+      line-height: 1.2;
     }
     .contato-channels {
       display: grid;
@@ -955,7 +960,7 @@
       text-align: center;
       transition: background var(--transition);
     }
-    .channel:hover { background: rgba(93,122,88,0.12); }
+    .channel:hover { background: rgba(154,117,72,0.12); }
     .channel-icon {
       width: 48px; height: 48px;
       border: 1.5px solid var(--primary);
@@ -980,7 +985,6 @@
       transition: color var(--transition);
     }
     .channel:hover a { color: var(--primary-light); }
-
     .footer-cta {
       text-align: center;
       padding: 80px 0 90px;
@@ -1019,50 +1023,148 @@
     }
     .fade-up.visible { opacity: 1; transform: translateY(0); }
 
-    /* ===== RESPONSIVE ===== */
+    /* ===========================
+       RESPONSIVE — mobile-first
+       =========================== */
+
+    /* Tablet 1024px */
     @media (max-width: 1024px) {
-      .sobre-grid { grid-template-columns: 1fr; gap: 48px; }
-      .sobre-img-wrap img { height: 420px; }
+      .sobre-grid { grid-template-columns: 1fr; gap: 40px; }
       .porque-grid { grid-template-columns: 1fr; }
-      .porque-img-stack { flex-direction: row; height: 280px; }
-      .porque-img-stack img { height: 100%; }
+      .porque-img-stack {
+        flex-direction: row;
+        max-height: 300px;
+      }
+      .porque-img-stack img { height: 300px; width: 50%; }
       .steps-grid { grid-template-columns: 1fr 1fr; }
-      .quem-grid { grid-template-columns: 1fr; gap: 48px; }
+      .quem-grid { grid-template-columns: 1fr; gap: 40px; }
       .quem-img { order: 1; }
       .quem-text { order: 2; }
-      .quem-img img { height: 420px; }
       .faq-layout { grid-template-columns: 1fr; gap: 48px; }
-      .faq-images { flex-direction: row; overflow: hidden; }
-      .faq-images img { height: 220px !important; flex: 1; }
-      .contra-grid { grid-template-columns: 1fr; gap: 48px; }
+      .faq-images { flex-direction: row; }
+      .faq-images img { height: 200px !important; flex: 1; }
+      .contra-grid { grid-template-columns: 1fr; gap: 40px; }
       .contra-visual-bg { display: none; }
       .contato-channels { grid-template-columns: 1fr; }
       .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+      /* depo: 2 por vez em tablet */
       .depo-slide { flex: 0 0 calc(50% - 8px); }
     }
+
+    /* Mobile 768px */
     @media (max-width: 768px) {
+      /* Nav */
       .nav-links { display: none; }
       .hamburger { display: flex; }
+
+      /* Hero */
       .hero-title { font-size: clamp(2.2rem, 10vw, 3.5rem); }
+      .hero-actions {
+        flex-direction: column;
+        align-items: center;       /* centraliza botões no mobile */
+        width: 100%;
+      }
+      .hero-actions .btn {
+        width: 100%;
+        max-width: 340px;
+        justify-content: center;
+      }
+      .hero-content { padding-bottom: 60px; }
+      .hero-scroll { display: none; }
+
+      /* Sobre */
+      .sobre-grid { grid-template-columns: 1fr; gap: 32px; }
+      .sobre-img-accent { display: none; }
+
+      /* Porque */
+      .porque-col-left { padding: 36px 24px; }
+      .porque-col-right { padding: 36px 24px; }
+      .porque-img-stack {
+        flex-direction: row;
+        max-height: 220px;
+      }
+      .porque-img-stack img { height: 220px; }
+      /* botão dentro da seção porque */
+      .porque-col-left .btn {
+        width: 100%;
+        text-align: center;
+      }
+
+      /* Steps */
       .steps-grid { grid-template-columns: 1fr; gap: 0; }
-      .gallery-grid { grid-template-columns: 1fr 1fr; }
-      .depo-slide { flex: 0 0 calc(100% - 0px); }
-      .hero-actions { flex-direction: column; align-items: flex-start; }
-      .footer-cta-btns { flex-direction: column; align-items: center; }
+      .step-item { padding: 36px 24px; }
+
+      /* Gallery — 2 colunas no mobile, aspect-ratio menor */
+      .gallery-grid { grid-template-columns: 1fr 1fr; gap: 3px; }
+      .gallery-item { aspect-ratio: 3/4; }
+
+      /* Depoimentos — 1 slide por vez mobile */
+      .depo-slide { flex: 0 0 100%; }
+
+      /* FAQ */
       .faq-images { display: none; }
       .faq-layout { grid-template-columns: 1fr; }
+
+      /* Contato */
+      .contato-channels { grid-template-columns: 1fr; }
+      .channel { padding: 36px 24px; }
+
+      /* Footer CTA btns centralizados e empilhados */
+      .footer-cta-btns {
+        flex-direction: column;
+        align-items: center;
+      }
+      .footer-cta-btns .btn {
+        width: 100%;
+        max-width: 340px;
+        text-align: center;
+      }
+
+      /* Botões genéricos: centralizados no mobile */
+      .processo-cta,
+      .resultados-cta,
+      .faq-cta,
+      .sobre-highlight,
+      .depoimentos-header {
+        text-align: center;
+      }
+      .processo-cta .btn,
+      .resultados-cta .btn,
+      .faq-cta .btn {
+        width: 100%;
+        max-width: 340px;
+        display: block;
+        margin: 0 auto;
+      }
+
+      /* Sections padding reduzido no mobile */
+      #sobre > div,
+      #sobre-mim,
+      #resultados,
+      #depoimentos,
+      #faq,
+      #contraindicacoes,
+      #porque { padding-top: 72px; padding-bottom: 72px; }
+      #processo { padding: 72px 0; }
+      #produtos { padding: 80px 0; }
     }
+
+    /* Mobile pequeno 480px */
     @media (max-width: 480px) {
-      .gallery-grid { grid-template-columns: 1fr; }
       .container { padding: 0 16px; }
-      .sobre-img-wrap img { height: 320px; }
+      /* Galeria: 1 coluna em telas muito pequenas */
+      .gallery-grid { grid-template-columns: 1fr; }
+      .gallery-item { aspect-ratio: 16/10; max-height: 260px; }
+      .beneficios-bar { gap: 8px; }
+      .beneficio-tag { font-size: 0.75rem; padding: 8px 12px; }
+      .steps-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
   <!-- MOBILE MENU -->
-  <div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu" id="mobileMenu" role="dialog" aria-label="Menu de navegação">
     <button class="mobile-close" id="mobileClose" aria-label="Fechar menu">✕</button>
     <a href="#sobre" onclick="closeMobileMenu()">Tratamento</a>
     <a href="#porque" onclick="closeMobileMenu()">Por que funciona</a>
@@ -1073,7 +1175,7 @@
   </div>
 
   <!-- NAV -->
-  <nav id="navbar">
+  <nav id="navbar" role="navigation" aria-label="Menu principal">
     <div class="container">
       <div class="nav-inner">
         <a href="#hero" class="nav-logo">Nicole <span>Carvalho</span></a>
@@ -1085,9 +1187,9 @@
           <li><a href="#faq">Dúvidas</a></li>
           <li><a href="#contato" class="nav-cta">Agendar</a></li>
         </ul>
-        <div class="hamburger" id="hamburger" aria-label="Abrir menu">
+        <button class="hamburger" id="hamburger" aria-label="Abrir menu" aria-expanded="false">
           <span></span><span></span><span></span>
-        </div>
+        </button>
       </div>
     </div>
   </nav>
@@ -1141,7 +1243,7 @@
 
   <!-- POR QUE FUNCIONA -->
   <section id="porque" aria-label="Por que funciona tão bem">
-    <div class="container" style="margin-bottom: 0;">
+    <div class="container" style="padding-bottom: 0;">
       <div class="porque-header fade-up">
         <span class="section-label">Diferencial</span>
         <h2>Por que funciona tão bem?</h2>
@@ -1305,9 +1407,9 @@
         </div>
       </div>
       <div class="carousel-controls">
-        <button class="carousel-btn" id="prevBtn" aria-label="Anterior">&#8592;</button>
-        <div class="carousel-dots" id="carouselDots"></div>
-        <button class="carousel-btn" id="nextBtn" aria-label="Próximo">&#8594;</button>
+        <button class="carousel-btn" id="prevBtn" aria-label="Depoimento anterior">&#8592;</button>
+        <div class="carousel-dots" id="carouselDots" role="tablist" aria-label="Página de depoimentos"></div>
+        <button class="carousel-btn" id="nextBtn" aria-label="Próximo depoimento">&#8594;</button>
       </div>
     </div>
   </section>
@@ -1411,7 +1513,7 @@
             Em caso de dúvida, agende uma avaliação. Cada caso é analisado individualmente com responsabilidade e ética.
           </div>
         </div>
-        <div class="contra-visual fade-up" aria-hidden="true">
+        <div class="fade-up" aria-hidden="true">
           <div class="contra-visual-bg"></div>
         </div>
       </div>
@@ -1456,33 +1558,35 @@
   </section>
 
   <script>
-    // ===== NAV SCROLL EFFECT =====
+    // ===== NAV SCROLL =====
     const navbar = document.getElementById('navbar');
     window.addEventListener('scroll', () => {
       navbar.classList.toggle('scrolled', window.scrollY > 60);
-    });
+    }, { passive: true });
 
-    // ===== HAMBURGER MENU =====
+    // ===== HAMBURGER =====
     const hamburger = document.getElementById('hamburger');
     const mobileMenu = document.getElementById('mobileMenu');
     const mobileClose = document.getElementById('mobileClose');
-
-    hamburger.addEventListener('click', () => { mobileMenu.classList.add('open'); });
+    hamburger.addEventListener('click', () => {
+      mobileMenu.classList.add('open');
+      hamburger.setAttribute('aria-expanded', 'true');
+    });
     mobileClose.addEventListener('click', closeMobileMenu);
-
-    function closeMobileMenu() { mobileMenu.classList.remove('open'); }
+    function closeMobileMenu() {
+      mobileMenu.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+    }
 
     // ===== ACCORDION =====
     document.querySelectorAll('.accordion-header').forEach(btn => {
       btn.addEventListener('click', () => {
         const isOpen = btn.classList.contains('open');
-        // Close all
         document.querySelectorAll('.accordion-header').forEach(b => {
           b.classList.remove('open');
           b.setAttribute('aria-expanded', 'false');
           b.nextElementSibling.classList.remove('open');
         });
-        // Toggle clicked
         if (!isOpen) {
           btn.classList.add('open');
           btn.setAttribute('aria-expanded', 'true');
@@ -1492,11 +1596,12 @@
     });
 
     // ===== CAROUSEL =====
+    // Responsive: mostra 1 slide por vez no mobile, percorre todos os 6 slides individualmente
     const track = document.getElementById('depoTrack');
-    const slides = track.querySelectorAll('.depo-slide');
+    const slides = Array.from(track.querySelectorAll('.depo-slide'));
     const dotsContainer = document.getElementById('carouselDots');
+    const totalSlides = slides.length;
     let current = 0;
-    let slidesPerView = getSlidesPerView();
 
     function getSlidesPerView() {
       if (window.innerWidth <= 768) return 1;
@@ -1504,30 +1609,59 @@
       return 3;
     }
 
-    const totalGroups = Math.ceil(slides.length / slidesPerView);
-
-    // Create dots
-    for (let i = 0; i < totalGroups; i++) {
-      const dot = document.createElement('div');
-      dot.className = 'dot' + (i === 0 ? ' active' : '');
-      dot.addEventListener('click', () => goTo(i));
-      dotsContainer.appendChild(dot);
+    function buildDots() {
+      dotsContainer.innerHTML = '';
+      const spv = getSlidesPerView();
+      // Número de "posições" possíveis = totalSlides - spv + 1, mas simplificado: totalSlides dots
+      const dotCount = totalSlides - spv + 1;
+      for (let i = 0; i < dotCount; i++) {
+        const dot = document.createElement('button');
+        dot.className = 'dot' + (i === 0 ? ' active' : '');
+        dot.setAttribute('aria-label', 'Ir para depoimento ' + (i + 1));
+        dot.addEventListener('click', () => goTo(i));
+        dotsContainer.appendChild(dot);
+      }
     }
 
     function goTo(index) {
-      current = Math.max(0, Math.min(index, totalGroups - 1));
-      const slideWidth = slides[0].offsetWidth + 16; // gap = 16px
-      track.style.transform = `translateX(-${current * slidesPerView * slideWidth}px)`;
-      document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === current));
+      const spv = getSlidesPerView();
+      const maxIndex = totalSlides - spv;
+      current = Math.max(0, Math.min(index, maxIndex));
+
+      // Calcula a largura real de um slide incluindo gap
+      const slideEl = slides[0];
+      const gap = 16;
+      const slideWidth = slideEl.offsetWidth + gap;
+      track.style.transform = `translateX(-${current * slideWidth}px)`;
+
+      document.querySelectorAll('.dot').forEach((d, i) => {
+        d.classList.toggle('active', i === current);
+      });
     }
 
     document.getElementById('prevBtn').addEventListener('click', () => goTo(current - 1));
     document.getElementById('nextBtn').addEventListener('click', () => goTo(current + 1));
 
+    // Swipe touch support
+    let touchStartX = 0;
+    track.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+    track.addEventListener('touchend', e => {
+      const diff = touchStartX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 40) goTo(diff > 0 ? current + 1 : current - 1);
+    }, { passive: true });
+
+    let resizeTimer;
     window.addEventListener('resize', () => {
-      slidesPerView = getSlidesPerView();
-      goTo(0);
-    });
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        buildDots();
+        goTo(0);
+      }, 150);
+    }, { passive: true });
+
+    // Init
+    buildDots();
+    goTo(0);
 
     // ===== INTERSECTION OBSERVER (fade-up) =====
     const fadeEls = document.querySelectorAll('.fade-up');
@@ -1538,8 +1672,7 @@
           observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-
+    }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
     fadeEls.forEach(el => observer.observe(el));
   </script>
 </body>
