@@ -88,7 +88,7 @@
       cursor: pointer;
       transition: var(--transition);
       border-radius: var(--radius-btn);
-      white-space: nowrap;
+      white-space: normal;
       text-align: center;
     }
     .btn:hover { background: var(--primary); color: var(--white); }
@@ -706,6 +706,19 @@
       transition: transform 0.6s cubic-bezier(0.4,0,0.2,1);
     }
     .gallery-item:hover img { transform: scale(1.05); }
+
+    /* Mobile: exibe imagem completa sem corte, altura automática */
+    @media (max-width: 768px) {
+      .gallery-item {
+        aspect-ratio: unset;
+        height: auto;
+      }
+      .gallery-item img {
+        height: auto;
+        object-fit: contain;
+        background: var(--dark);
+      }
+    }
     .gallery-caption {
       position: absolute;
       bottom: 0; left: 0; right: 0;
@@ -1094,9 +1107,8 @@
       .steps-grid { grid-template-columns: 1fr; gap: 0; }
       .step-item { padding: 36px 24px; }
 
-      /* Gallery — 2 colunas no mobile, aspect-ratio menor */
+      /* Gallery — 2 colunas no mobile, sem corte */
       .gallery-grid { grid-template-columns: 1fr 1fr; gap: 3px; }
-      .gallery-item { aspect-ratio: 3/4; }
 
       /* Depoimentos — 1 slide por vez mobile */
       .depo-slide { flex: 0 0 100%; }
@@ -1135,6 +1147,11 @@
         max-width: 340px;
         display: block;
         margin: 0 auto;
+        white-space: normal;
+        text-align: center;
+        line-height: 1.4;
+        padding-left: 20px;
+        padding-right: 20px;
       }
 
       /* Sections padding reduzido no mobile */
@@ -1154,7 +1171,7 @@
       .container { padding: 0 16px; }
       /* Galeria: 1 coluna em telas muito pequenas */
       .gallery-grid { grid-template-columns: 1fr; }
-      .gallery-item { aspect-ratio: 16/10; max-height: 260px; }
+      .gallery-item { aspect-ratio: unset; max-height: none; }
       .beneficios-bar { gap: 8px; }
       .beneficio-tag { font-size: 0.75rem; padding: 8px 12px; }
       .steps-grid { grid-template-columns: 1fr; }
