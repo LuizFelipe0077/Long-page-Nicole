@@ -45,7 +45,7 @@
   --r:           3px;
 }
 
-html { scroll-behavior: smooth; font-size: 16px; }
+html { scroll-behavior: smooth; font-size: 16px; overflow-x: hidden; }
 
 body {
   font-family: 'Jost', sans-serif;
@@ -55,6 +55,8 @@ body {
   line-height: 1.85;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
 }
 
 img { max-width: 100%; display: block; }
@@ -200,11 +202,14 @@ section.s-tight { padding: 4rem 0; }
   position: sticky;
   top: 0;
   z-index: 200;
-  background: rgba(250,248,245,0.96);
+  background: rgba(250,248,245,0.97);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 0.5px solid var(--border);
-  padding: 1.1rem 1.5rem;
+  padding: 0.85rem 1rem;
+  width: 100%;
+  left: 0;
+  right: 0;
 }
 
 .header-inner {
@@ -213,16 +218,19 @@ section.s-tight { padding: 4rem 0; }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
+  gap: 0.5rem;
+  width: 100%;
 }
 
 .logo {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 1.35rem;
+  font-size: 1.2rem;
   font-weight: 600;
   color: var(--brown);
   letter-spacing: 0.12em;
   text-transform: uppercase;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 .logo span { color: var(--gold-dk); font-weight: 300; }
 
@@ -231,7 +239,7 @@ section.s-tight { padding: 4rem 0; }
 ═══════════════════════════════════════ */
 #hero {
   background: var(--cream);
-  padding: 5rem 0 4rem;
+  padding: 4rem 0 3.5rem;
   position: relative;
   overflow: hidden;
 }
@@ -336,7 +344,8 @@ section.s-tight { padding: 4rem 0; }
   justify-content: center;
   align-items: center;
   position: relative;
-  padding: 2rem;
+  padding: 2.5rem 2rem;
+  overflow: hidden;
 }
 
 .book-ring {
@@ -344,11 +353,10 @@ section.s-tight { padding: 4rem 0; }
   border-radius: 50%;
   border: 1px solid var(--border-md);
   opacity: 0.5;
+  pointer-events: none;
 }
-.ring-1 { width: 280px; height: 280px; animation: spin-slow 20s linear infinite; }
-.ring-2 { width: 380px; height: 380px; opacity: 0.25; animation: spin-slow 35s linear infinite reverse; }
-
-@keyframes spin-slow { to { transform: rotate(360deg); } }
+.ring-1 { width: 280px; height: 280px; }
+.ring-2 { width: 380px; height: 380px; opacity: 0.22; }
 
 .book {
   width: 230px;
@@ -436,28 +444,31 @@ section.s-tight { padding: 4rem 0; }
   line-height: 1.9;
 }
 
+@keyframes spin-slow { to { transform: rotate(360deg); } }
+
 .book-badge-ring {
   position: absolute;
-  top: -14px; right: -14px;
-  width: 54px; height: 54px;
+  top: -18px; right: -18px;
+  width: 64px; height: 64px;
   border-radius: 50%;
-  border: 1px solid var(--gold);
+  border: 1.5px solid var(--gold);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   background: var(--brown);
-  z-index: 5;
+  z-index: 10;
+  box-shadow: 0 0 0 3px rgba(30,17,8,0.7), 0 4px 16px rgba(30,17,8,0.5);
 }
 .book-badge-ring b {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   color: var(--gold);
   line-height: 1;
 }
 .book-badge-ring small {
   font-family: 'Jost', sans-serif;
-  font-size: 0.46rem;
+  font-size: 0.48rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--gold);
@@ -577,6 +588,27 @@ section.s-tight { padding: 4rem 0; }
 }
 .pain-profile-body p:last-child { margin-bottom: 0; }
 
+.dor-fechamento {
+  background: var(--gold-pale);
+  border-left: 2px solid var(--gold);
+  border-radius: 0 var(--r) var(--r) 0;
+  padding: 1.5rem 2rem;
+}
+
+.dor-fechamento p {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  font-style: italic;
+  color: var(--brown-md);
+  line-height: 1.75;
+}
+
+.dor-fechamento strong {
+  font-style: normal;
+  font-weight: 600;
+  color: var(--brown);
+}
+
 .pain-profile-body em {
   color: var(--brown-md);
   font-style: italic;
@@ -663,6 +695,15 @@ section.s-tight { padding: 4rem 0; }
   gap: 0.6rem;
   position: relative;
   overflow: hidden;
+}
+
+.autora-photo img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 6px;
 }
 
 .autora-photo::before {
@@ -766,6 +807,7 @@ section.s-tight { padding: 4rem 0; }
   align-items: center;
   position: relative;
   padding: 2rem;
+  overflow: hidden;
 }
 
 .ebook-cover-placeholder {
@@ -773,7 +815,7 @@ section.s-tight { padding: 4rem 0; }
   aspect-ratio: 3/4;
   background: var(--brown);
   border-radius: 4px 12px 12px 4px;
-  box-shadow: -6px 8px 50px rgba(30,17,8,0.4), 2px 2px 0 rgba(255,255,255,0.04) inset;
+  box-shadow: -6px 8px 20px rgba(82, 68, 8, 0.60), 2px 2px 0 rgba(255,255,255,0.04) inset;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -901,75 +943,6 @@ section.s-tight { padding: 4rem 0; }
   font-size: 0.84rem;
   color: var(--brown-lt);
   line-height: 1.75;
-}
-
-/* Pilares grid */
-.pilares-grid {
-  margin-top: 3rem;
-}
-
-.pilares-grid-title {
-  text-align: center;
-  margin-bottom: 2rem;
-}
-
-.pilares-grid-title h3 {
-  font-size: clamp(1.3rem, 2.5vw, 1.8rem);
-}
-
-.pilares-cards {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1px;
-  background: var(--border);
-  border: 0.5px solid var(--border);
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-.pilar {
-  background: var(--cream);
-  padding: 1.6rem;
-  display: flex;
-  gap: 1.2rem;
-  align-items: flex-start;
-  transition: background 0.3s;
-  cursor: default;
-}
-
-.pilar:hover { background: var(--white); }
-
-.pilar-num {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 2.6rem;
-  font-weight: 300;
-  color: var(--gold);
-  line-height: 1;
-  min-width: 44px;
-  opacity: 0.65;
-  flex-shrink: 0;
-}
-
-.pilar-body h3 {
-  font-size: 1.05rem;
-  font-weight: 500;
-  color: var(--brown);
-  margin-bottom: 0.35rem;
-}
-
-.pilar-body p { font-size: 0.84rem; color: var(--brown-lt); line-height: 1.85; }
-
-.pilar-locked {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-  font-size: 0.63rem;
-  font-family: 'Jost', sans-serif;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--gold-dk);
-  margin-top: 0.5rem;
 }
 
 /* Bônus */
@@ -1130,17 +1103,13 @@ section.s-tight { padding: 4rem 0; }
   color: var(--brown);
 }
 
-.countdown-box {
+.countdown-wrap {
   background: var(--gold-pale);
   border: 0.5px solid var(--border-md);
-  border-radius: 4px;
-  padding: 1rem 1.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.8rem;
+  border-radius: 6px;
+  padding: 1.4rem 1.5rem;
+  text-align: center;
   margin-bottom: 2rem;
-  flex-wrap: wrap;
 }
 
 .countdown-label {
@@ -1150,48 +1119,52 @@ section.s-tight { padding: 4rem 0; }
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--brown-md);
+  display: block;
+  margin-bottom: 1rem;
 }
 
-.countdown-timer {
+.countdown {
   display: flex;
-  gap: 0.5rem;
+  gap: 1rem;
   align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .cd-unit {
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 0.35rem;
 }
 
 .cd-num {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 2rem;
+  font-size: 2.4rem;
   font-weight: 500;
   color: var(--brown);
   line-height: 1;
-  min-width: 48px;
+  min-width: 58px;
   text-align: center;
-  background: var(--white);
-  border: 0.5px solid var(--border-dk);
-  border-radius: 3px;
-  padding: 0.2rem 0.4rem;
+  background: transparent;
+  padding: 0.25rem 0.5rem;
+  display: block;
 }
 
-.cd-lbl {
-  font-size: 0.56rem;
-  letter-spacing: 0.14em;
+.cd-label {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--brown-xlt);
-  margin-top: 0.25rem;
 }
 
 .cd-sep {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 1.8rem;
-  color: var(--brown-xlt);
+  font-size: 2rem;
+  color: var(--gold-dk);
   line-height: 1;
-  margin-bottom: 0.5rem;
+  padding-bottom: 1.2rem;
 }
 
 .oferta-card {
@@ -1240,17 +1213,14 @@ section.s-tight { padding: 4rem 0; }
 
 .oferta-list li:last-child { border-bottom: none; }
 
-.oferta-check {
-  width: 18px; height: 18px;
-  border-radius: 50%;
-  background: var(--gold-pale);
+.oferta-dot {
+  color: var(--gold-dk);
+  font-size: 1.4rem;
+  line-height: 1;
   flex-shrink: 0;
-  margin-top: 2px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  margin-top: -1px;
+  font-weight: 600;
 }
-.oferta-check svg { width: 9px; height: 9px; stroke: var(--gold-dk); fill: none; stroke-width: 2.5; }
 
 .price-area { text-align: center; padding: 1.5rem 0; }
 
@@ -1422,12 +1392,57 @@ footer {
 }
 
 @media (max-width: 480px) {
-  .wrap, .wrap-sm, .wrap-md { padding: 0 1.1rem; }
-  section { padding: 4rem 0; }
+  .wrap, .wrap-sm, .wrap-md { padding: 0 1rem; }
+  section { padding: 3.5rem 0; }
   .autora-stats { grid-template-columns: 1fr 1fr; }
   .autora-stats .a-stat:last-child { grid-column: span 2; }
   nav .btn-outline { display: none; }
   .bonus-strip { flex-direction: column; }
+
+  /* Header fix mobile */
+  #site-header { padding: 0.7rem 1rem; }
+  .header-inner { gap: 0.5rem; }
+  .btn-gold { padding: 0.55rem 1rem; font-size: 0.68rem; }
+  .logo { font-size: 1.05rem; }
+  .header-btn-outline { display: none; }
+
+  /* Hero */
+  .hero-headline { font-size: clamp(1.9rem, 8vw, 2.4rem); }
+  .hero-sub { font-size: 0.9rem; }
+  .book-ring.ring-1 { width: 220px; height: 220px; }
+  .book-ring.ring-2 { width: 300px; height: 300px; }
+  .book { width: 185px; }
+
+  /* Pilares */
+  .pilar { flex-direction: row; }
+
+  /* Stats */
+  .stats-grid { grid-template-columns: 1fr; }
+
+  /* Oferta card */
+  .oferta-body { padding: 1.2rem; }
+  .price-int { font-size: 3.8rem; }
+
+  /* Countdown */
+  .countdown-box { flex-direction: column; gap: 0.6rem; text-align: center; }
+  .cd-num { min-width: 38px; font-size: 1.6rem; }
+
+  /* Countdown novo */
+  .countdown-wrap { padding: 1rem; }
+
+  /* Botão compra full width */
+  .btn-full { padding: 1rem; }
+
+  /* Footer */
+  .footer-bottom { flex-direction: column; }
+  .seals { justify-content: center; }
+}
+
+/* Mobile pequeno */
+@media (max-width: 360px) {
+  .hero-headline { font-size: 1.75rem; }
+  .book { width: 165px; padding: 1.5rem 1.2rem; }
+  .btn-gold span { font-size: 0.65rem; }
 }
 </style>
 </head>
@@ -1444,9 +1459,9 @@ footer {
     <a href="#hero" class="logo" aria-label="PROSKIN — início da página">
       PRO<span>SKIN</span>
     </a>
-    <div style="display:flex;gap:0.8rem;align-items:center;">
-      <a href="#para-quem" class="btn btn-outline t-xs" style="padding:0.55rem 1.2rem;">Para quem é?</a>
-      <a href="#oferta" class="btn btn-gold btn-pulse">
+    <div style="display:flex;gap:0.6rem;align-items:center;flex-shrink:0;">
+      <a href="#para-quem" class="btn btn-outline t-xs header-btn-outline" style="padding:0.55rem 1rem;white-space:nowrap;">Para quem é?</a>
+      <a href="#oferta" class="btn btn-gold btn-pulse" style="white-space:nowrap;">
         <span>Quero o Guia</span>
       </a>
     </div>
@@ -1531,19 +1546,19 @@ footer {
       <span class="t-eyebrow stats-eyebrow">Dados que ninguém te conta</span>
       <div class="divider c" style="background:var(--gold);"></div>
       <h2 class="t-h2 stats-title" id="stats-h2">A realidade da pele<br><em style="color:rgba(214,202,150,0.7);">na gestação</em></h2>
-      <p style="font-size:0.9rem;color:rgba(250,248,245,0.5);margin-top:0.8rem;line-height:1.8;">Os números são contundentes. E ignorá-los não vai mudar o que acontece dentro da sua derme.</p>
+      <p style="font-size:0.9rem;color:rgba(250,248,245,0.5);margin-top:0.8rem;line-height:1.8;">Os números são contundentes. E ignorá-los não vai mudar o que acontece dentro da sua pele.</p>
     </div>
 
     <div class="stats-grid fade-up d1" role="list">
       <div class="stat-block" role="listitem">
         <span class="stat-num">50–90%</span>
         <span class="stat-label">das gestantes desenvolvem estrias</span>
-        <span class="stat-detail">mesmo se cuidando — isso é fato clínico documentado</span>
+        <span class="stat-detail">mesmo se cuidando, isso é fato clínico documentado</span>
       </div>
       <div class="stat-block" role="listitem">
         <span class="stat-num">4–6<small style="font-size:1.5rem;color:var(--gold-dk);"> sem.</small></span>
-        <span class="stat-label">antes do aparecimento visual, o processo de rompimento dérmico já está ativo</span>
-        <span class="stat-detail">alterações na matriz extracelular precedem toda marca visível</span>
+        <span class="stat-label">antes do aparecimento visual, o processo de rompimento das fibras já está ativo</span>
+        <span class="stat-detail">alterações internas precedem toda marca visível</span>
       </div>
       <div class="stat-block" role="listitem">
         <span class="stat-num">+100</span>
@@ -1563,10 +1578,10 @@ footer {
   <div class="wrap-md">
 
     <div class="dor-intro fade-up">
-      <span class="t-eyebrow">Reconheça sua história</span>
+      <span class="t-eyebrow">Sua história</span>
       <div class="divider"></div>
       <h2 class="t-h2" id="dor-h2">Você se vê em<br><em>algum desses perfis?</em></h2>
-      <p class="t-body" style="margin-top:1rem;">Antes de qualquer solução, é preciso honestidade. Duas histórias muito comuns — e igualmente cheias de insegurança.</p>
+      <p class="t-body" style="margin-top:1rem;">Antes de qualquer solução, é preciso honestidade. Duas histórias muito comuns e igualmente cheias de insegurança.</p>
     </div>
 
     <div class="pain-profiles">
@@ -1576,8 +1591,8 @@ footer {
           <h3>Mãe de 1ª Viagem</h3>
         </div>
         <div class="pain-profile-body">
-          <p>Você quer fazer tudo certo. Mas "tudo certo" parece impossível de definir. A internet diz uma coisa, o Instagram diz outra, sua mãe diz mais outra — e todas se contradizem.</p>
-          <p>Você passa creme todo dia. Bebe água. Tenta dormir bem. Mas no fundo sente que <em>só o creme não vai resolver</em> — e que existe algo maior que ninguém está te contando.</p>
+          <p>Você quer fazer tudo certo. Mas "tudo certo" parece impossível de definir. A internet diz uma coisa, o Instagram diz outra, sua mãe diz mais outra e todas se contradizem.</p>
+          <p>Você passa creme todo dia. Bebe água. Tenta dormir bem. Mas no fundo sente que <em>só o creme não vai resolver</em>  e que existe algo maior que ninguém está te contando.</p>
           <p>Essa intuição é correta.</p>
         </div>
       </article>
@@ -1595,13 +1610,12 @@ footer {
       </article>
     </div>
 
+    <div class="dor-fechamento fade-up d3" style="margin-top:2.5rem;">
+      <p>A culpa nunca foi sua. Foi a ausência de uma informação precisa — aquela que explica o que acontece na sua derme antes de qualquer estiramento. É exatamente isso que o <strong>Ritual PROSKIN</strong> existe para mudar.</p>
+    </div>
+
   </div>
 </section>
-
-
-<!-- ════════════════════════════════════
-     SEÇÃO 4 · PARADIGMA — O GATILHO, NÃO A CAUSA
-════════════════════════════════════ -->
 <section id="paradigma" aria-labelledby="paradigma-h2">
   <div class="wrap-md">
 
@@ -1613,13 +1627,13 @@ footer {
 
     <div class="paradigma-quote fade-up d1">
       <p>
-        "O rompimento das fibras dérmicas acontece no momento em que a pele se estica — isso é verdade. Mas o que determina se essas fibras vão <strong>ceder ou resistir</strong> foi decidido semanas antes, no estado interno da sua matriz extracelular. E esse estado é moldado por fatores que a maioria das gestantes nunca ouviu falar. Como <strong>inflamação sistêmica</strong>, <strong>cortisol elevado</strong>, <strong>eixo intestino-pele</strong>, deficiências nutricionais, hábitos diários que mudam tudo e que a maioria das pessoas faz errado sem entender a importância — é isso que molda a sua <strong>epigenética</strong>."
+        O rompimento das fibras dérmicas acontece no momento em que a pele se estica, isso é verdade. Mas o que determina se essas fibras vão <strong>ceder ou resistir</strong> foi decidido semanas antes, no estado interno do seu organismo. E esse estado é moldado por fatores que a maioria das gestantes nunca ouviu falar. Como <strong>inflamação sistêmica</strong>, <strong>cortisol elevado</strong>, <strong>eixo intestino-pele</strong>, deficiências nutricionais, hábitos diários que mudam tudo e que a maioria das pessoas faz errado sem entender a importância - é isso que molda a sua <strong>epigenética</strong>."
       </p>
     </div>
 
     <div class="paradigma-cta-note fade-up d2">
       <p>
-        Todos esses fatores — cada um deles — são desvendados no <strong>PROSKIN Ritual Materno</strong>.<br>
+        Todos esses fatores - um deles - são desvendados no <strong>PROSKIN Ritual Materno</strong>.<br>
         <em>Pela primeira vez, você vai entender o que realmente está acontecendo na sua pele.</em>
       </p>
       <div style="margin-top:1.4rem;">
@@ -1643,10 +1657,9 @@ footer {
 
       <div class="autora-photo-box fade-up">
         <div class="autora-photo" role="img" aria-label="Foto de Nicole Carvalho, Biomédica Esteta Integrativa">
-          <div class="photo-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-          </div>
-          <span class="photo-caption">Foto da especialista</span>
+          <a href=".imagens-estrias/2.png" target="_blank" rel="noopener" style="display:block;width:100%;height:100%;position:absolute;inset:0;">
+            <img src=".imagens-estrias/2.png" alt="Nicole Carvalho — Biomédica Esteta Integrativa" style="width:100%;height:100%;object-fit:cover;border-radius:6px;display:block;" loading="lazy">
+          </a>
         </div>
         <div class="autora-photo-deco" aria-hidden="true"></div>
       </div>
@@ -1667,10 +1680,10 @@ footer {
         </div>
 
         <p class="t-body fade-up d2">
-          Biomédica especialista em Estética Integrativa e dedicada ao estudo aprofundado da saúde e regeneração da pele. Nicole acredita que a verdadeira prevenção vai muito além dos cremes — ela começa no entendimento profundo do corpo, da epigenética e dos hábitos diários.
+          Biomédica pela Universidade Federal de Jataí (UFJ) -  especialista em Estética Integrativa e saúde e regeneração da pele. Nicole acredita que a verdadeira prevenção vai muito além dos cremes, ela começa no entendimento profundo do corpo, da epigenética e dos hábitos diários.
         </p>
         <p class="t-body fade-up d2" style="margin-top:0.8rem;">
-          Foi acompanhando mais de 100 mulheres em suas jornadas — observando dúvidas, inseguranças e informações desencontradas — que nasceu este guia. Um material que não existe para gerar medo. Existe para devolver a você <strong style="color:var(--brown);font-weight:500;">tranquilidade, autonomia e confiança no próprio corpo</strong>.
+          Foi acompanhando mais de 100 mulheres em suas jornadas, observando dúvidas, inseguranças e informações desencontradas, que nasceu este guia. Um material que não existe para gerar medo. Existe para devolver a você <strong style="color:var(--brown);font-weight:500;">tranquilidade, autonomia e confiança no próprio corpo</strong>.
         </p>
 
         <div class="autora-stats fade-up d3" role="list" aria-label="Números da trajetória de Nicole">
@@ -1703,8 +1716,8 @@ footer {
     <div style="text-align:center;max-width:600px;margin:0 auto 3.5rem;" class="fade-up">
       <span class="t-eyebrow">O que está dentro</span>
       <div class="divider c"></div>
-      <h2 class="t-h2" id="produto-h2">PROSKIN<br><em>Ritual Materno</em></h2>
-      <p class="t-body" style="margin-top:1rem;">Uma prévia do que você vai receber — e do que vai mudar para sempre na forma como você cuida da sua pele.</p>
+      <h2 class="t-h2" id="produto-h2">ProSkin · Ritual Materno<br><em>Guia Completo</em></h2>
+      <p class="t-body" style="margin-top:1rem;">O que você vai encontrar — cada seção construída para transformar a forma como você compreende e cuida do seu corpo durante a gestação.</p>
     </div>
 
     <div class="produto-grid">
@@ -1724,17 +1737,26 @@ footer {
 
       <!-- Conteúdo -->
       <div>
-        <div class="fade-up">
-          <h3 style="font-size:clamp(1.3rem,2.5vw,1.75rem);margin-bottom:0.5rem;">O que você vai encontrar</h3>
-          <p class="t-body">Cada seção foi construída para transformar a forma como você compreende — e cuida — do seu corpo durante a gestação.</p>
-        </div>
-
         <ul class="produto-items fade-up d1" role="list">
           <li class="produto-item" role="listitem">
             <span class="produto-item-ic">🔬</span>
             <div class="produto-item-body">
               <h4>Entendendo a Pele de Verdade</h4>
-              <p>O que realmente acontece nas camadas dérmicas durante a gravidez — sem simplificação, sem eufemismo.</p>
+              <p>O que realmente acontece na pele durante a gravidez, sem simplificação, sem eufemismo.</p>
+            </div>
+          </li>
+          <li class="produto-item" role="listitem">
+            <span class="produto-item-ic">🔒</span>
+            <div class="produto-item-body">
+              <h4>Os 7 Pilares que mudam tudo</h4>
+              <p> Hábitos que você já faz todos os dias, mas de um jeito errado, sem saber o impacto real que têm na sua pele.</p>
+            </div>
+          </li>
+           <li class="produto-item" role="listitem">
+            <span class="produto-item-ic">🔒</span>
+            <div class="produto-item-body">
+              <h4>Os 7 Pilares que mudam tudo</h4>
+              <p> Hábitos que você já faz todos os dias, mas de um jeito errado, sem saber o impacto real que têm na sua pele.</p>
             </div>
           </li>
           <li class="produto-item" role="listitem">
@@ -1748,80 +1770,10 @@ footer {
             <span class="produto-item-ic">🫧</span>
             <div class="produto-item-body">
               <h4>Skincare Corporal Estratégico</h4>
-              <p>Como, quando e por que aplicar — de forma que realmente faça diferença na estrutura da pele.</p>
+              <p>Como, quando e por que aplicar de forma que realmente faça diferença na estrutura da pele e na prevenção das estrias.</p>
             </div>
           </li>
         </ul>
-
-        <!-- 7 Pilares -->
-        <div class="pilares-grid fade-up d2">
-          <div class="pilares-grid-title">
-            <span class="t-eyebrow" style="margin-bottom:0.5rem;">O coração do método</span>
-            <h3>Os 7 Pilares <em>que mudam tudo</em></h3>
-            <p class="t-body" style="margin-top:0.6rem;font-size:0.85rem;">
-              Hábitos que você provavelmente já faz todos os dias — mas de um jeito errado, sem saber o impacto real que têm na sua pele.
-            </p>
-          </div>
-
-          <div class="pilares-cards" role="list">
-            <article class="pilar fade-up" role="listitem">
-              <div class="pilar-num" aria-hidden="true">01</div>
-              <div class="pilar-body">
-                <h3>O Pilar da Matriz</h3>
-                <p>Tudo começa aqui. O que a maioria ignora sobre a estrutura que decide se sua pele vai resistir ou ceder.</p>
-                <span class="pilar-locked">🔒 Dentro do guia</span>
-              </div>
-            </article>
-            <article class="pilar fade-up d1" role="listitem">
-              <div class="pilar-num" aria-hidden="true">02</div>
-              <div class="pilar-body">
-                <h3>O Pilar do Fogo Interno</h3>
-                <p>Um processo silencioso que você alimenta — ou apaga — em cada refeição do dia.</p>
-                <span class="pilar-locked">🔒 Dentro do guia</span>
-              </div>
-            </article>
-            <article class="pilar fade-up d2" role="listitem">
-              <div class="pilar-num" aria-hidden="true">03</div>
-              <div class="pilar-body">
-                <h3>O Pilar do Eixo Oculto</h3>
-                <p>A conexão que poucos profissionais explicam — e que afeta diretamente a qualidade da sua pele.</p>
-                <span class="pilar-locked">🔒 Dentro do guia</span>
-              </div>
-            </article>
-            <article class="pilar fade-up d3" role="listitem">
-              <div class="pilar-num" aria-hidden="true">04</div>
-              <div class="pilar-body">
-                <h3>O Pilar do Estresse</h3>
-                <p>Cortisol elevado faz algo específico com as fibras dérmicas. Você precisa saber o que é.</p>
-                <span class="pilar-locked">🔒 Dentro do guia</span>
-              </div>
-            </article>
-            <article class="pilar fade-up d1" role="listitem">
-              <div class="pilar-num" aria-hidden="true">05</div>
-              <div class="pilar-body">
-                <h3>O Pilar da Nutrição</h3>
-                <p>Existem nutrientes que constroem fibras e outros que as destroem. Qual dos dois você está priorizando?</p>
-                <span class="pilar-locked">🔒 Dentro do guia</span>
-              </div>
-            </article>
-            <article class="pilar fade-up d2" role="listitem">
-              <div class="pilar-num" aria-hidden="true">06</div>
-              <div class="pilar-body">
-                <h3>O Pilar do Sono</h3>
-                <p>O que acontece (ou deixa de acontecer) na sua pele enquanto você dorme — e o que fazer a respeito.</p>
-                <span class="pilar-locked">🔒 Dentro do guia</span>
-              </div>
-            </article>
-            <article class="pilar fade-up d3" role="listitem">
-              <div class="pilar-num" aria-hidden="true">07</div>
-              <div class="pilar-body">
-                <h3>O Pilar do Ritual</h3>
-                <p>O último pilar amarra tudo. E ele é mais simples — e mais poderoso — do que você imagina.</p>
-                <span class="pilar-locked">🔒 Dentro do guia</span>
-              </div>
-            </article>
-          </div>
-        </div>
 
         <!-- Bônus -->
         <div class="bonus-strip fade-up d3">
@@ -1829,7 +1781,7 @@ footer {
           <div>
             <div class="bonus-badge">Bônus Exclusivo</div>
             <h4>Cosmetologia Limpa na Gestação</h4>
-            <p>Um guia completo sobre como ler rótulos e entender quais compostos gestantes <strong style="color:rgba(250,248,245,0.85);">absolutamente não podem usar</strong> — e que estão em produtos vendidos como "indicados para gestantes". A maioria das mulheres não sabe que está se expondo.</p>
+            <p>Um guia completo sobre como ler rótulos e entender quais compostos gestantes <strong style="color:rgba(250,248,245,0.85);">absolutamente não podem usar</strong> e como saber quais são seguros para a mamãe e bebê . A maioria das mulheres não sabe que está se expondo.</p>
           </div>
         </div>
 
@@ -1849,7 +1801,7 @@ footer {
       <span class="t-eyebrow">Honestidade antes de tudo</span>
       <div class="divider c"></div>
       <h2 class="t-h2" id="para-quem-h2">Este guia foi feito<br><em>para quem?</em></h2>
-      <p class="t-body" style="margin-top:1rem;">O Ritual não serve para todo mundo — e isso não é problema. Veja se você se encaixa.</p>
+      <p class="t-body" style="margin-top:1rem;">O Ritual não serve para todo mundo e isso não é problema. Veja se você se encaixa.</p>
     </div>
 
     <div class="para-quem-grid">
@@ -1862,7 +1814,7 @@ footer {
         <ul class="para-quem-body" role="list">
           <li class="pq-item" role="listitem">
             <span class="pq-dot yes">✓</span>
-            <span>Entende que prevenção real exige informação real e mudanças de hábitos com consistência — não promessas de embalagem.</span>
+            <span>Entende que prevenção real exige informação real e mudanças de hábitos com consistência, não promessas de embalagem.</span>
           </li>
           <li class="pq-item" role="listitem">
             <span class="pq-dot yes">✓</span>
@@ -1870,11 +1822,11 @@ footer {
           </li>
           <li class="pq-item" role="listitem">
             <span class="pq-dot yes">✓</span>
-            <span>Busca uma abordagem baseada em ciência, sem toxinas e sem achismos.</span>
+            <span>Busca uma abordagem baseada em ciência, sem achismos.</span>
           </li>
           <li class="pq-item" role="listitem">
             <span class="pq-dot yes">✓</span>
-            <span>Está pronta para se tornar expert na própria pele — e manter essa inteligência para sempre.</span>
+            <span>Está pronta para se tornar expert na própria pele e manter essa inteligência para sempre.</span>
           </li>
         </ul>
       </div>
@@ -1891,7 +1843,7 @@ footer {
           </li>
           <li class="pq-item" role="listitem">
             <span class="pq-dot no">✕</span>
-            <span>Quer uma promessa de resultado garantido — o Ritual não faz promessas, faz ciência.</span>
+            <span>Quer uma promessa de resultado garantido - o Ritual não faz promessas, faz ciência.</span>
           </li>
           <li class="pq-item" role="listitem">
             <span class="pq-dot no">✕</span>
@@ -1929,27 +1881,27 @@ footer {
         <p>
           <strong>Anos de estudo clínico. Acessível agora.</strong><br><br>
           Esta condição de acesso se encerra em breve.<br><br>
-          <em>Você pode continuar passando cremes e esperando. Ou pode, pela primeira vez, compreender o que realmente está acontecendo na sua pele — e o que você pode fazer a respeito.</em>
+          <em>Você pode continuar passando cremes e esperando. Ou pode, pela primeira vez, compreender o que realmente está acontecendo na sua pele e o que você pode fazer a respeito.</em>
         </p>
       </div>
 
       <!-- Contador -->
-      <div class="countdown-box fade-up d2" role="timer" aria-label="Contador regressivo da oferta">
-        <span class="countdown-label">Oferta encerra em</span>
-        <div class="countdown-timer">
+      <div class="countdown-wrap fade-up d2" style="transition-delay:0.16s" role="timer" aria-label="Contador regressivo da oferta">
+        <p class="countdown-label">Encerramento da oferta em</p>
+        <div class="countdown">
           <div class="cd-unit">
-            <span class="cd-num" id="cd-h">23</span>
-            <span class="cd-lbl">horas</span>
+            <span class="cd-num" id="cd-hours">00</span>
+            <span class="cd-label">Horas</span>
           </div>
-          <span class="cd-sep">:</span>
+          <span class="cd-sep">·</span>
           <div class="cd-unit">
-            <span class="cd-num" id="cd-m">59</span>
-            <span class="cd-lbl">min</span>
+            <span class="cd-num" id="cd-mins">00</span>
+            <span class="cd-label">Minutos</span>
           </div>
-          <span class="cd-sep">:</span>
+          <span class="cd-sep">·</span>
           <div class="cd-unit">
-            <span class="cd-num" id="cd-s">59</span>
-            <span class="cd-lbl">seg</span>
+            <span class="cd-num" id="cd-secs">00</span>
+            <span class="cd-label">Segundos</span>
           </div>
         </div>
       </div>
@@ -1964,27 +1916,27 @@ footer {
         <div class="oferta-body">
           <ul class="oferta-list">
             <li>
-              <div class="oferta-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <span class="oferta-dot">·</span>
               <span>Guia completo em PDF · Acesso imediato e vitalício</span>
             </li>
             <li>
-              <div class="oferta-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-              <span>Os 7 Pilares com estratégias práticas e embasadas — o que molda sua epigenética</span>
+              <span class="oferta-dot">·</span>
+              <span>Os 7 Pilares com estratégias práticas e embasadas que moldam sua epigenética</span>
             </li>
             <li>
-              <div class="oferta-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-              <span>Ritual Materno completo (rotina matinal e noturna)</span>
+              <span class="oferta-dot">·</span>
+              <span>Ritual Materno completo — rotina matinal e noturna</span>
             </li>
             <li>
-              <div class="oferta-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <span class="oferta-dot">·</span>
               <span>Checklist Diário da Gestante Expert</span>
             </li>
             <li>
-              <div class="oferta-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <span class="oferta-dot">·</span>
               <span>Skincare corporal estratégico e realmente eficaz</span>
             </li>
             <li>
-              <div class="oferta-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <span class="oferta-dot">·</span>
               <span><strong>Bônus:</strong> Guia de Cosmetologia Limpa — como ler rótulos e o que não usar na gestação</span>
             </li>
           </ul>
@@ -1998,8 +1950,8 @@ footer {
             <p class="price-note">Pagamento único · Acesso vitalício · PDF para download imediato</p>
           </div>
 
-          <a href="#" class="btn btn-gold btn-lg btn-full btn-pulse" role="button" aria-label="Comprar ProSkin Ritual Materno por R$39,90">
-            <span>Quero o Guia Agora — R$ 39,90</span>
+          <a href="http://nicolecarvalhoestetica.com/" class="btn btn-gold btn-lg btn-full btn-pulse" role="button" aria-label="Comprar ProSkin Ritual Materno por R$39,90" target="_blank" rel="noopener noreferrer">
+            <span>Quero o Guia Agora - R$ 39,90</span>
           </a>
 
           <div class="secure-row">
@@ -2150,9 +2102,9 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a){
 
   function pad(n){ return n < 10 ? '0' + n : n; }
 
-  var hEl = document.getElementById('cd-h');
-  var mEl = document.getElementById('cd-m');
-  var sEl = document.getElementById('cd-s');
+  var hEl = document.getElementById('cd-hours');
+  var mEl = document.getElementById('cd-mins');
+  var sEl = document.getElementById('cd-secs');
 
   function tick(){
     var diff = Math.max(0, end - Date.now());
