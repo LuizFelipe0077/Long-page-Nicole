@@ -1,0 +1,1324 @@
+<!DOCTYPE html>
+<html lang="pt-BR" style="color-scheme: light only;">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light only" />
+  <meta name="description" content="Nicole Carvalho Estética — Protocolos integrativosde melasma, desinflamação e estrias. Tratamentos especializados à distância." />
+  <title>Nicole Carvalho Estética — Protocolos Integrativos</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Reset & Base ─────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      color-scheme: light only;
+      --terracota:      #994f20;
+      --terracota-dark: #7a3e18;
+      --terracota-mid:  #c47a4e;
+      --terracota-pale: #f5ede6;
+      --nude:           #e8ddd4;
+      --nude-dark:      #c9b8aa;
+      --off-white:      #faf8f5;
+      --cream:          #f2ece4;
+      --warm-gray:      #8c8177;
+      --dark-earth:     #2c2420;
+      --serif: 'Cormorant Garamond', Georgia, serif;
+      --sans:  'Jost', sans-serif;
+    }
+    html { scroll-behavior: smooth; background: var(--off-white); }
+    body {
+      font-family: var(--sans);
+      background: var(--off-white);
+      color: var(--dark-earth);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+    img { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ── Scrollbar ───────────────────────────────── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--off-white); }
+    ::-webkit-scrollbar-thumb { background: var(--nude-dark); border-radius: 2px; }
+
+    /* ── Utilities ───────────────────────────────── */
+    .section-label {
+      font-family: var(--sans);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--terracota);
+    }
+    .rule {
+      width: 40px; height: 1px;
+      background: var(--terracota);
+      display: inline-block;
+    }
+    .rule--center { display: block; margin: 0 auto; }
+
+    /* ── Animations ──────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(32px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes shimmer {
+      0%   { background-position: -200% center; }
+      100% { background-position: 200% center; }
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-10px); }
+    }
+    @keyframes pulse-ring {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(153,79,32,0.4); }
+      50%       { box-shadow: 0 0 0 16px rgba(153,79,32,0); }
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.75s ease, transform 0.75s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── NAV ─────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 18px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background 0.4s, backdrop-filter 0.4s, box-shadow 0.4s;
+    }
+    nav.scrolled {
+      background: rgba(250,248,245,0.92);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: 0 1px 0 rgba(44,36,32,0.08);
+    }
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: clamp(18px, 3vw, 26px);
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      color: var(--off-white);
+      transition: color 0.4s;
+    }
+    nav.scrolled .nav-logo { color: var(--dark-earth); }
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(250,248,245,0.75);
+      transition: color 0.3s;
+    }
+    nav.scrolled .nav-links a { color: var(--warm-gray); }
+    .nav-links a:hover { color: var(--terracota) !important; }
+
+    .nav-cta {
+      font-family: var(--sans);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--off-white) !important;
+      background: var(--terracota);
+      padding: 10px 22px;
+      border-radius: 2px;
+      transition: background 0.3s;
+    }
+    .nav-cta:hover { background: var(--terracota-dark) !important; }
+
+    /* Mobile nav */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block;
+      width: 22px; height: 1.5px;
+      background: var(--off-white);
+      transition: background 0.4s;
+    }
+    nav.scrolled .hamburger span { background: var(--dark-earth); }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: var(--dark-earth);
+      z-index: 99;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 36px;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-family: var(--serif);
+      font-size: clamp(28px, 8vw, 48px);
+      font-weight: 300;
+      letter-spacing: 0.06em;
+      color: var(--nude);
+      transition: color 0.2s;
+    }
+    .mobile-menu a:hover { color: var(--terracota-mid); }
+    .mobile-close {
+      position: absolute;
+      top: 22px; right: 28px;
+      font-size: 28px;
+      color: var(--nude-dark);
+      cursor: pointer;
+      background: none;
+      border: none;
+      line-height: 1;
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 16px 24px; }
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+    }
+
+    /* ── HERO ────────────────────────────────────── */
+    .hero {
+      min-height: 100svh;
+      background: linear-gradient(150deg, #2c2420 0%, #3d2e26 35%, #4a3428 65%, #994f20 100%);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      padding: 100px 24px 60px;
+    }
+    /* Texture */
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.015'%3E%3Cpath d='M50 50v-5h-3v5h-5v3h5v5h3v-5h5v-3h-5zm0-40V5h-3v5h-5v3h5v5h3v-5h5v-3h-5zM10 50v-5H7v5H2v3h5v5h3v-5h5v-3h-5zm0-40V5H7v5H2v3h5v5h3v-5h5v-3h-5z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+    /* Glow orb */
+    .hero::after {
+      content: '';
+      position: absolute;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(153,79,32,0.25) 0%, transparent 70%);
+      top: -100px; right: -150px;
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 2;
+      max-width: 780px;
+      text-align: center;
+      animation: fadeUp 1s ease forwards;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--sans);
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--terracota-mid);
+      display: block;
+      margin-bottom: 28px;
+    }
+
+    .hero-name {
+      font-family: var(--serif);
+      font-size: clamp(48px, 10vw, 96px);
+      font-weight: 300;
+      line-height: 0.95;
+      color: var(--off-white);
+      letter-spacing: -0.01em;
+      display: block;
+      margin-bottom: 6px;
+    }
+    .hero-name em {
+      font-style: italic;
+      color: var(--terracota-mid);
+    }
+
+    .hero-surname {
+      font-family: var(--serif);
+      font-size: clamp(20px, 4vw, 36px);
+      font-weight: 300;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--nude);
+      display: block;
+      margin-bottom: 32px;
+    }
+
+    .rule--center { margin-bottom: 28px; }
+
+    .hero-tagline {
+      font-family: var(--serif);
+      font-size: clamp(16px, 2.5vw, 22px);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.65;
+      color: var(--nude-dark);
+      max-width: 560px;
+      margin: 0 auto 40px;
+    }
+
+    .hero-cta-group {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--off-white);
+      background: var(--terracota);
+      padding: 14px 32px;
+      border-radius: 2px;
+      animation: pulse-ring 2.8s ease-in-out infinite;
+      transition: background 0.3s;
+    }
+    .btn-primary:hover { background: var(--terracota-dark); }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--nude);
+      border: 1px solid rgba(232,221,212,0.3);
+      padding: 14px 28px;
+      border-radius: 2px;
+      transition: border-color 0.3s, color 0.3s;
+    }
+    .btn-ghost:hover { border-color: var(--terracota-mid); color: var(--terracota-mid); }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+    .hero-scroll span {
+      font-family: var(--sans);
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(201,184,170,0.5);
+    }
+    .scroll-line {
+      width: 1px; height: 48px;
+      background: linear-gradient(to bottom, rgba(153,79,32,0.8), transparent);
+      animation: float 2s ease-in-out infinite;
+    }
+
+    /* ── ABOUT STRIP ─────────────────────────────── */
+    .about-strip {
+      background: var(--cream);
+      padding: 80px 24px;
+    }
+    .about-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .about-photo-wrap {
+      position: relative;
+    }
+    .about-photo-wrap::before {
+      content: '';
+      position: absolute;
+      top: -16px; left: -16px;
+      right: 32px; bottom: 32px;
+      border: 1px solid var(--terracota);
+      border-radius: 2px;
+      z-index: 0;
+    }
+    .about-photo {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      object-position: top center;
+      border-radius: 2px;
+      filter: grayscale(8%) contrast(1.04);
+    }
+    .about-text { }
+    .about-text .section-label { margin-bottom: 20px; display: block; }
+    .about-heading {
+      font-family: var(--serif);
+      font-size: clamp(28px, 4vw, 46px);
+      font-weight: 300;
+      line-height: 1.2;
+      color: var(--dark-earth);
+      margin-bottom: 20px;
+    }
+    .about-heading em { font-style: italic; color: var(--terracota); }
+    .about-body {
+      font-family: var(--sans);
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--warm-gray);
+      margin-bottom: 16px;
+      text-align: justify;
+    }
+    .about-credential {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 28px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(44,36,32,0.1);
+    }
+    .credential-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--terracota);
+      flex-shrink: 0;
+    }
+    .credential-text {
+      font-family: var(--sans);
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      color: var(--warm-gray);
+    }
+
+    @media (max-width: 768px) {
+      .about-inner {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+      .about-photo-wrap::before { display: none; }
+      .about-photo { aspect-ratio: 1/1; }
+    }
+
+    /* ── PRODUCTS ────────────────────────────────── */
+    .products {
+      padding: 100px 24px;
+      background: var(--off-white);
+    }
+    .products-header {
+      max-width: 1100px;
+      margin: 0 auto 72px;
+      text-align: center;
+    }
+    .products-header .section-label { display: block; margin-bottom: 16px; }
+    .products-heading {
+      font-family: var(--serif);
+      font-size: clamp(32px, 5vw, 56px);
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--dark-earth);
+    }
+    .products-heading em { font-style: italic; color: var(--terracota); }
+
+    .products-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+
+    .product-card {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      group: true;
+    }
+    .product-card::before {
+      content: '';
+      position: absolute; inset: 0;
+      z-index: 1;
+      transition: opacity 0.5s;
+    }
+
+    /* Card 1 — MelanCode */
+    .product-card:nth-child(1) { background: linear-gradient(160deg, #2c2420 0%, #4a3428 60%, #994f20 100%); }
+    .product-card:nth-child(1)::before { background: linear-gradient(to top, rgba(44,36,32,0.85) 0%, transparent 50%); }
+
+    /* Card 2 — Desinflamação */
+    .product-card:nth-child(2) { background: linear-gradient(160deg, #3d4f3c 0%, #4a5e48 60%, #6e8b6a 100%); }
+    .product-card:nth-child(2)::before { background: linear-gradient(to top, rgba(44,36,32,0.85) 0%, transparent 50%); }
+
+    /* Card 3 — Estrias */
+    .product-card:nth-child(3) { background: linear-gradient(160deg, #4a3d2e 0%, #6b5640 60%, #c9956b 100%); }
+    .product-card:nth-child(3)::before { background: linear-gradient(to top, rgba(44,36,32,0.85) 0%, transparent 50%); }
+
+    .product-card-inner {
+      position: relative;
+      z-index: 2;
+      padding: 64px 40px 48px;
+      min-height: 520px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+    .product-number {
+      position: absolute;
+      top: 36px; right: 36px;
+      font-family: var(--serif);
+      font-size: 80px;
+      font-weight: 300;
+      line-height: 1;
+      color: rgba(255,255,255,0.07);
+      letter-spacing: -0.03em;
+    }
+    .product-icon {
+      width: 48px; height: 48px;
+      margin-bottom: 24px;
+      opacity: 0.85;
+    }
+    .product-tag {
+      font-family: var(--sans);
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      display: block;
+      margin-bottom: 12px;
+    }
+    .product-name {
+      font-family: var(--serif);
+      font-size: clamp(26px, 3vw, 38px);
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--off-white);
+      margin-bottom: 16px;
+    }
+    .product-name em { font-style: italic; color: var(--terracota-mid); }
+    .product-desc {
+      font-family: var(--sans);
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 1.7;
+      color: rgba(232,221,212,0.7);
+      margin-bottom: 28px;
+    }
+    .product-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--sans);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--off-white);
+      transition: gap 0.3s;
+    }
+    .product-link svg { transition: transform 0.3s; }
+    .product-card:hover .product-link { gap: 14px; }
+    .product-card:hover .product-link svg { transform: translateX(4px); }
+
+    /* Hover lift */
+    .product-card-inner { transition: transform 0.5s ease; }
+    .product-card:hover .product-card-inner { transform: translateY(-6px); }
+
+    /* Featured badge */
+    .product-badge {
+      position: absolute;
+      top: 28px; left: 28px;
+      z-index: 3;
+      font-family: var(--sans);
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--dark-earth);
+      background: var(--terracota-mid);
+      padding: 5px 12px;
+      border-radius: 2px;
+    }
+
+    @media (max-width: 900px) {
+      .products-grid {
+        grid-template-columns: 1fr;
+        gap: 3px;
+      }
+      .product-card-inner { min-height: 360px; padding: 48px 28px 36px; }
+    }
+
+    /* ── SOCIAL PROOF ────────────────────────────── */
+    .social-proof {
+      background: var(--dark-earth);
+      padding: 100px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .social-proof::before {
+      content: '';
+      position: absolute;
+      width: 500px; height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(153,79,32,0.15) 0%, transparent 70%);
+      top: -100px; left: -100px;
+      pointer-events: none;
+    }
+
+    .social-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .social-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+    .social-header .section-label { color: var(--terracota-mid); margin-bottom: 16px; display: block; }
+    .social-heading {
+      font-family: var(--serif);
+      font-size: clamp(28px, 4vw, 48px);
+      font-weight: 300;
+      color: var(--off-white);
+      line-height: 1.2;
+    }
+    .social-heading em { font-style: italic; color: var(--terracota-mid); }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(255,255,255,0.05);
+      margin-bottom: 2px;
+    }
+    .stat-box {
+      background: var(--dark-earth);
+      padding: 40px 32px;
+      text-align: center;
+    }
+    .stat-num {
+      font-family: var(--serif);
+      font-size: clamp(40px, 6vw, 72px);
+      font-weight: 300;
+      color: var(--terracota-mid);
+      line-height: 1;
+      display: block;
+      margin-bottom: 8px;
+    }
+    .stat-label {
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--warm-gray);
+    }
+
+    .testimonials {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(255,255,255,0.05);
+    }
+    .testimonial {
+      background: rgba(255,255,255,0.03);
+      padding: 40px 32px;
+    }
+    .testimonial-quote {
+      font-family: var(--serif);
+      font-size: clamp(15px, 1.5vw, 18px);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.7;
+      color: var(--nude-dark);
+      margin-bottom: 24px;
+    }
+    .testimonial-quote::before { content: '"'; color: var(--terracota); }
+    .testimonial-quote::after  { content: '"'; color: var(--terracota); }
+    .testimonial-author {
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--warm-gray);
+    }
+    .testimonial-stars {
+      color: var(--terracota-mid);
+      font-size: 12px;
+      letter-spacing: 3px;
+      margin-bottom: 16px;
+    }
+
+    @media (max-width: 768px) {
+      .stats-row,
+      .testimonials {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ── METHODOLOGY ─────────────────────────────── */
+    .methodology {
+      background: var(--cream);
+      padding: 100px 24px;
+    }
+    .method-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .method-heading {
+      font-family: var(--serif);
+      font-size: clamp(32px, 4vw, 52px);
+      font-weight: 300;
+      line-height: 1.15;
+      color: var(--dark-earth);
+      margin-bottom: 24px;
+    }
+    .method-heading em { font-style: italic; color: var(--terracota); }
+    .method-body {
+      font-family: var(--sans);
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--warm-gray);
+      margin-bottom: 32px;
+      text-align: justify;
+    }
+
+    .pillars {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .pillar {
+      padding: 28px 0;
+      border-bottom: 1px solid rgba(44,36,32,0.1);
+      display: flex;
+      gap: 24px;
+      align-items: flex-start;
+    }
+    .pillar:first-child { border-top: 1px solid rgba(44,36,32,0.1); }
+    .pillar-num {
+      font-family: var(--serif);
+      font-size: 36px;
+      font-weight: 300;
+      color: var(--terracota);
+      line-height: 1;
+      flex-shrink: 0;
+      width: 40px;
+    }
+    .pillar-content { }
+    .pillar-title {
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--dark-earth);
+      margin-bottom: 6px;
+    }
+    .pillar-desc {
+      font-family: var(--sans);
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 1.6;
+      color: var(--warm-gray);
+    }
+
+    @media (max-width: 768px) {
+      .method-inner { grid-template-columns: 1fr; gap: 48px; }
+    }
+
+    /* ── CTA BANNER ──────────────────────────────── */
+    .cta-banner {
+      background: linear-gradient(120deg, #2c2420 0%, #994f20 100%);
+      padding: 80px 24px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-banner::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23ffffff' fill-opacity='0.025'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+    .cta-banner-inner { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; }
+    .cta-banner-label { font-family: var(--sans); font-size: 10px; font-weight: 400; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(255,255,255,0.6); display: block; margin-bottom: 20px; }
+    .cta-banner-heading {
+      font-family: var(--serif);
+      font-size: clamp(28px, 5vw, 54px);
+      font-weight: 300;
+      line-height: 1.15;
+      color: var(--off-white);
+      margin-bottom: 16px;
+    }
+    .cta-banner-heading em { font-style: italic; color: var(--terracota-mid); }
+    .cta-banner-sub {
+      font-family: var(--sans);
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 1.7;
+      color: rgba(232,221,212,0.7);
+      margin-bottom: 40px;
+    }
+    .cta-banner-btns {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* ── FOOTER ──────────────────────────────────── */
+    footer {
+      background: var(--dark-earth);
+      padding: 60px 24px 32px;
+      border-top: 1px solid rgba(255,255,255,0.04);
+    }
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 48px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .footer-brand-name {
+      font-family: var(--serif);
+      font-size: 28px;
+      font-weight: 300;
+      letter-spacing: 0.06em;
+      color: var(--off-white);
+      margin-bottom: 8px;
+    }
+    .footer-brand-name em { font-style: italic; color: var(--terracota-mid); }
+    .footer-brand-sub {
+      font-family: var(--sans);
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--warm-gray);
+      display: block;
+      margin-bottom: 16px;
+    }
+    .footer-brand-desc {
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 300;
+      line-height: 1.7;
+      color: rgba(140,129,119,0.7);
+    }
+    .footer-col-title {
+      font-family: var(--sans);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--terracota-mid);
+      display: block;
+      margin-bottom: 20px;
+    }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .footer-links a {
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--warm-gray);
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--terracota-mid); }
+
+    .footer-bottom {
+      padding-top: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .footer-copy {
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      color: rgba(140,129,119,0.5);
+    }
+
+    @media (max-width: 768px) {
+      .footer-top { grid-template-columns: 1fr; gap: 36px; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════
+  NAVIGATION
+═══════════════════════════════════════ -->
+<nav id="main-nav" role="navigation" aria-label="Navegação principal">
+  <a href="/" class="nav-logo" aria-label="Nicole Carvalho Estética — Home">Nicole Carvalho</a>
+
+  <ul class="nav-links" role="list">
+    <li><a href="#protocolos">Protocolos</a></li>
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#resultados">Resultados</a></li>
+    <li><a href="#metodo">Método</a></li>
+  </ul>
+
+  <a href="https://wa.me/message/SBPULBCTHU4VC1" target="_blank" rel="noopener" class="nav-cta">
+    Agendar Consulta
+  </a>
+
+  <button class="hamburger" aria-label="Abrir menu" id="hamburger" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobile-menu" role="dialog" aria-modal="true" aria-label="Menu de navegação">
+  <button class="mobile-close" id="mobile-close" aria-label="Fechar menu">✕</button>
+  <a href="#protocolos" class="mobile-link">Protocolos</a>
+  <a href="#sobre" class="mobile-link">Sobre</a>
+  <a href="#resultados" class="mobile-link">Resultados</a>
+  <a href="#metodo" class="mobile-link">Método</a>
+  <a href="https://wa.me/message/SBPULBCTHU4VC1" target="_blank" rel="noopener" class="mobile-link" style="color: var(--terracota-mid);">Agendar →</a>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+  HERO
+═══════════════════════════════════════ -->
+<section class="hero" aria-labelledby="hero-heading">
+  <div class="hero-inner">
+    <span class="hero-eyebrow">Estética Integrativa · Rio de Janeiro</span>
+
+    <span class="hero-name" id="hero-heading">Nicole <em>Carvalho</em></span>
+    <span class="hero-surname">Estética</span>
+
+    <span class="rule rule--center" style="margin-bottom: 28px;"></span>
+
+    <p class="hero-tagline">
+      Protocolos integrativos de alta performance para quem quer resultados reais —
+      tratados com ciência, cuidado e dedicação exclusiva.
+    </p>
+
+    <div class="hero-cta-group">
+      <a href="#protocolos" class="btn-primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/>
+        </svg>
+        Ver Protocolos
+      </a>
+      <a href="#sobre" class="btn-ghost">Conheça a Nicole</a>
+    </div>
+  </div>
+
+  <div class="hero-scroll" aria-hidden="true">
+    <span>Rolar</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════
+  ABOUT
+═══════════════════════════════════════ -->
+<section class="about-strip fade-in" id="sobre" aria-labelledby="sobre-heading">
+  <div class="about-inner">
+
+    <div class="about-photo-wrap">
+      <img
+        class="about-photo"
+        src="Minhafoto.jpeg"
+        alt="Nicole Carvalho — Especialista em Estética Integrativa"
+        loading="lazy"
+        width="500" height="667"
+      />
+    </div>
+
+    <div class="about-text">
+      <span class="section-label">Sobre a Especialista</span>
+      <h2 class="about-heading" id="sobre-heading">
+        Uma abordagem <em>diferente</em><br>para a sua pele
+      </h2>
+      <p class="about-body">
+        Nicole Carvalho é especialista em estética integrativa com foco no tratamento de condições complexas de pele — melasma, inflamação crônica e estrias. Sua metodologia une ciência dermatológica, nutrição funcional e protocolos de controle hormonal para resultados duradouros.
+      </p>
+      <p class="about-body">
+        Com atendimentos 100% à distância, Nicole já transformou a rotina e a autoestima de centenas de pacientes em todo o Brasil, entregando protocolos personalizados, acompanhamento próximo e resultados que outras abordagens não conseguiram oferecer.
+      </p>
+
+      <div class="about-credential">
+        <span class="credential-dot"></span>
+        <span class="credential-text">Especialista em Melasma &amp; Estética Integrativa</span>
+      </div>
+      <div class="about-credential">
+        <span class="credential-dot"></span>
+        <span class="credential-text">Atendimento 100% à Distância · Todo o Brasil</span>
+      </div>
+      <div class="about-credential">
+        <span class="credential-dot"></span>
+        <span class="credential-text">+500 pacientes atendidas com protocolos exclusivos</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════
+  PRODUCTS
+═══════════════════════════════════════ -->
+<section class="products" id="protocolos" aria-labelledby="protocolos-heading">
+
+  <header class="products-header fade-in">
+    <span class="section-label">Protocolos Exclusivos</span>
+    <h2 class="products-heading" id="protocolos-heading">
+      Escolha o protocolo<br>certo para <em>você</em>
+    </h2>
+  </header>
+
+  <div class="products-grid" role="list">
+
+    <!-- Card 1: MelanCode -->
+    <article class="product-card fade-in" role="listitem">
+      <span class="product-badge">Destaque</span>
+      <div class="product-card-inner">
+        <span class="product-number" aria-hidden="true">01</span>
+        <svg class="product-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="24" cy="24" r="20" stroke="rgba(255,255,255,0.35)" stroke-width="1"/>
+          <path d="M16 24c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8" stroke="rgba(255,255,255,0.7)" stroke-width="1.2" stroke-linecap="round"/>
+          <circle cx="24" cy="24" r="3" fill="rgba(196,122,78,0.9)"/>
+        </svg>
+        <span class="product-tag">Tratamento Integrativo · 90 Dias</span>
+        <h3 class="product-name">Melan<em>Code</em></h3>
+        <p class="product-desc">
+          Protocolo integrativo de 90 dias para controle do melasma. Ação de dentro para fora, sem agressividade — para quem já tentou tudo e busca o controle verdadeiro.
+        </p>
+        <a href="https://nicolecarvalhoestetica.com/melancode" class="product-link" aria-label="Conhecer o protocolo MelanCode">
+          Conhecer o protocolo
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
+    </article>
+
+    <!-- Card 2: Desinflamação -->
+    <article class="product-card fade-in" role="listitem" style="animation-delay: 0.15s;">
+      <div class="product-card-inner">
+        <span class="product-number" aria-hidden="true">02</span>
+        <svg class="product-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M24 8c0 0-12 8-12 18a12 12 0 0 0 24 0C36 16 24 8 24 8z" stroke="rgba(255,255,255,0.5)" stroke-width="1.2"/>
+          <path d="M24 18c0 0-5 4-5 9a5 5 0 0 0 10 0c0-5-5-9-5-9z" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.4)" stroke-width="1"/>
+        </svg>
+        <span class="product-tag">Protocolo Funcional · Personalizado</span>
+        <h3 class="product-name">Des<em>inflamação</em></h3>
+        <p class="product-desc">
+          Protocolo funcional para reverter inflamação crônica de pele. Abordagem sistêmica que combina alimentação, suplementação e cuidados tópicos específicos.
+        </p>
+        <a href="#" class="product-link" aria-label="Conhecer o protocolo de Desinflamação">
+          Conhecer o protocolo
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
+    </article>
+
+    <!-- Card 3: Estrias -->
+    <article class="product-card fade-in" role="listitem" style="animation-delay: 0.3s;">
+      <div class="product-card-inner">
+        <span class="product-number" aria-hidden="true">03</span>
+        <svg class="product-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M10 28 Q18 20 24 26 Q30 32 38 22" stroke="rgba(255,255,255,0.6)" stroke-width="1.2" stroke-linecap="round"/>
+          <path d="M10 34 Q18 26 24 32 Q30 38 38 28" stroke="rgba(255,255,255,0.35)" stroke-width="1" stroke-linecap="round"/>
+          <path d="M10 22 Q18 14 24 20 Q30 26 38 16" stroke="rgba(255,255,255,0.2)" stroke-width="0.8" stroke-linecap="round"/>
+        </svg>
+        <span class="product-tag">Protocolo Regenerativo · Exclusivo</span>
+        <h3 class="product-name">Trat. de <em>Estrias</em></h3>
+        <p class="product-desc">
+          Protocolo regenerativo para atenuação de estrias com abordagem integrativa. Combina ativos de alta performance com suporte nutricional e hormonal.
+        </p>
+        <a href="#" class="product-link" aria-label="Conhecer o protocolo de Estrias">
+          Conhecer o protocolo
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════
+  SOCIAL PROOF
+═══════════════════════════════════════ -->
+<section class="social-proof fade-in" id="resultados" aria-labelledby="resultados-heading">
+  <div class="social-inner">
+
+    <header class="social-header">
+      <span class="section-label">Resultados Reais</span>
+      <h2 class="social-heading" id="resultados-heading">
+        Vidas transformadas<br>com <em>método e ciência</em>
+      </h2>
+    </header>
+
+    <div class="stats-row" role="list">
+      <div class="stat-box" role="listitem">
+        <span class="stat-num">+500</span>
+        <span class="stat-label">Pacientes Atendidas</span>
+      </div>
+      <div class="stat-box" role="listitem">
+        <span class="stat-num">90</span>
+        <span class="stat-label">Dias de Protocolo</span>
+      </div>
+      <div class="stat-box" role="listitem">
+        <span class="stat-num">3</span>
+        <span class="stat-label">Protocolos Exclusivos</span>
+      </div>
+    </div>
+
+    <div class="testimonials">
+      <blockquote class="testimonial fade-in">
+        <div class="testimonial-stars" aria-label="5 estrelas">★★★★★</div>
+        <p class="testimonial-quote">Depois de anos tentando controlar meu melasma, o MelanCode foi a única coisa que realmente funcionou. Em 90 dias vi uma diferença que nunca imaginei.</p>
+        <cite class="testimonial-author">— Mariana S., São Paulo</cite>
+      </blockquote>
+
+      <blockquote class="testimonial fade-in" style="transition-delay: 0.15s;">
+        <div class="testimonial-stars" aria-label="5 estrelas">★★★★★</div>
+        <p class="testimonial-quote">O protocolo de desinflamação mudou minha pele por completo. Nunca pensei que fosse uma questão interna, mas a Nicole entendeu o que nenhum dermatologista tinha visto.</p>
+        <cite class="testimonial-author">— Camila R., Rio de Janeiro</cite>
+      </blockquote>
+
+      <blockquote class="testimonial fade-in" style="transition-delay: 0.3s;">
+        <div class="testimonial-stars" aria-label="5 estrelas">★★★★★</div>
+        <p class="testimonial-quote">Minhas estrias clararam muito mais do que eu esperava. O acompanhamento é próximo e o protocolo é realmente personalizado. Vale cada centavo.</p>
+        <cite class="testimonial-author">— Fernanda L., Belo Horizonte</cite>
+      </blockquote>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════
+  METHODOLOGY
+═══════════════════════════════════════ -->
+<section class="methodology fade-in" id="metodo" aria-labelledby="metodo-heading">
+  <div class="method-inner">
+
+    <div>
+      <span class="section-label" style="display:block; margin-bottom:16px;">A Abordagem</span>
+      <h2 class="method-heading" id="metodo-heading">
+        Integrativo,<br>personalizado<br>e <em>eficaz</em>
+      </h2>
+      <p class="method-body">
+        Cada protocolo é construído com base na sua história, exames e objetivos específicos. Não existe fórmula pronta — existe ciência aplicada à sua realidade, com acompanhamento contínuo durante todo o tratamento.
+      </p>
+      <a href="https://wa.me/message/SBPULBCTHU4VC1" target="_blank" rel="noopener" class="btn-primary" style="display: inline-flex;">
+        Iniciar meu protocolo
+      </a>
+    </div>
+
+    <div class="pillars" role="list">
+      <div class="pillar" role="listitem">
+        <span class="pillar-num" aria-hidden="true">1</span>
+        <div class="pillar-content">
+          <h3 class="pillar-title">Avaliação Personalizada</h3>
+          <p class="pillar-desc">Anamnese completa da sua pele, histórico hormonal, hábitos e objetivos antes de qualquer prescrição.</p>
+        </div>
+      </div>
+      <div class="pillar" role="listitem">
+        <span class="pillar-num" aria-hidden="true">2</span>
+        <div class="pillar-content">
+          <h3 class="pillar-title">Protocolo Integrativo</h3>
+          <p class="pillar-desc">Combinação estratégica de ativos tópicos, suplementação, alimentação funcional e controle de gatilhos.</p>
+        </div>
+      </div>
+      <div class="pillar" role="listitem">
+        <span class="pillar-num" aria-hidden="true">3</span>
+        <div class="pillar-content">
+          <h3 class="pillar-title">Acompanhamento Contínuo</h3>
+          <p class="pillar-desc">Retornos periódicos para ajuste do protocolo conforme sua evolução e resposta ao tratamento.</p>
+        </div>
+      </div>
+      <div class="pillar" role="listitem">
+        <span class="pillar-num" aria-hidden="true">4</span>
+        <div class="pillar-content">
+          <h3 class="pillar-title">Resultados Sustentáveis</h3>
+          <p class="pillar-desc">Foco em controle duradouro, não em soluções temporárias — para que a melhora se mantenha ao longo do tempo.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════
+  CTA BANNER
+═══════════════════════════════════════ -->
+<section class="cta-banner" aria-labelledby="cta-heading">
+  <div class="cta-banner-inner fade-in">
+    <span class="cta-banner-label">Próximo passo</span>
+    <h2 class="cta-banner-heading" id="cta-heading">
+      Pronta para começar<br>a <em>transformação</em>?
+    </h2>
+    <p class="cta-banner-sub">
+      Agende uma consulta gratuita e descubra qual protocolo foi feito para você.
+      Atendimento 100% à distância, em todo o Brasil.
+    </p>
+    <div class="cta-banner-btns">
+      <a href="https://wa.me/message/SBPULBCTHU4VC1" target="_blank" rel="noopener" class="btn-primary">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+        Falar no WhatsApp
+      </a>
+      <a href="#protocolos" class="btn-ghost">Ver os protocolos</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════
+  FOOTER
+═══════════════════════════════════════ -->
+<footer role="contentinfo">
+  <div class="footer-inner">
+    <div class="footer-top">
+
+      <div>
+        <p class="footer-brand-name">Nicole <em>Carvalho</em></p>
+        <span class="footer-brand-sub">Estética Integrativa</span>
+        <p class="footer-brand-desc">
+          Protocolos integrativos de alta performance para melasma, desinflamação e estrias.
+          Atendimento à distância, em todo o Brasil.
+        </p>
+      </div>
+
+      <nav aria-label="Links de protocolos">
+        <span class="footer-col-title">Protocolos</span>
+        <ul class="footer-links">
+          <li><a href="https://nicolecarvalhoestetica.com/melancode">MelanCode</a></li>
+          <li><a href="#">Desinflamação</a></li>
+          <li><a href="#">Estrias</a></li>
+        </ul>
+      </nav>
+
+      <nav aria-label="Links institucionais">
+        <span class="footer-col-title">Nicole</span>
+        <ul class="footer-links">
+          <li><a href="#sobre">Sobre</a></li>
+          <li><a href="#metodo">Método</a></li>
+          <li><a href="#resultados">Resultados</a></li>
+          <li><a href="https://wa.me/message/SBPULBCTHU4VC1" target="_blank" rel="noopener">Contato</a></li>
+        </ul>
+      </nav>
+
+    </div>
+
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2025 Nicole Carvalho Estética. Todos os direitos reservados.</p>
+      <p class="footer-copy">nicolecarvalho<wbr>estetica.com</p>
+    </div>
+  </div>
+</footer>
+
+
+<script>
+  // ── Nav scroll effect
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  }, { passive: true });
+
+  // ── Mobile menu
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const mobileClose = document.getElementById('mobile-close');
+
+  hamburger.addEventListener('click', () => {
+    mobileMenu.classList.add('open');
+    hamburger.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  });
+
+  function closeMenu() {
+    mobileMenu.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+
+  mobileClose.addEventListener('click', closeMenu);
+  document.querySelectorAll('.mobile-link').forEach(link => {
+    link.addEventListener('click', closeMenu);
+  });
+
+  // ── Fade-in on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
