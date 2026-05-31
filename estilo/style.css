@@ -214,9 +214,19 @@
     height: auto;
     display: block;
 
-    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    animation: flutuar 2s ease-in-out infinite;
+    transition: transform 0.3s ease;
 }
 
 #caixa img:hover {
     transform: scale(1.08);
+}
+
+@keyframes flutuar {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-24px);
+    }
 }
