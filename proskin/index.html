@@ -1306,6 +1306,8 @@ footer {
   background: var(--brown);
   padding: 4rem 0 2.5rem;
   color: rgba(250,248,245,0.55);
+  text-justify: center;
+  text-align: center;
 }
 
 .footer-top {
@@ -1328,7 +1330,7 @@ footer {
 }
 .footer-logo span { color: var(--gold); font-weight: 300; }
 
-.footer-desc { font-size: 0.82rem; max-width: 280px; line-height: 1.9; }
+.footer-desc { font-size: 0.82rem; max-width: 280px; line-height: 1.9; margin: 0 auto; }
 
 .footer-heading {
   font-family: 'Jost', sans-serif;
@@ -1351,10 +1353,11 @@ footer {
 
 .footer-bottom {
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
+  align-items: center;
+  justify-content: center;
   flex-wrap: wrap;
   gap: 1rem;
+  
 }
 
 .footer-copy { font-size: 0.72rem; color: rgba(250,248,245,0.28); line-height: 1.7; }
