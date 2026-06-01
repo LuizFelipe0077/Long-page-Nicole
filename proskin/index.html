@@ -379,26 +379,7 @@ section.s-tight { padding: 4rem 0; }
   .divider { margin-left: auto; margin-right: auto; }
 }
 
-/* Book mockup */
-.book-wrap {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  padding: 3rem 2.5rem;
-  overflow: visible;
-  min-height: 320px;
-}
-
 /* Mobile: contém os anéis para não gerar overflow nem esticar o container */
-@media (max-width: 899px) {
-  .book-wrap {
-    padding: 2.5rem 1.5rem;
-    min-height: 280px;
-    overflow: hidden;
-  }
-  .book-ring { display: none; }
-}
 
 .book-ring {
   position: absolute;
@@ -1647,25 +1628,12 @@ footer {
       </div>
 
       <div class="book-wrap fade-up d2">
-        <div class="book-ring ring-2" aria-hidden="true"></div>
-        <div class="book-ring ring-1" aria-hidden="true"></div>
-        <div class="book" role="img" aria-label="Capa do e-book ProSkin Ritual Materno">
-          <div class="book-badge-ring" aria-hidden="true">
-            <b>7</b>
-            <small>pilares</small>
-          </div>
-          <div class="book-label">Nicole Carvalho · Biomédica</div>
-          <div class="book-t1">ProSkin</div>
-          <div class="book-t2">Ritual Materno</div>
-          <div class="book-line"></div>
-          <!-- Espaço para imagem de capa do ebook -->
-          <div class="book-sub">
-            Estética Integrativa<br>
-            para a gestação<br><br>
-            CIÊNCIA · HÁBITOS · RITUAL<br>
-            COSMETOLOGIA LIMPA
-          </div>
+        <div class="autora-photo-box fade-up">
+        <div class="autora-photo" role="img" aria-label="Foto de Nicole Carvalho, Biomédica Esteta Integrativa">
+          <img src="../proskin/imagens/26.jpeg" alt="Nicole Carvalho — Biomédica Esteta Integrativa" loading="lazy">
         </div>
+        <div class="autora-photo-deco" aria-hidden="true"></div>
+      </div>
       </div>
 
     </div>
@@ -1860,15 +1828,14 @@ footer {
 
       <!-- Mockup do ebook -->
       <div class="produto-mockup-box fade-up">
-        <div class="produto-ring p-ring-2" aria-hidden="true"></div>
-        <div class="produto-ring p-ring-1" aria-hidden="true"></div>
-        <div class="ebook-cover-placeholder" role="img" aria-label="Capa do e-book PROSKIN Ritual Materno">
-          <div class="ebook-img-placeholder">Imagem de capa</div>
-          <div class="ebook-title-main">Pro<br>Skin</div>
-          <div class="ebook-title-sub">Ritual Materno</div>
-          <div class="ebook-divider"></div>
-          <div class="ebook-author">Nicole Carvalho<br>Biomédica Esteta Integrativa</div>
+        <div class="book-wrap fade-up d2">
+        <div class="autora-photo-box fade-up">
+        <div class="autora-photo" role="img" aria-label="Foto de Nicole Carvalho, Biomédica Esteta Integrativa">
+          <img src="../proskin/imagens/ProSkin CAPA.jpeg" alt="Nicole Carvalho — Biomédica Esteta Integrativa" loading="lazy">
         </div>
+        <div class="autora-photo-deco" aria-hidden="true"></div>
+      </div>
+      </div>
       </div>
 
       <!-- Conteúdo -->
