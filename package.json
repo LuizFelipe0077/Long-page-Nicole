@@ -1,0 +1,27 @@
+{
+  "name": "nicole-carvalho-estetica",
+  "version": "1.0.0",
+  "description": "Nicole Carvalho - Estética Integrativa & Avançada",
+  "main": "index.js",
+  "scripts": {
+    "build": "esbuild src/speed-insights.js --bundle --minify --outfile=dist/speed-insights.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LuizFelipe0077/Long-page-Nicole.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LuizFelipe0077/Long-page-Nicole/issues"
+  },
+  "homepage": "https://github.com/LuizFelipe0077/Long-page-Nicole#readme",
+  "dependencies": {
+    "@vercel/speed-insights": "^2.0.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.0"
+  }
+}
