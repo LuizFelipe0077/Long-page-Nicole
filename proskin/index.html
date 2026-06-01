@@ -1561,6 +1561,85 @@ footer {
   .book { width: 165px; padding: 1.5rem 1.2rem; }
   .btn-gold span { font-size: 0.65rem; }
 }
+
+/* ═══════════════════════════════════════
+   HERO PHOTO BOX — mesmo padrão de .autora-photo-box
+═══════════════════════════════════════ */
+.hero-photo-box {
+  max-width: 320px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.hero-photo {
+  width: 100%;
+  aspect-ratio: 3/4;
+  background: var(--nude-dk);
+  border-radius: 10px;
+  border: 0.5px solid var(--border-md);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-photo img {
+  position: static;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  border-radius: 6px;
+  display: block;
+}
+
+.hero-photo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(145deg, rgba(214,202,150,0.12) 0%, transparent 55%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.hero-photo-deco {
+  position: absolute;
+  bottom: -18px; right: -18px;
+  width: 90px; height: 90px;
+  border-radius: 50%;
+  border: 1px solid var(--border-md);
+  opacity: 0.5;
+}
+
+/* ═══════════════════════════════════════
+   EBOOK COVER — mesmo padrão de .autora-photo-box
+═══════════════════════════════════════ */
+.ebook-cover-wrap {
+  max-width: 320px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.ebook-cover-wrap .ebook-cover-photo {
+  width: 100%;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  object-position: center top;
+  background: var(--nude-dk);
+  border-radius: 10px;
+  border: 0.5px solid var(--border-md);
+  display: block;
+}
+
+.ebook-cover-shadow {
+  position: absolute;
+  bottom: -18px; right: -18px;
+  width: 90px; height: 90px;
+  border-radius: 50%;
+  border: 1px solid var(--border-md);
+  opacity: 0.5;
+  pointer-events: none;
+}
+
 </style>
 </head>
 <body>
@@ -1627,13 +1706,11 @@ footer {
         </div>
       </div>
 
-      <div class="book-wrap fade-up d2">
-        <div class="autora-photo-box fade-up">
-        <div class="autora-photo" role="img" aria-label="Foto de Nicole Carvalho, Biomédica Esteta Integrativa">
+      <div class="hero-photo-box fade-up d2">
+        <div class="hero-photo" role="img" aria-label="Foto de Nicole Carvalho, Biomédica Esteta Integrativa">
           <img src="../proskin/imagens/26.jpeg" alt="Nicole Carvalho — Biomédica Esteta Integrativa" loading="lazy">
         </div>
-        <div class="autora-photo-deco" aria-hidden="true"></div>
-      </div>
+        <div class="hero-photo-deco" aria-hidden="true"></div>
       </div>
 
     </div>
@@ -1828,14 +1905,10 @@ footer {
 
       <!-- Mockup do ebook -->
       <div class="produto-mockup-box fade-up">
-        <div class="book-wrap fade-up d2">
-        <div class="autora-photo-box fade-up">
-        <div class="autora-photo" role="img" aria-label="Foto de Nicole Carvalho, Biomédica Esteta Integrativa">
-          <img src="../proskin/imagens/ProSkin CAPA.jpeg" alt="Nicole Carvalho — Biomédica Esteta Integrativa" loading="lazy">
+        <div class="ebook-cover-wrap">
+          <img class="ebook-cover-photo" src="../proskin/imagens/ProSkin CAPA.jpeg" alt="Capa do guia ProSkin Ritual Materno" loading="lazy">
+          <div class="ebook-cover-shadow" aria-hidden="true"></div>
         </div>
-        <div class="autora-photo-deco" aria-hidden="true"></div>
-      </div>
-      </div>
       </div>
 
       <!-- Conteúdo -->
