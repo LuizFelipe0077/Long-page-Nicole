@@ -39,6 +39,34 @@
   }
 </script>
 <link rel="stylesheet" href="melancode/estilo/style.css" />
+
+<!-- ================================================
+  META PIXEL — base (OPÇÃO A: hardcoded no site)
+  Se você for injetar o Pixel via GTM, REMOVA este bloco
+  inteiro (head + noscript). O tracking de eventos continua
+  funcionando pelo dataLayer mesmo sem este bloco.
+================================================ -->
+<script>
+  // >>> PREENCHA com o ID do seu Pixel <<<
+  var FB_PIXEL_ID = 'SEU_PIXEL_AQUI';
+
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+
+  // Só inicializa se o ID já tiver sido preenchido (evita erro com placeholder).
+  if (FB_PIXEL_ID && FB_PIXEL_ID !== 'SEU_PIXEL_AQUI') {
+    fbq('init', FB_PIXEL_ID);
+    fbq('track', 'PageView');
+  }
+</script>
+<noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=SEU_PIXEL_AQUI&ev=PageView&noscript=1" alt=""/></noscript>
 </head>
 <body class="antialiased" style="background-color:#faf8f5; color:#2c2420;">
 
@@ -72,6 +100,25 @@
       <p class="font-sans font-light text-base md:text-lg leading-relaxed max-w-xl mx-auto mb-10" style="color:#c9b8aa; text-align:justify; text-indent:2em;">
         Em 90 dias, à distância, no conforto da sua casa, um método integrativo que age clareando a sua mancha de dentro para fora. Para quem já tentou de tudo e ainda não encontrou a resposta. O fim da agressividade. O início do controle verdadeiro.
       </p>
+
+      <!-- ================================================
+        VÍDEO DE RETENÇÃO (YouTube não listado · IFrame API)
+        Troque SEU_VIDEO_ID pelo ID do vídeo (o mesmo no
+        script de tracking, no fim do body).
+      ================================================ -->
+      <div class="hero-video-wrap mx-auto mb-10" style="max-width:600px; width:100%;">
+        <p class="section-label mb-4" style="color:#c47a4e !important;">Assista antes de decidir</p>
+        <div class="hero-video-frame" style="position:relative; width:100%; padding-bottom:56.25%; border-radius:14px; overflow:hidden; border:1px solid rgba(196,122,78,0.35); box-shadow:0 24px 60px -20px rgba(0,0,0,0.6); background-color:#1a1512;">
+          <iframe
+            id="hero-video"
+            src="https://www.youtube-nocookie.com/embed/SEU_VIDEO_ID?enablejsapi=1&rel=0&modestbranding=1&playsinline=1"
+            title="Método Matriz do Melasma — Introdução"
+            style="position:absolute; inset:0; width:100%; height:100%; border:0;"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+            loading="lazy"></iframe>
+        </div>
+      </div>
 
       <a href="https://wa.me/message/SBPULBCTHU4VC1" target="_blank" rel="noopener"
          class="cta-pulse inline-flex items-center gap-3 font-sans font-light tracking-widest text-sm uppercase px-10 py-4 transition-all duration-300"
@@ -676,6 +723,131 @@
       el.classList.add('visible');
     });
   }
+</script>
+
+
+<!-- ================================================
+  TRACKING — Scroll Depth · Vídeo (YouTube) · WhatsApp
+  Disparo DUPLO por evento:
+    1) dataLayer.push(...)  -> pronto pro Google Tag Manager
+    2) fbq(...)             -> Meta Pixel direto (com guarda; se o
+                              Pixel não estiver na página, é ignorado)
+  Eventos enviados:
+    ScrollDepth   {percent: 25|50|75|90}   (custom)
+    VideoPlay     {}                        (custom)
+    VideoProgress {percent: 50|75|100}      (custom)
+    Lead          {source:'whatsapp'}       (padrão)
+================================================ -->
+<script>
+(function () {
+  'use strict';
+
+  // ---- CONFIG ----
+  // (o ID do vídeo já vai no iframe do Hero; aqui é só referência)
+
+  window.dataLayer = window.dataLayer || [];
+
+  // Dispatcher único. isStandard=true -> fbq('track'); senão -> fbq('trackCustom').
+  function track(eventName, params, isStandard) {
+    params = params || {};
+    var payload = { event: eventName };
+    for (var k in params) { if (params.hasOwnProperty(k)) payload[k] = params[k]; }
+    window.dataLayer.push(payload);
+    if (typeof window.fbq === 'function') {
+      window.fbq(isStandard ? 'track' : 'trackCustom', eventName, params);
+    }
+  }
+
+  // ---------- 1) SCROLL DEPTH (25 / 50 / 75 / 90%) ----------
+  (function () {
+    var marks = [25, 50, 75, 90];
+    var fired = {};
+    var ticking = false;
+
+    function check() {
+      ticking = false;
+      var doc = document.documentElement;
+      var scrollable = doc.scrollHeight - window.innerHeight;
+      if (scrollable <= 0) return;
+      var pct = (window.scrollY || doc.scrollTop) / scrollable * 100;
+      for (var i = 0; i < marks.length; i++) {
+        var m = marks[i];
+        if (pct >= m && !fired[m]) {
+          fired[m] = true;
+          track('ScrollDepth', { percent: m }, false);
+        }
+      }
+      if (fired[90]) window.removeEventListener('scroll', onScroll);
+    }
+    function onScroll() {
+      if (!ticking) { ticking = true; window.requestAnimationFrame(check); }
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    check(); // caso a página já abra rolada
+  })();
+
+  // ---------- 2) WHATSAPP (evento padrão "Lead") ----------
+  (function () {
+    var links = document.querySelectorAll('a[href*="wa.me"], a[href*="api.whatsapp.com"]');
+    Array.prototype.forEach.call(links, function (a) {
+      a.addEventListener('click', function () {
+        // Troque 'Lead' por 'Contact' se preferir esse evento padrão.
+        track('Lead', { source: 'whatsapp', location: (a.textContent || '').trim().slice(0, 40) }, true);
+      });
+    });
+  })();
+
+  // ---------- 3) VÍDEO (YouTube IFrame API) ----------
+  (function () {
+    var iframe = document.getElementById('hero-video');
+    if (!iframe) return;
+
+    var fired = { play: false, 50: false, 75: false, 100: false };
+    var milestones = [50, 75, 100];
+    var poll = null;
+
+    function fireMilestone(pct) {
+      for (var i = 0; i < milestones.length; i++) {
+        var m = milestones[i];
+        if (pct >= m && !fired[m]) {
+          fired[m] = true;
+          track('VideoProgress', { percent: m }, false);
+        }
+      }
+    }
+
+    // Carrega a API do YouTube uma única vez.
+    var tag = document.createElement('script');
+    tag.src = 'https://www.youtube.com/iframe_api';
+    document.head.appendChild(tag);
+
+    window.onYouTubeIframeAPIReady = function () {
+      new YT.Player('hero-video', {
+        events: {
+          onStateChange: function (e) {
+            var p = e.target;
+            if (e.data === YT.PlayerState.PLAYING) {
+              if (!fired.play) {
+                fired.play = true;
+                track('VideoPlay', {}, false);
+              }
+              if (!poll) {
+                poll = setInterval(function () {
+                  var d = p.getDuration();
+                  if (d > 0) fireMilestone(p.getCurrentTime() / d * 100);
+                }, 1000);
+              }
+            } else {
+              if (poll) { clearInterval(poll); poll = null; }
+              if (e.data === YT.PlayerState.ENDED) fireMilestone(100);
+            }
+          }
+        }
+      });
+    };
+  })();
+
+})();
 </script>
 
 </body>
