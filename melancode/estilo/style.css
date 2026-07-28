@@ -27,37 +27,63 @@
     appearance: none;
   }
 
-  /* ---- Logo ---- */
+  /* ---- Logo (nav fixo) ---- */
   .logo-bg {
-    padding: 70px 36px 20px;
+    padding: 0;
     display: inline-flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
+    line-height: 1;
+    text-decoration: none;
   }
   .logo-wordmark {
     font-family: 'TAN Pearl', 'Cormorant Garamond', serif;
-    font-size: clamp(42px, 10vw, 72px);
+    font-size: clamp(1.35rem, 3.5vw, 1.7rem);
     letter-spacing: 0.1em;
-    background: linear-gradient(90deg, #ffffff 0%, #905117 55%, #905117 100%);
+    background: linear-gradient(90deg, #ffffff 0%, #c47a4e 55%, #994f20 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     line-height: 1;
     display: block;
-    text-align: center;
-    padding: 12px;
+    text-align: left;
+    padding: 0;
   }
   .logo-subtitle {
     font-family: 'Open Sans', sans-serif;
     font-weight: 600;
-    font-size: clamp(9px, 2vw, 12px);
-    letter-spacing: 0.22em;
+    font-size: 8px;
+    letter-spacing: 0.28em;
     text-transform: uppercase;
-    color: #ffffff !important;
-    text-align: center;
+    color: rgba(250, 248, 245, 0.85) !important;
+    text-align: left;
     display: block;
     white-space: nowrap;
+    margin-top: 5px;
   }
+
+  /* ---- Header fixo (modelo desinflamação · paleta MelanCode) ---- */
+  .site-header {
+    transition: background-color .3s ease, box-shadow .3s ease;
+  }
+  .site-header.is-solid {
+    background: rgba(250, 248, 245, 0.92);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 1px 0 rgba(201, 184, 170, 0.45);
+  }
+  .site-header .nav-link { color: rgba(250, 248, 245, 0.88); }
+  .site-header .nav-link:hover { color: #c47a4e; }
+  .site-header.is-solid .nav-link { color: #2c2420; }
+  .site-header.is-solid .nav-link:hover { color: #994f20; }
+  .site-header.is-solid .logo-wordmark {
+    background: linear-gradient(90deg, #2c2420 0%, #994f20 55%, #7a3e18 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .site-header.is-solid .logo-subtitle { color: #994f20 !important; }
+  .tap { min-height: 44px; }
 
   /* ---- Pulse elegante ---- */
   @-webkit-keyframes elegant-pulse {
