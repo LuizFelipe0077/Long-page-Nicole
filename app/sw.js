@@ -12,7 +12,7 @@
 // deletes any cache key that doesn't match CACHE_NAME, so this also purges
 // returning visitors' stale cached HTML/icons/manifest from before the
 // rebrand, not just a cosmetic rename.
-const CACHE_NAME = 'nicole-carvalho-v3-push';
+const CACHE_NAME = 'nicole-carvalho-v5-session';
 
 self.addEventListener('install', (event) => {
   self.skipWaiting();
@@ -78,15 +78,12 @@ self.addEventListener('push', (event) => {
   }
 
   const title = data.title || 'Nicole Carvalho';
-  // Prefer server-provided actions; fall back so Android always shows buttons
-  // for dose/snooze notifications even if an older sender omitted them.
+  // Prefer server-provided actions; fall back so Android always shows
+  // "✅ Tomei agora" for dose notifications even if an older sender omitted them.
   const kind = data.kind || 'dose';
-  const defaultActions = kind === 'conclusao_dia'
+  const defaultActions = kind === 'conclusao_dia' || kind === 'ack'
     ? []
-    : [
-      { action: 'tomar', title: '✅ Tomei agora' },
-      { action: 'adiar', title: '⏰ Lembrar em 10 minutos' }
-    ];
+    : [{ action: 'tomar', title: '✅ Tomei agora' }];
   const actions = Array.isArray(data.actions) && data.actions.length > 0
     ? data.actions
     : defaultActions;
@@ -162,21 +159,15 @@ async function notifyClientsDashboardRefresh(result) {
 }
 
 async function authenticatedGasCall(action, fields) {
-  const refreshToken = await readRefreshTokenFromIndexedDb();
-  if (!refreshToken) {
-    throw new Error('Sessão indisponível no Service Worker (sem refresh token).');
-  }
-  const refreshed = await callGasAction('refreshToken', { refreshToken });
-  await writeRefreshTokenToIndexedDb(refreshed.refreshToken);
+  const refreshed = await refreshAccessFromIndexedDb();
   return callGasAction(action, { token: refreshed.token, ...fields });
 }
 
 /**
  * notificationclick
  * - action `tomar` (Android/Chromium): check-in via API without opening UI.
- * - action `adiar` (Android/Chromium): schedule temporary +10 min reminder.
  * - default body tap: open app. On iOS (no action buttons), open already
- *   primed to run the corresponding check-in (best effort per Apple limits).
+ *   primed to run check-in (best effort per Apple limits).
  */
 self.addEventListener('notificationclick', (event) => {
   const nData = (event.notification && event.notification.data) || {};
@@ -216,39 +207,6 @@ self.addEventListener('notificationclick', (event) => {
     return;
   }
 
-  if (event.action === 'adiar') {
-    event.waitUntil(
-      (async () => {
-        try {
-          if (!nData.suplementoId || !nData.dataHoraPrescrita) {
-            throw new Error('Payload incompleto para adiar.');
-          }
-          await authenticatedGasCall('adiarLembretePush', {
-            suplementoId: nData.suplementoId,
-            dataHoraPrescrita: nData.dataHoraPrescrita
-          });
-          await self.registration.showNotification('⏰ Lembrete agendado', {
-            body: 'Vamos lembrar você em 10 minutos.',
-            icon: './brand/icon-192.png',
-            badge: './brand/icon-96.png',
-            tag: 'nicole-snooze-ok',
-            silent: true,
-            data: { kind: 'ack' }
-          });
-        } catch (err) {
-          await openOrFocusPatient(
-            buildPatientDeepLink({
-              pushSnooze: '1',
-              suplementoId: nData.suplementoId || '',
-              dataHoraPrescrita: nData.dataHoraPrescrita || ''
-            })
-          );
-        }
-      })()
-    );
-    return;
-  }
-
   if (nData.kind === 'ack') return;
 
   const shouldPrimeCheckin =
@@ -275,7 +233,16 @@ self.addEventListener('notificationclick', (event) => {
 const AUTH_DB_NAME = 'nicole-carvalho-auth';
 const AUTH_STORE_NAME = 'session';
 const AUTH_RECORD_KEY = 'current';
+/** Must match frontend/src/utils/silentRefreshSession.js AUTH_REFRESH_LOCK. */
+const AUTH_REFRESH_LOCK = 'nicole-carvalho-auth-refresh';
 const API_BASE_URL = 'https://script.google.com/macros/s/AKfycby_E0a6SOkGz3zOScWyTVNVsH3SicSt6OEZMWISRk2wJLYlCYg2ugu1W3SkvNGlX1hG/exec';
+
+let refreshInflight = null;
+
+function isDefinitiveSessionError(err) {
+  const msg = String((err && err.message) || '');
+  return /Sessão inválida|Sessão expirada/i.test(msg);
+}
 
 function readRefreshTokenFromIndexedDb() {
   return new Promise((resolve) => {
@@ -325,6 +292,61 @@ function writeRefreshTokenToIndexedDb(refreshToken) {
   });
 }
 
+function clearRefreshTokenFromIndexedDb() {
+  return new Promise((resolve) => {
+    const openRequest = indexedDB.open(AUTH_DB_NAME, 1);
+    openRequest.onerror = () => resolve();
+    openRequest.onsuccess = () => {
+      const db = openRequest.result;
+      if (!db.objectStoreNames.contains(AUTH_STORE_NAME)) {
+        resolve();
+        return;
+      }
+      const tx = db.transaction(AUTH_STORE_NAME, 'readwrite');
+      tx.objectStore(AUTH_STORE_NAME).delete(AUTH_RECORD_KEY);
+      tx.oncomplete = () => resolve();
+      tx.onerror = () => resolve();
+    };
+  });
+}
+
+/**
+ * Rotate refresh → access under the same Web Lock as the page
+ * (AUTH_REFRESH_LOCK). Re-reads IndexedDB inside the lock to avoid replay
+ * kill-switch races with AuthContext boot / 401 recovery.
+ */
+async function refreshAccessFromIndexedDb() {
+  if (refreshInflight) return refreshInflight;
+
+  const run = async () => {
+    const refreshToken = await readRefreshTokenFromIndexedDb();
+    if (!refreshToken) {
+      throw new Error('Sessão indisponível no Service Worker (sem refresh token).');
+    }
+    try {
+      const refreshed = await callGasAction('refreshToken', { refreshToken });
+      await writeRefreshTokenToIndexedDb(refreshed.refreshToken);
+      return refreshed;
+    } catch (err) {
+      if (isDefinitiveSessionError(err)) {
+        await clearRefreshTokenFromIndexedDb();
+      }
+      throw err;
+    }
+  };
+
+  refreshInflight = (async () => {
+    if (self.navigator && self.navigator.locks && self.navigator.locks.request) {
+      return self.navigator.locks.request(AUTH_REFRESH_LOCK, run);
+    }
+    return run();
+  })().finally(() => {
+    refreshInflight = null;
+  });
+
+  return refreshInflight;
+}
+
 async function callGasAction(action, payload) {
   const response = await fetch(API_BASE_URL, {
     method: 'POST',
@@ -368,21 +390,17 @@ self.addEventListener('pushsubscriptionchange', (event) => {
         const newSubscription = event.newSubscription
           || await self.registration.pushManager.subscribe(event.oldSubscription ? event.oldSubscription.options : undefined);
 
-        const refreshToken = await readRefreshTokenFromIndexedDb();
-        if (!refreshToken) return;
-
-        const refreshed = await callGasAction('refreshToken', { refreshToken });
-        await writeRefreshTokenToIndexedDb(refreshed.refreshToken);
+        const refreshed = await refreshAccessFromIndexedDb();
 
         const json = newSubscription.toJSON();
         await callGasAction('salvarInscricaoPush', {
           token: refreshed.token,
           endpoint: json.endpoint,
-          p256dh: json.keys.p256dh,
-          auth: json.keys.auth
+          p256dh: json.keys && json.keys.p256dh,
+          auth: json.keys && json.keys.auth
         });
-      } catch (err) {
-        // Silencioso de propósito — ver comentário acima do listener.
+      } catch (_err) {
+        // Best-effort — next app open reconciles via initPushNotifications().
       }
     })()
   );
