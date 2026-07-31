@@ -12,7 +12,7 @@
 // deletes any cache key that doesn't match CACHE_NAME, so this also purges
 // returning visitors' stale cached HTML/icons/manifest from before the
 // rebrand, not just a cosmetic rename.
-const CACHE_NAME = 'nicole-carvalho-v1';
+const CACHE_NAME = 'nicole-carvalho-v2-push';
 
 self.addEventListener('install', (event) => {
   self.skipWaiting();
@@ -60,18 +60,14 @@ self.addEventListener('fetch', (event) => {
 });
 
 /**
- * push — fires even with the app fully closed (that's the whole point of
- * Web Push). Payload is plain JSON sent by the backend's send trigger:
- * { title, body }. Deliberately terse per product spec — no dosage, no
- * extra copy, just "Nicole Carvalho" / supplement name / one short line.
+ * push — fires even with the app fully closed.
+ * Payload (Push V2): { title, body, tag, kind, actions, pacienteId,
+ * suplementoId, lembreteId, dataHoraPrescrita }.
  *
- * Sound/vibration: the Notification API has no "vibrate but never play a
- * sound" switch — `silent: true` suppresses both together, there is no way
- * to separate them from the web platform side. `silent: false` + a short
- * `vibrate` pattern is the closest available approximation of "discreet",
- * and only Android/Chromium honors the `vibrate` array at all — iOS/WebKit
- * ignores it and always follows the system's own notification sound
- * settings (Focus Mode included), a platform limitation, not a bug here.
+ * Platform notes (documented, not hacked around):
+ * - Chromium/Android: `actions` buttons are shown.
+ * - Safari/iOS (Home Screen PWA): `actions` are ignored by WebKit — only the
+ *   body tap fires `notificationclick` with empty `event.action`.
  */
 self.addEventListener('push', (event) => {
   let data = {};
@@ -82,6 +78,7 @@ self.addEventListener('push', (event) => {
   }
 
   const title = data.title || 'Nicole Carvalho';
+  const actions = Array.isArray(data.actions) ? data.actions : [];
   const options = {
     body: data.body || '',
     icon: './brand/icon-192.png',
@@ -89,43 +86,150 @@ self.addEventListener('push', (event) => {
     tag: data.tag || 'nicole-carvalho-lembrete',
     silent: false,
     vibrate: [80, 40, 80],
-    data: { url: './#/paciente' }
+    actions,
+    data: {
+      url: './#/paciente',
+      kind: data.kind || 'dose',
+      pacienteId: data.pacienteId || null,
+      suplementoId: data.suplementoId || null,
+      lembreteId: data.lembreteId || null,
+      dataHoraPrescrita: data.dataHoraPrescrita || null
+    }
   };
 
   event.waitUntil(self.registration.showNotification(title, options));
 });
 
-/**
- * notificationclick — always opens/focuses the patient dashboard (Home),
- * never a specific supplement/dose (product decision: keep it simple).
- *
- * `event.action` is already switched on so future action buttons ("Marcar
- * como tomado", "Lembrar depois") have a place to plug in — not implemented
- * yet, on purpose: any action that needs to call registrarCheckin from here
- * requires an auth token the Service Worker can actually read, which today
- * it cannot (sessionStorage/localStorage are invisible to a SW). That only
- * becomes possible once the refresh-token session (IndexedDB-backed) lands.
- */
-self.addEventListener('notificationclick', (event) => {
-  event.notification.close();
+function isIosLike() {
+  const ua = self.navigator.userAgent || '';
+  if (/iPad|iPhone|iPod/i.test(ua)) return true;
+  // iPadOS desktop UA
+  return self.navigator.platform === 'MacIntel' && self.navigator.maxTouchPoints > 1;
+}
 
-  switch (event.action) {
-    // case 'marcar': // reserved for a future release — needs SW-readable auth token first
-    // case 'lembrar': // reserved for a future release
-    default: {
-      const targetUrl = new URL('./#/paciente', self.registration.scope).href;
-      event.waitUntil(
-        self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then((windowClients) => {
-          for (const client of windowClients) {
-            if (client.url.startsWith(self.registration.scope) && 'focus' in client) {
-              return client.focus();
-            }
-          }
-          return self.clients.openWindow(targetUrl);
-        })
-      );
+function buildPatientDeepLink(params) {
+  const url = new URL('./#/paciente', self.registration.scope);
+  // Hash query so the SPA can read it without a server round-trip.
+  const qs = new URLSearchParams();
+  Object.keys(params).forEach((key) => {
+    if (params[key] != null && params[key] !== '') qs.set(key, params[key]);
+  });
+  const q = qs.toString();
+  url.hash = q ? `/paciente?${q}` : '/paciente';
+  return url.href;
+}
+
+async function openOrFocusPatient(deepLink) {
+  const targetUrl = deepLink || new URL('./#/paciente', self.registration.scope).href;
+  const windowClients = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
+  for (const client of windowClients) {
+    if (client.url.startsWith(self.registration.scope) && 'focus' in client) {
+      if ('navigate' in client) {
+        try {
+          await client.navigate(targetUrl);
+        } catch (_err) {
+          // navigate may fail on some engines — focus is enough; FE reads nothing.
+        }
+      }
+      await client.focus();
+      if (client.postMessage) {
+        client.postMessage({ type: 'PUSH_NAV', url: targetUrl });
+      }
+      return;
     }
   }
+  await self.clients.openWindow(targetUrl);
+}
+
+async function notifyClientsDashboardRefresh(result) {
+  const windowClients = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
+  for (const client of windowClients) {
+    client.postMessage({ type: 'PUSH_CHECKIN_DONE', result: result || null });
+  }
+}
+
+async function authenticatedGasCall(action, fields) {
+  const refreshToken = await readRefreshTokenFromIndexedDb();
+  if (!refreshToken) {
+    throw new Error('Sessão indisponível no Service Worker (sem refresh token).');
+  }
+  const refreshed = await callGasAction('refreshToken', { refreshToken });
+  await writeRefreshTokenToIndexedDb(refreshed.refreshToken);
+  return callGasAction(action, { token: refreshed.token, ...fields });
+}
+
+/**
+ * notificationclick
+ * - action `tomar` (Android/Chromium): check-in via API without opening UI.
+ * - action `adiar` (Android/Chromium): schedule temporary +10 min reminder.
+ * - default body tap: open app. On iOS (no action buttons), open already
+ *   primed to run the corresponding check-in (best effort per Apple limits).
+ */
+self.addEventListener('notificationclick', (event) => {
+  const nData = (event.notification && event.notification.data) || {};
+  event.notification.close();
+
+  if (event.action === 'tomar') {
+    event.waitUntil(
+      (async () => {
+        try {
+          if (!nData.suplementoId || !nData.dataHoraPrescrita) {
+            throw new Error('Payload da notificação incompleto para check-in.');
+          }
+          const result = await authenticatedGasCall('registrarCheckin', {
+            suplementoId: nData.suplementoId,
+            dataHoraPrescrita: nData.dataHoraPrescrita
+          });
+          await notifyClientsDashboardRefresh(result);
+        } catch (err) {
+          // Fallback: open the app so the patient can confirm manually.
+          // Documented limitation when SW has no session or API fails —
+          // do not invent silent retries that could double-checkin.
+          await openOrFocusPatient(
+            buildPatientDeepLink({
+              pushCheckin: '1',
+              suplementoId: nData.suplementoId || '',
+              dataHoraPrescrita: nData.dataHoraPrescrita || ''
+            })
+          );
+        }
+      })()
+    );
+    return;
+  }
+
+  if (event.action === 'adiar') {
+    event.waitUntil(
+      (async () => {
+        try {
+          await authenticatedGasCall('adiarLembretePush', {
+            suplementoId: nData.suplementoId,
+            dataHoraPrescrita: nData.dataHoraPrescrita
+          });
+        } catch (err) {
+          await openOrFocusPatient(new URL('./#/paciente', self.registration.scope).href);
+        }
+      })()
+    );
+    return;
+  }
+
+  // Body tap (and the only path on iOS, where actions are ignored).
+  const shouldPrimeCheckin =
+    nData.kind !== 'conclusao_dia' &&
+    nData.suplementoId &&
+    nData.dataHoraPrescrita &&
+    isIosLike();
+
+  const deepLink = shouldPrimeCheckin
+    ? buildPatientDeepLink({
+        pushCheckin: '1',
+        suplementoId: nData.suplementoId,
+        dataHoraPrescrita: nData.dataHoraPrescrita
+      })
+    : new URL('./#/paciente', self.registration.scope).href;
+
+  event.waitUntil(openOrFocusPatient(deepLink));
 });
 
 // Mirrors frontend/src/utils/sessionDb.js's DB/store/key exactly — sw.js is
