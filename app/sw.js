@@ -12,7 +12,7 @@
 // deletes any cache key that doesn't match CACHE_NAME, so this also purges
 // returning visitors' stale cached HTML/icons/manifest from before the
 // rebrand, not just a cosmetic rename.
-const CACHE_NAME = 'nicole-carvalho-v2-push';
+const CACHE_NAME = 'nicole-carvalho-v3-push';
 
 self.addEventListener('install', (event) => {
   self.skipWaiting();
@@ -78,18 +78,31 @@ self.addEventListener('push', (event) => {
   }
 
   const title = data.title || 'Nicole Carvalho';
-  const actions = Array.isArray(data.actions) ? data.actions : [];
+  // Prefer server-provided actions; fall back so Android always shows buttons
+  // for dose/snooze notifications even if an older sender omitted them.
+  const kind = data.kind || 'dose';
+  const defaultActions = kind === 'conclusao_dia'
+    ? []
+    : [
+      { action: 'tomar', title: '✅ Tomei agora' },
+      { action: 'adiar', title: '⏰ Lembrar em 10 minutos' }
+    ];
+  const actions = Array.isArray(data.actions) && data.actions.length > 0
+    ? data.actions
+    : defaultActions;
+
   const options = {
     body: data.body || '',
     icon: './brand/icon-192.png',
     badge: './brand/icon-96.png',
     tag: data.tag || 'nicole-carvalho-lembrete',
+    renotify: true,
     silent: false,
     vibrate: [80, 40, 80],
     actions,
     data: {
       url: './#/paciente',
-      kind: data.kind || 'dose',
+      kind,
       pacienteId: data.pacienteId || null,
       suplementoId: data.suplementoId || null,
       lembreteId: data.lembreteId || null,
@@ -181,10 +194,15 @@ self.addEventListener('notificationclick', (event) => {
             dataHoraPrescrita: nData.dataHoraPrescrita
           });
           await notifyClientsDashboardRefresh(result);
+          await self.registration.showNotification('✅ Registrado', {
+            body: 'Check-in confirmado. Seu tratamento continua no ritmo.',
+            icon: './brand/icon-192.png',
+            badge: './brand/icon-96.png',
+            tag: 'nicole-checkin-ok',
+            silent: true,
+            data: { kind: 'ack' }
+          });
         } catch (err) {
-          // Fallback: open the app so the patient can confirm manually.
-          // Documented limitation when SW has no session or API fails —
-          // do not invent silent retries that could double-checkin.
           await openOrFocusPatient(
             buildPatientDeepLink({
               pushCheckin: '1',
@@ -202,19 +220,37 @@ self.addEventListener('notificationclick', (event) => {
     event.waitUntil(
       (async () => {
         try {
+          if (!nData.suplementoId || !nData.dataHoraPrescrita) {
+            throw new Error('Payload incompleto para adiar.');
+          }
           await authenticatedGasCall('adiarLembretePush', {
             suplementoId: nData.suplementoId,
             dataHoraPrescrita: nData.dataHoraPrescrita
           });
+          await self.registration.showNotification('⏰ Lembrete agendado', {
+            body: 'Vamos lembrar você em 10 minutos.',
+            icon: './brand/icon-192.png',
+            badge: './brand/icon-96.png',
+            tag: 'nicole-snooze-ok',
+            silent: true,
+            data: { kind: 'ack' }
+          });
         } catch (err) {
-          await openOrFocusPatient(new URL('./#/paciente', self.registration.scope).href);
+          await openOrFocusPatient(
+            buildPatientDeepLink({
+              pushSnooze: '1',
+              suplementoId: nData.suplementoId || '',
+              dataHoraPrescrita: nData.dataHoraPrescrita || ''
+            })
+          );
         }
       })()
     );
     return;
   }
 
-  // Body tap (and the only path on iOS, where actions are ignored).
+  if (nData.kind === 'ack') return;
+
   const shouldPrimeCheckin =
     nData.kind !== 'conclusao_dia' &&
     nData.suplementoId &&
@@ -243,7 +279,13 @@ const API_BASE_URL = 'https://script.google.com/macros/s/AKfycby_E0a6SOkGz3zOScW
 
 function readRefreshTokenFromIndexedDb() {
   return new Promise((resolve) => {
-    const openRequest = indexedDB.open(AUTH_DB_NAME);
+    const openRequest = indexedDB.open(AUTH_DB_NAME, 1);
+    openRequest.onupgradeneeded = () => {
+      const db = openRequest.result;
+      if (!db.objectStoreNames.contains(AUTH_STORE_NAME)) {
+        db.createObjectStore(AUTH_STORE_NAME);
+      }
+    };
     openRequest.onerror = () => resolve(null);
     openRequest.onsuccess = () => {
       const db = openRequest.result;
@@ -259,15 +301,15 @@ function readRefreshTokenFromIndexedDb() {
   });
 }
 
-// The refresh token is rotated (single-use) on every refreshToken call — if
-// the newly-issued one isn't written back here, the page's own copy in
-// IndexedDB goes stale, and its next refresh attempt would replay an
-// already-used token, tripping the backend's theft-detection kill switch
-// (RefreshTokenUseCase revokes every session for the patient on replay).
-// This write-back is what keeps that from happening.
 function writeRefreshTokenToIndexedDb(refreshToken) {
   return new Promise((resolve) => {
-    const openRequest = indexedDB.open(AUTH_DB_NAME);
+    const openRequest = indexedDB.open(AUTH_DB_NAME, 1);
+    openRequest.onupgradeneeded = () => {
+      const db = openRequest.result;
+      if (!db.objectStoreNames.contains(AUTH_STORE_NAME)) {
+        db.createObjectStore(AUTH_STORE_NAME);
+      }
+    };
     openRequest.onerror = () => resolve();
     openRequest.onsuccess = () => {
       const db = openRequest.result;
@@ -289,7 +331,13 @@ async function callGasAction(action, payload) {
     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
     body: JSON.stringify({ action, ...payload })
   });
-  const result = await response.json();
+  const text = await response.text();
+  let result;
+  try {
+    result = JSON.parse(text);
+  } catch (_err) {
+    throw new Error('Resposta inválida do servidor.');
+  }
   if (result.statusCode !== 200) {
     throw new Error((result.data && result.data.message) || 'Erro ao chamar o backend.');
   }
