@@ -194,6 +194,20 @@ self.addEventListener('notificationclick', (event) => {
             data: { kind: 'ack' }
           });
         } catch (err) {
+          const msg = err && err.message ? String(err.message) : '';
+          // Idempotent: dose already confirmed — calm ack, not error deep-link.
+          if (/já registrado/i.test(msg)) {
+            await notifyClientsDashboardRefresh(null);
+            await self.registration.showNotification('✅ Já registrado', {
+              body: 'Esta dose já estava confirmada.',
+              icon: './brand/icon-192.png',
+              badge: './brand/icon-96.png',
+              tag: 'nicole-checkin-ok',
+              silent: true,
+              data: { kind: 'ack' }
+            });
+            return;
+          }
           await openOrFocusPatient(
             buildPatientDeepLink({
               pushCheckin: '1',
