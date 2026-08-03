@@ -255,7 +255,7 @@ let refreshInflight = null;
 
 function isDefinitiveSessionError(err) {
   const msg = String((err && err.message) || '');
-  return /Sessão inválida|Sessão expirada/i.test(msg);
+  return /Sessão inválida|Sessão expirada|conta está inativa|temporariamente bloqueada/i.test(msg);
 }
 
 function readRefreshTokenFromIndexedDb() {
