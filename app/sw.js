@@ -326,8 +326,9 @@ function clearRefreshTokenFromIndexedDb() {
 
 /**
  * Rotate refresh → access under the same Web Lock as the page
- * (AUTH_REFRESH_LOCK). Re-reads IndexedDB inside the lock to avoid replay
- * kill-switch races with AuthContext boot / 401 recovery.
+ * (AUTH_REFRESH_LOCK). Single-flight (refreshInflight) + exclusive lock so
+ * notificationclick / pushsubscriptionchange never race AuthContext boot/401.
+ * Re-reads IndexedDB inside the lock after waiting for the previous holder.
  */
 async function refreshAccessFromIndexedDb() {
   if (refreshInflight) return refreshInflight;
@@ -351,7 +352,7 @@ async function refreshAccessFromIndexedDb() {
 
   refreshInflight = (async () => {
     if (self.navigator && self.navigator.locks && self.navigator.locks.request) {
-      return self.navigator.locks.request(AUTH_REFRESH_LOCK, run);
+      return self.navigator.locks.request(AUTH_REFRESH_LOCK, { mode: 'exclusive' }, run);
     }
     return run();
   })().finally(() => {
