@@ -1,685 +1,831 @@
 <!DOCTYPE html>
-<html lang="pt-BR" style="color-scheme: light only;">
+<html lang="pt-BR">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="color-scheme" content="light only" />
-<title>Melasma — Investigação Integrativa · Nicole Carvalho</title>
-<meta name="description" content="Uma consulta que investiga a raiz biológica do melasma antes de qualquer plano. Acompanhamento individualizado de aproximadamente 90 dias, 100% à distância, com Nicole Carvalho." />
-<script src="https://cdn.tailwindcss.com"></script>
-<link rel="icon" href="melancode/imagens/fivecon.png" type="image/png">
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
-<script>
-  tailwind.config = {
-    theme: {
-      extend: {
-        colors: {
-          terracota: '#994f20', 'terracota-dark': '#7a3e18', 'terracota-light': '#c47a4e', 'terracota-pale': '#f5ede6',
-          nude: '#e8ddd4', 'nude-dark': '#c9b8aa', 'off-white': '#faf8f5', 'cream': '#f2ece4',
-          sage: '#3d4f3c', 'sage-light': '#5a7059', 'sage-pale': '#dde6db', 'warm-gray': '#8c8177', 'dark-earth': '#2c2420',
-        },
-        fontFamily: { serif: ['Cormorant Garamond', 'serif'], sans: ['Jost', 'sans-serif'], opensans: ['Open Sans', 'sans-serif'] },
-      }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="color-scheme" content="light only" />
+
+  <!-- SEO -->
+  <title>Nicole Carvalho | Estética Integrativa & Avançada · Protocolos Exclusivos</title>
+  <meta name="description" content="Nicole Carvalho — Biomédica Esteta, CRBM 26343. Especialista em estética integrativa. Protocolos exclusivos MelanCode, Desinflamação, Estrias e ProSkin. Atendimento 100% à distância." />
+  <meta name="keywords" content="melasma, MelanCode, tratamento melasma, desinflamação pele, estrias, ProSkin, estética integrativa, Nicole Carvalho, biomédica, protocolo melasma, CRBM 26343" />
+  <link rel="canonical" href="https://nicolecarvalhoestetica.com/" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Nicole Carvalho | Estética Integrativa & Avançada" />
+  <meta property="og:description" content="Biomédica Esteta especializada em melasma, desinflamação, estrias e prevenção. Protocolos integrativos exclusivos, 100% à distância." />
+  <meta property="og:image" content="https://nicolecarvalhoestetica.com/og-image.jpg" />
+  <meta property="og:url" content="https://nicolecarvalhoestetica.com/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="pt_BR" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Nicole Carvalho | Estética Integrativa & Avançada" />
+  <meta name="twitter:description" content="Biomédica Esteta especializada em melasma, desinflamação, estrias e prevenção. Protocolos integrativos exclusivos." />
+  <meta name="twitter:image" content="https://nicolecarvalhoestetica.com/og-image.jpg" />
+
+  <!-- Schema.org -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "MedicalBusiness",
+    "name": "Nicole Carvalho Estética",
+    "url": "https://nicolecarvalhoestetica.com",
+    "description": "Protocolos integrativos exclusivos para melasma, desinflamação, estrias e prevenção. Atendimento 100% à distância.",
+    "priceRange": "$$",
+    "areaServed": "Brasil",
+    "availableChannel": {
+      "@type": "ServiceChannel",
+      "serviceUrl": "https://nicolecarvalhoestetica.com",
+      "serviceType": "Online"
+    },
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Protocolos Nicole Carvalho",
+      "itemListElement": [
+        { "@type": "Offer", "name": "MelanCode", "description": "Protocolo integrativo para tratamento do melasma de dentro para fora.", "url": "https://nicolecarvalhoestetica.com/melancode" },
+        { "@type": "Offer", "name": "Desinflamação", "description": "Protocolo para redução da inflamação sistêmica que impacta diretamente a saúde da pele." },
+        { "@type": "Offer", "name": "Estrias", "description": "Protocolo regenerativo para melhora da aparência e qualidade da pele com estrias." },
+        { "@type": "Offer", "name": "ProSkin", "description": "E-book exclusivo para prevenção de estrias durante a gestação." }
+      ]
+    },
+    "sameAs": ["https://www.instagram.com/nicolecarvalho.estetica"]
+  }
+  </script>
+
+  <!-- Fonts: Playfair Display (editorial serif) + DM Sans (refined sans) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+  <link rel="icon" href="melancode/imagens/fivecon.png" type="image/png">
+
+  <style>
+    /* ══════════════════════════════════════════
+       DESIGN TOKENS — Light Premium Palette
+    ══════════════════════════════════════════ */
+    :root {
+      /* Brand */
+      --copper:        #a05a30;
+      --copper-light:  #c8835a;
+      --copper-xlight: #dfa882;
+
+      /* Surface */
+      --bg:            #faf7f4;
+      --surface:       #f5f0ea;
+      --surface-b:     #ede6dd;
+      --card-bg:       #ffffff;
+
+      /* Text */
+      --ink:           #2a1f18;
+      --ink-mid:       #5c4a3e;
+      --ink-soft:      #8a7268;
+      --ink-muted:     #b0a098;
+
+      /* Border */
+      --border:        rgba(160, 90, 48, 0.14);
+      --border-strong: rgba(160, 90, 48, 0.28);
+
+      /* Type */
+      --serif: 'Playfair Display', Georgia, serif;
+      --sans:  'DM Sans', system-ui, sans-serif;
+
+      /* Layout */
+      --page-max: 540px;
+      --radius:   10px;
+      --ease:     cubic-bezier(0.4, 0, 0.2, 1);
     }
-  }
-</script>
-<link rel="stylesheet" href="melancode/estilo/style.css" />
 
-<!-- ================================================
-  Animação da caixa + composição do app — definidas
-  aqui diretamente para garantir que funcionem mesmo
-  que style.css externo não as contenha ainda.
-  Respeita prefers-reduced-motion (acessibilidade).
-================================================ -->
-<style>
-  @keyframes caixaFloat {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-14px); }
-  }
-  #caixa { animation: caixaFloat 5s ease-in-out infinite; }
-  @media (prefers-reduced-motion: reduce) {
-    #caixa { animation: none; }
-  }
+    /* ══════════════════════════════════════════
+       RESET
+    ══════════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      min-height: 100svh;
+      overflow-x: hidden;
+    }
+    img { display: block; max-width: 100%; }
+    a   { text-decoration: none; color: inherit; }
 
-  .app-shot { position:absolute; border-radius:22px; cursor:pointer; transition:transform .35s ease, filter .35s ease, opacity .35s ease; box-shadow:0 24px 55px -20px rgba(0,0,0,0.4); outline:none; }
-  .app-shot:hover, .app-shot:focus-visible { filter:none !important; opacity:1 !important; transform:translateY(-4px) scale(1.02); }
-  .app-center { position:relative; width:220px; z-index:3; }
-  .app-side { width:180px; filter:blur(2.5px); opacity:0.5; z-index:1; top:50%; transform:translateY(-50%) scale(0.92); }
-  .app-side-left { left:2%; }
-  .app-side-right { right:2%; }
-  @media (max-width:640px){ .app-side{ display:none; } }
+    ::-webkit-scrollbar { width: 3px; }
+    ::-webkit-scrollbar-track { background: var(--surface); }
+    ::-webkit-scrollbar-thumb { background: var(--copper-light); border-radius: 2px; }
 
-  #lightbox { position:fixed; inset:0; background:rgba(20,16,13,0.92); z-index:100; display:none; align-items:center; justify-content:center; padding:24px; cursor:zoom-out; }
-  #lightbox img { max-width:90vw; max-height:88vh; border-radius:16px; box-shadow:0 30px 80px -20px rgba(0,0,0,0.6); }
-</style>
+    /* ══════════════════════════════════════════
+       BACKGROUND — warm linen texture
+    ══════════════════════════════════════════ */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background:
+        radial-gradient(ellipse 90% 55% at 50% 0%,  rgba(196,130,90,0.09) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 40% at 100% 85%, rgba(196,130,90,0.06) 0%, transparent 55%),
+        var(--bg);
+      pointer-events: none;
+    }
+    /* Fine linen grain */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.028'/%3E%3C/svg%3E");
+      pointer-events: none;
+      mix-blend-mode: multiply;
+    }
 
-<!-- ================================================
-  META PIXEL — TODO obrigatório antes de tráfego pago:
-  substituir 'SEU_PIXEL_AQUI' pelo ID real.
-================================================ -->
-<script>
-  var FB_PIXEL_ID = 'SEU_PIXEL_AQUI';
-  !function(f,b,e,v,n,t,s)
-  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-  n.queue=[];t=b.createElement(e);t.async=!0;
-  t.src=v;s=b.getElementsByTagName(e)[0];
-  s.parentNode.insertBefore(t,s)}(window, document,'script',
-  'https://connect.facebook.net/en_US/fbevents.js');
-  if (FB_PIXEL_ID && FB_PIXEL_ID !== 'SEU_PIXEL_AQUI') { fbq('init', FB_PIXEL_ID); fbq('track', 'PageView'); }
-</script>
-<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=SEU_PIXEL_AQUI&ev=PageView&noscript=1" alt=""/></noscript>
+    /* ══════════════════════════════════════════
+       WRAPPER
+    ══════════════════════════════════════════ */
+    .page-wrap {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: var(--page-max);
+      margin: 0 auto;
+      padding: 0 28px 100px;
+    }
+
+    /* ══════════════════════════════════════════
+       REVEAL
+    ══════════════════════════════════════════ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.75s var(--ease), transform 0.75s var(--ease);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ══════════════════════════════════════════
+       HERO
+    ══════════════════════════════════════════ */
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding-top: clamp(60px, 12vw, 96px);
+      padding-bottom: clamp(20px, 5vw);
+    }
+
+    /* — Avatar — */
+    .avatar-wrap {
+      position: relative;
+      width: clamp(148px, 38vw, 192px);
+      height: clamp(148px, 38vw, 192px);
+      margin-bottom: clamp(32px, 7vw, 48px);
+    }
+
+    /* Outer halo ring */
+    .avatar-wrap::before {
+      content: '';
+      position: absolute;
+      inset: -16px;
+      border-radius: 50%;
+      border: 1px solid rgba(160, 90, 48, 0.18);
+    }
+    /* Middle ring */
+    .avatar-wrap::after {
+      content: '';
+      position: absolute;
+      inset: -8px;
+      border-radius: 50%;
+      border: 1px solid rgba(160, 90, 48, 0.28);
+    }
+
+    .avatar-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+      border: 2.5px solid rgba(200, 131, 90, 0.50);
+      box-shadow:
+        0 0 0 5px rgba(250, 247, 244, 1),
+        0 12px 40px rgba(100, 60, 30, 0.13),
+        0 2px 8px  rgba(100, 60, 30, 0.08);
+    }
+
+    .avatar-fallback {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: linear-gradient(145deg, var(--surface-b) 0%, var(--surface) 100%);
+      border: 2px solid var(--border-strong);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--serif);
+      font-size: clamp(46px, 11vw, 62px);
+      font-weight: 400;
+      color: var(--copper-light);
+      box-shadow: 0 12px 40px rgba(100,60,30,0.10);
+    }
+
+    /* — Identity — */
+    .hero-name {
+      font-family: var(--serif);
+      font-size: clamp(34px, 8.5vw, 48px);
+      font-weight: 400;
+      letter-spacing: 0.015em;
+      color: var(--ink);
+      line-height: 1.05;
+      margin-bottom: 14px;
+      opacity: 0;
+      animation: heroUp 0.9s 0.15s var(--ease) forwards;
+    }
+    .hero-name em {
+      font-style: italic;
+      color: var(--copper);
+    }
+
+    .hero-credential {
+      display: block;
+      font-family: var(--sans);
+      font-size: clamp(10px, 2.4vw, 11px);
+      font-weight: 400;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      margin-bottom: 14px;
+      opacity: 0;
+      animation: heroUp 0.9s 0.3s var(--ease) forwards;
+    }
+
+    .hero-tagline {
+      font-family: var(--serif);
+      font-size: clamp(16px, 4vw, 20px);
+      font-weight: 400;
+      font-style: italic;
+      line-height: 1.55;
+      color: var(--ink-mid);
+      max-width: 340px;
+      opacity: 0;
+      animation: heroUp 0.9s 0.45s var(--ease) forwards;
+    }
+
+    @keyframes heroUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Ornamental divider */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      width: 100%;
+      margin: clamp(44px, 10vw, 44px) 0 clamp(32px, 7vw, 44px);
+      color: var(--copper-light);
+    }
+    .divider::before, .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--border-strong), transparent);
+    }
+    .divider span {
+      font-family: var(--serif);
+      font-size: 16px;
+      opacity: 0.7;
+    }
+
+    /* ══════════════════════════════════════════
+       SECTION LABEL
+    ══════════════════════════════════════════ */
+    .section-label {
+      display: block;
+      text-align: center;
+      font-family: var(--sans);
+      font-size: clamp(9px, 2vw, 10px);
+      font-weight: 500;
+      letter-spacing: 0.34em;
+      text-transform: uppercase;
+      color: var(--copper);
+      margin-bottom: clamp(24px, 5.5vw, 36px);
+      opacity: 0.8;
+    }
+
+    /* ══════════════════════════════════════════
+       PRODUCT CARDS — uniform height system
+    ══════════════════════════════════════════ */
+    .products-stack {
+      display: flex;
+      flex-direction: column;
+      gap: clamp(12px, 3vw, 16px);
+    }
+
+    .product-card {
+      display: flex;
+      position: relative;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      text-decoration: none;
+      color: var(--ink);
+      min-height: 110px;          /* uniform floor height */
+      transition: transform 0.32s var(--ease),
+                  box-shadow 0.32s var(--ease),
+                  border-color 0.32s var(--ease);
+      box-shadow: 0 2px 12px rgba(100,60,30,0.06), 0 1px 3px rgba(100,60,30,0.04);
+      will-change: transform;
+    }
+    .product-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--border-strong);
+      box-shadow: 0 8px 32px rgba(100,60,30,0.10), 0 2px 8px rgba(100,60,30,0.06);
+    }
+    .product-card:active { transform: scale(0.988); }
+
+    /* Left accent stripe */
+    .card-stripe {
+      width: 3px;
+      flex-shrink: 0;
+      background: var(--stripe-color, var(--copper-light));
+      border-radius: var(--radius) 0 0 var(--radius);
+      opacity: 0.7;
+    }
+
+    /* Card body */
+    .card-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(20px, 5vw, 26px) clamp(18px, 4.5vw, 24px);
+      /* Keep text in the left half — never overlap the image */
+      max-width: 52%;
+      z-index: 1;
+    }
+
+    .card-label {
+      font-family: var(--sans);
+      font-size: clamp(9px, 2vw, 10px);
+      font-weight: 400;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      margin-bottom: 6px;
+    }
+
+    /* Arrow positioned absolutely over the image area, near right edge, centered vertically */
+    .card-arrow {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.5);
+      background: rgba(255,255,255,0.18);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      z-index: 2;
+      transition: background 0.3s var(--ease), border-color 0.3s var(--ease), transform 0.3s var(--ease);
+    }
+    .product-card:hover .card-arrow {
+      background: var(--stripe-color, var(--copper-light));
+      border-color: rgba(255,255,255,0.25);
+      transform: translateY(-50%) translateX(3px);
+    }
+    .product-card:hover .card-arrow svg { stroke: #fff; opacity: 1; }
+    .card-arrow svg {
+      width: 15px; height: 15px;
+      stroke: rgba(255,255,255,0.75);
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: stroke 0.3s var(--ease), opacity 0.3s var(--ease);
+    }
+
+    .card-title {
+      font-family: var(--serif);
+      font-size: clamp(22px, 5.5vw, 27px);
+      font-weight: 400;
+      color: var(--ink);
+      line-height: 1.1;
+      letter-spacing: 0.01em;
+      margin-bottom: 8px;
+    }
+    .card-title em { font-style: italic; color: var(--copper); }
+
+    .card-desc {
+      font-family: var(--sans);
+      font-size: clamp(13px, 3.2vw, 14px);
+      font-weight: 300;
+      line-height: 1.65;
+      color: var(--ink-soft);
+    }
+
+    /* — Card colour themes (stripe only, card stays white) — */
+    .card--copper  { --stripe-color: #b86e3e; }
+    .card--sage    { --stripe-color: #5d7a58; }
+    .card--sand    { --stripe-color: #9a7548; }
+    .card--blush   { --stripe-color: #d6ca96; }
+
+    /* — Featured card (MelanCode) — lifted surface — */
+    .card--featured {
+      background: linear-gradient(108deg, #fdf9f6 0%, #faf3ec 100%);
+      border-color: rgba(184, 110, 62, 0.28);
+      box-shadow:
+        0 4px 20px rgba(160, 90, 48, 0.10),
+        0 1px 4px rgba(160, 90, 48, 0.08);
+    }
+    .card--featured:hover {
+      border-color: rgba(184, 110, 62, 0.42);
+      box-shadow:
+        0 10px 36px rgba(160, 90, 48, 0.14),
+        0 2px 8px rgba(160, 90, 48, 0.08);
+    }
+    .card--featured .card-stripe { opacity: 1; }
+
+    /* — Badge (MelanCode only) — */
+    .card-badge {
+      position: absolute;
+      top: 0; right: 0;
+      font-family: var(--sans);
+      font-size: 8.5px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #fff;
+      background: #7a3a10;
+      padding: 5px 13px;
+      border-radius: 0 var(--radius) 0 var(--radius);
+      z-index: 3;
+    }
+
+    /* ══════════════════════════════════════════
+       FOOTER
+    ══════════════════════════════════════════ */
+    footer {
+      margin-top: clamp(72px, 16vw, 104px);
+      padding-top: clamp(36px, 8vw, 52px);
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .footer-wordmark {
+      display: block;
+      font-family: var(--serif);
+      font-size: clamp(20px, 4.5vw, 24px);
+      font-weight: 400;
+      font-style: italic;
+      letter-spacing: 0.06em;
+      color: var(--copper);
+      margin-bottom: 32px;
+      opacity: 0.9;
+    }
+
+    .footer-line {
+      font-family: var(--sans);
+      font-size: clamp(11px, 2.6vw, 12px);
+      font-weight: 400;
+      line-height: 1.7;
+      color: var(--ink-soft);
+    }
+    .footer-line + .footer-line { margin-top: 2px; }
+
+    .footer-name-line {
+      font-family: var(--serif);
+      font-size: clamp(13px, 3.2vw, 15px);
+      font-style: italic;
+      font-weight: 400;
+      color: var(--ink-mid);
+      margin-top: 10px;
+    }
+
+    .footer-spec-line {
+      font-family: var(--sans);
+      font-size: clamp(9px, 2.2vw, 10px);
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      margin-top: 4px;
+      margin-bottom: 28px;
+    }
+
+    .footer-disclaimer {
+      font-family: var(--sans);
+      font-size: clamp(11px, 2.6vw, 12px);
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--ink-muted);
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+
+    /* ══ CARD BACKGROUND IMAGES ══ */
+    .card-img {
+      position: absolute;
+      top: 0; right: 0;
+      width: 50%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      opacity: 0.55;
+      /* Fade left → transparent, stronger fade to ensure clean split */
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.6) 30%, rgba(0,0,0,1) 65%);
+      mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.6) 30%, rgba(0,0,0,1) 65%);
+      pointer-events: none;
+      user-select: none;
+    }
+
+    /* ══ CONTACT ICONS ══ */
+    .contact-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 28px;
+      margin-top: clamp(48px, 10vw, 68px);
+    }
+    .contact-link {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: var(--ink-soft);
+      transition: color 0.28s var(--ease), transform 0.28s var(--ease);
+      text-decoration: none;
+    }
+    .contact-link:hover { color: var(--copper); transform: translateY(-3px); }
+    .contact-icon {
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--card-bg);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 2px 10px rgba(100,60,30,0.07);
+      transition: border-color 0.28s var(--ease), box-shadow 0.28s var(--ease);
+    }
+    .contact-link:hover .contact-icon {
+      border-color: var(--border-strong);
+      box-shadow: 0 6px 20px rgba(100,60,30,0.12);
+    }
+    .contact-icon svg { width: 22px; height: 22px; }
+    .contact-label {
+      font-family: var(--sans);
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    /* CTA — área do paciente (/app) */
+    .app-access {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      margin-top: 28px;
+    }
+    .app-access-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 28px;
+      border-radius: 999px;
+      background: var(--copper);
+      color: #fff;
+      text-decoration: none;
+      font-family: var(--sans);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      box-shadow: 0 8px 24px rgba(160, 90, 48, 0.28);
+      transition: transform 0.28s var(--ease), box-shadow 0.28s var(--ease), background 0.28s var(--ease);
+    }
+    .app-access-btn:hover {
+      background: var(--copper-light);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(160, 90, 48, 0.34);
+    }
+    .app-access-btn svg {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+    .app-access-hint {
+      margin: 0;
+      font-family: var(--sans);
+      font-size: 12px;
+      color: var(--ink-soft);
+      letter-spacing: 0.02em;
+    }
+
+    /* ══════════════════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════════════════ */
+    @media (max-width: 320px) {
+      .page-wrap { padding: 0 18px 80px; }
+    }
+  </style>
 </head>
-<body class="antialiased" style="background-color:#faf8f5; color:#2c2420;">
+<body>
 
-<!-- NAV -->
-<header class="site-header fixed top-0 inset-x-0 z-50">
-  <nav class="max-w-6xl mx-auto px-6 md:px-8 h-16 flex items-center justify-between" aria-label="Navegação principal">
-    <a href="#inicio" class="logo-bg tap flex flex-col justify-center" aria-label="Início">
-      <span class="logo-wordmark">Melasma</span>
-      <span class="logo-subtitle">Investigação Integrativa</span>
-    </a>
-    <div class="flex items-center gap-6">
-      <ul class="hidden md:flex items-center gap-7 text-sm font-sans font-light tracking-wide">
-        <li><a href="#consulta" class="nav-link tap inline-flex items-center transition-colors">Como Funciona</a></li>
-        <li><a href="#historias" class="nav-link tap inline-flex items-center transition-colors">Histórias</a></li>
-        <li><a href="#faq" class="nav-link tap inline-flex items-center transition-colors">Perguntas</a></li>
-      </ul>
-      <a href="#convite" class="tap inline-flex items-center gap-2 font-sans font-light text-xs uppercase tracking-widest px-5 py-2.5 rounded-lg transition-colors duration-300"
-         style="background-color:#994f20; color:#faf8f5; letter-spacing:0.14em;">Consulta</a>
-    </div>
-  </nav>
-</header>
+  <div class="page-wrap">
 
-<!-- ================================================
-  1. HERO — Continuidade
-  Missão 5: título reescrito para eliminar a
-  ambiguidade "o tratamento também falha?". Agora nomeia
-  explicitamente "tratamentos estéticos tradicionais"
-  como sujeito da pergunta — a curiosidade permanece,
-  mas sem risco de má interpretação.
-================================================ -->
-<section id="inicio" class="hero-bg texture-overlay min-h-screen flex flex-col relative overflow-hidden" style="background: linear-gradient(160deg, #2c2420 0%, #3d2e26 40%, #4a3428 70%, #994f20 100%);">
-  <div class="flex-1 flex items-center justify-center px-6 md:px-12 pt-28 pb-16 md:pt-32 md:pb-20">
-    <div id="hero-content" class="max-w-3xl mx-auto text-center fade-in">
-      <p class="section-label mb-6" style="color:#c47a4e !important;">Tratamento 100% à Distância</p>
-      <div class="terracota-rule mx-auto mb-8" style="background-color:#994f20;"></div>
-      <h2 class="font-serif text-2xl md:text-3xl font-light italic leading-relaxed mb-6" style="color:#e8ddd4;">
-        Por que o melasma volta depois que os tratamentos<br/>estéticos tradicionais parecem funcionar?
-      </h2>
-      <p class="font-sans font-light text-base md:text-lg leading-relaxed max-w-xl mx-auto mb-10" style="color:#c9b8aa; text-align:justify; text-indent:2em;">
-        Talvez você já tenha ouvido respostas diferentes para essa pergunta. Este vídeo explica por que ela continua sem resposta definitiva — e por que a origem pode nunca ter sido apenas a pele.
-      </p>
-      <div class="hero-video-wrap mx-auto mb-6" style="max-width:600px; width:100%;">
-        <p class="section-label mb-4" style="color:#c47a4e !important;">Assista antes de continuar</p>
-        <div class="hero-video-frame" style="position:relative; width:100%; padding-bottom:56.25%; border-radius:14px; overflow:hidden; border:1px solid rgba(196,122,78,0.35); box-shadow:0 24px 60px -20px rgba(0,0,0,0.6); background-color:#1a1512;">
-          <iframe id="hero-video" src="https://www.youtube-nocookie.com/embed/SEU_VIDEO_ID?enablejsapi=1&rel=0&modestbranding=1&playsinline=1" title="Método Matriz do Melasma — Introdução" style="position:absolute; inset:0; width:100%; height:100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+    <!-- ══ HEADER ══════════════════════════════ -->
+    <header>
+      <section class="hero" aria-label="Apresentação de Nicole Carvalho">
+
+        <div class="avatar-wrap">
+          <img
+            class="avatar-img"
+            src="fotos/Minhafoto.jpeg"
+            alt="Nicole Carvalho — Biomédica Esteta especialista em estética integrativa e avançada"
+            width="192" height="192"
+          />
+          <div class="avatar-fallback" style="display:none;" aria-hidden="true">NC</div>
         </div>
-      </div>
-    </div>
-  </div>
-  <div class="flex justify-center pb-8 animate-bounce">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c9b8aa" stroke-width="1.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
-  </div>
-</section>
 
+        <h1 class="hero-name"><em>Nicole</em> Carvalho</h1>
+        <span class="hero-credential">Biomédica  &nbsp;·&nbsp; CRBM 26343</span>
+        <p class="hero-tagline">Estética Integrativa e Regenerativa</p>
 
-<!-- ================================================
-  2. RECONHECIMENTO — missão única: identificação
-  Missão 9: reconhecimento real, não agitação. Frases
-  factuais, sem dramatização, sem cadência de copy de
-  resposta direta. Nenhuma exploração da dor.
-================================================ -->
-<section id="reconhecimento" class="py-16 md:py-20 px-6 md:px-12" style="background-color:#f2ece4;">
-  <div class="max-w-2xl mx-auto text-center fade-in">
-    <p class="section-label mb-6">Antes de Continuar</p>
-    <h2 class="font-serif text-3xl md:text-4xl font-light leading-tight mb-6" style="color:#2c2420;">
-      Talvez você reconheça esse caminho.
-    </h2>
-    <p class="font-sans font-light text-base md:text-lg leading-relaxed mb-10" style="color:#8c8177;">
-      Tratamentos que funcionaram por um tempo. Manchas que voltaram, às vezes em um tom mais escuro. Explicações que nunca pareciam se encaixar completamente com o que você vivia.
-    </p>
-    <p class="font-serif text-xl md:text-2xl italic font-light" style="color:#2c2420; border-left:2px solid #994f20; padding-left:1.5rem; display:inline-block; text-align:left;">
-      "Quanto dinheiro já gastei tentando me livrar disso... e continuo sem resposta."
-    </p>
-    <p class="font-sans font-light text-sm mt-8" style="color:#8c8177;">
-      Reconhecer isso não é reviver a frustração. É entender, finalmente, por que aconteceu.
-    </p>
-  </div>
-</section>
+      </section>
+    </header>
 
+    <!-- ══ MAIN ════════════════════════════════ -->
+    <main>
+      <section class="reveal" aria-labelledby="products-heading">
 
-<!-- ================================================
-  3. O MELASMA COMO SISTEMA — missão única: educar
-  Missão 7: seção que volta, reescrita para funcionar
-  de forma autossuficiente (nem toda visitante assiste
-  ao vídeo inteiro). Complementa o vídeo com densidade
-  mais clínica — não repete a narrativa, aprofunda o
-  vocabulário técnico por trás dela.
-================================================ -->
-<section id="sistema" class="py-20 md:py-28 px-6 md:px-12" style="background-color:#faf8f5;">
-  <div class="max-w-3xl mx-auto">
-    <div class="fade-in mb-14">
-      <p class="section-label mb-5">A Base Científica</p>
-      <h2 class="font-serif text-4xl md:text-5xl font-light leading-tight mb-6" style="color:#2c2420;">
-        O melasma não é um problema<br/>de pele. É um problema de sistema.
-      </h2>
-      <div class="terracota-rule mb-8" style="background-color:#994f20;"></div>
-      <p class="font-sans font-light leading-relaxed text-base md:text-lg" style="color:#8c8177;">
-        O melasma é reconhecido como uma <span style="color:#994f20; font-weight:500;">condição inflamatória crônica</span>, sustentada por fatores que vão muito além da exposição solar: sensibilidade hormonal, inflamação de baixo grau, estresse oxidativo e, em muitos casos, desequilíbrios hepáticos ou intestinais que alimentam a produção excessiva de melanina. É essa raiz sistêmica — não a mancha em si — que determina se um tratamento se sustenta ou perde efeito com o tempo.
-      </p>
-    </div>
+        <div class="divider" aria-hidden="true"><span>✦</span></div>
+        <span class="section-label" id="products-heading">Protocolos</span>
 
-    <div class="fade-in space-y-0" style="border-top:1px solid rgba(201,184,170,0.3);">
-      <div class="accordion-item" style="border-bottom:1px solid rgba(201,184,170,0.3);">
-        <button class="accordion-btn w-full flex items-center justify-between py-5 text-left gap-4" aria-expanded="false" style="background:transparent; border:none; cursor:pointer;">
-          <span class="font-sans font-light text-base md:text-lg" style="color:#2c2420;">Por que tratar apenas a mancha costuma trazer resultado temporário?</span>
-          <span class="accordion-icon flex-shrink-0 text-2xl font-light leading-none" style="color:#994f20; line-height:1;">+</span>
-        </button>
-        <div class="accordion-content"><div class="prose-body pb-6 font-sans font-light text-base leading-relaxed" style="color:#8c8177;">
-          <p>Clareadores agem sobre o pigmento já formado, não sobre a hiperativação dos melanócitos que continua produzindo mais pigmento. Enquanto esse mecanismo permanece ativo, o resultado tende a durar apenas enquanto o produto é usado.</p>
-        </div></div>
-      </div>
-      <div class="accordion-item" style="border-bottom:1px solid rgba(201,184,170,0.3);">
-        <button class="accordion-btn w-full flex items-center justify-between py-5 text-left gap-4" aria-expanded="false" style="background:transparent; border:none; cursor:pointer;">
-          <span class="font-sans font-light text-base md:text-lg" style="color:#2c2420;">Por que ácidos e lasers podem piorar o quadro?</span>
-          <span class="accordion-icon flex-shrink-0 text-2xl font-light leading-none" style="color:#994f20; line-height:1;">+</span>
-        </button>
-        <div class="accordion-content"><div class="prose-body pb-6 font-sans font-light text-base leading-relaxed" style="color:#8c8177;">
-          <p>Usados sobre uma inflamação ainda ativa, podem funcionar como uma nova agressão. A resposta natural da pele à agressão é produzir mais pigmento — o que explica por que, para algumas pacientes, o melasma piora exatamente depois de um procedimento agressivo.</p>
-        </div></div>
-      </div>
-      <div class="accordion-item" style="border-bottom:1px solid rgba(201,184,170,0.3);">
-        <button class="accordion-btn w-full flex items-center justify-between py-5 text-left gap-4" aria-expanded="false" style="background:transparent; border:none; cursor:pointer;">
-          <span class="font-sans font-light text-base md:text-lg" style="color:#2c2420;">Existe cura, ou apenas controle?</span>
-          <span class="accordion-icon flex-shrink-0 text-2xl font-light leading-none" style="color:#994f20; line-height:1;">+</span>
-        </button>
-        <div class="accordion-content"><div class="prose-body pb-6 font-sans font-light text-base leading-relaxed" style="color:#8c8177;">
-          <p>O melasma não tem cura — tem controle. Quando o terreno biológico que sustenta a inflamação é investigado e tratado, a tendência de produção de pigmento diminui e o controle se torna consideravelmente mais estável e duradouro.</p>
-        </div></div>
-      </div>
-    </div>
-  </div>
-</section>
+        <div class="products-stack" role="list">
 
+          <!-- MelanCode — Produto Principal -->
+          <a
+            class="product-card card--copper card--featured reveal"
+            href="https://nicolecarvalhoestetica.com/melancode"
+            aria-label="MelanCode — Protocolo integrativo para tratamento do melasma"
+            role="listitem"
+          >
+            <span class="card-badge">Produto Principal</span>
+            <div class="card-stripe" aria-hidden="true"></div>
+            <img class="card-img" src="fotos/FOTO MELASMA.jpg" alt="" aria-hidden="true" />
+            <div class="card-body">
+              <span class="card-label">Tratamento Integrativo</span>
+              <div class="card-arrow" aria-hidden="true"> 
+                <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </div>
+              <h2 class="card-title"><em>Melasma</em></h2>
+              <p class="card-desc">Tratando seu melasma de dentro para fora, pela raiz.</p>
+            </div>
+          </a>
 
-<!-- ================================================
-  4. COMO FUNCIONA A CONSULTA — mantida (Missão 8)
-  Missão 6: "avaliação" substituída por "consulta".
-================================================ -->
-<section id="consulta" class="py-20 md:py-28 px-6 md:px-12" style="background-color:#f2ece4;">
-  <div class="max-w-4xl mx-auto fade-in">
-    <p class="section-label mb-5">O Primeiro Passo</p>
-    <h2 class="font-serif text-4xl md:text-5xl font-light leading-tight mb-6" style="color:#2c2420;">Como funciona a consulta</h2>
-    <div class="terracota-rule mb-8" style="background-color:#994f20;"></div>
-    <p class="font-sans font-light leading-relaxed text-base md:text-lg max-w-2xl" style="color:#8c8177;">
-      A consulta é uma conversa ao vivo, comigo, 100% à distância — não um formulário automático. É o momento em que a sua história passa a ser lida como um sistema, não como uma lista de sintomas.
-    </p>
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mt-14">
-      <div><p class="font-serif text-3xl italic mb-3" style="color:#c47a4e;">01</p>
-        <h3 class="font-sans text-sm uppercase tracking-widest mb-3" style="color:#2c2420; letter-spacing:0.08em;">Conversa inicial</h3>
-        <p class="font-sans font-light text-sm leading-relaxed" style="color:#8c8177;">Você me conta a sua história: quando começou, o que já tentou, o que percebeu ao longo do caminho.</p></div>
-      <div><p class="font-serif text-3xl italic mb-3" style="color:#c47a4e;">02</p>
-        <h3 class="font-sans text-sm uppercase tracking-widest mb-3" style="color:#2c2420; letter-spacing:0.08em;">Mapeamento biológico</h3>
-        <p class="font-sans font-light text-sm leading-relaxed" style="color:#8c8177;">Analisamos juntas os sinais do seu organismo — sintomas, rotina e, quando fizer sentido, exames que você já tenha ou venha a realizar.</p></div>
-      <div><p class="font-serif text-3xl italic mb-3" style="color:#c47a4e;">03</p>
-        <h3 class="font-sans text-sm uppercase tracking-widest mb-3" style="color:#2c2420; letter-spacing:0.08em;">Leitura sistêmica</h3>
-        <p class="font-sans font-light text-sm leading-relaxed" style="color:#8c8177;">Eu conecto essas informações para entender quais sistemas podem estar sustentando o processo no seu caso específico.</p></div>
-      <div><p class="font-serif text-3xl italic mb-3" style="color:#c47a4e;">04</p>
-        <h3 class="font-sans text-sm uppercase tracking-widest mb-3" style="color:#2c2420; letter-spacing:0.08em;">Definição do caminho</h3>
-        <p class="font-sans font-light text-sm leading-relaxed" style="color:#8c8177;">Só então decidimos, juntas, o que faz sentido: ajustes de rotina, aprofundamento de investigação, ou um plano completo.</p></div>
-    </div>
-  </div>
-</section>
+          <!-- Desinflamação -->
+          <a
+            class="product-card card--sage reveal"
+            href="https://nicolecarvalhoestetica.com/desinflamação"
+            aria-label="Desinflamação — Protocolo para redução da inflamação sistêmica"
+            role="listitem"
+          >
+            <div class="card-stripe" aria-hidden="true"></div>
+            <img class="card-img" src="fotos/FDOTO DESINFLAMAÇÃO.jpg" alt="" aria-hidden="true" />
+            <div class="card-body">
+              <span class="card-label">PROTOCOLO</span>
+              <div class="card-arrow" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </div>
+              <h2 class="card-title"><em>Desinflamação</em></h2>
+              <p class="card-desc">90 dias para resgatar a sua saúde e transformar a sua pele.</p>
+            </div>
+          </a>
 
+          <!-- Estrias -->
+          <a
+            class="product-card card--sand reveal"
+            href="https://nicolecarvalhoestetica.com/estrias"
+            aria-label="Estrias — Protocolo regenerativo para melhora da pele com estrias"
+            role="listitem"
+          >
+            <div class="card-stripe" aria-hidden="true"></div>
+            <img class="card-img" src="fotos/FOTO ESTRIAS.jpg" alt="" aria-hidden="true" />
+            <div class="card-body">
+              <span class="card-label">INDÉRMIS</span>
+              <div class="card-arrow" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </div>
+              <h2 class="card-title"><em>Estrias</em></h2>
+              <p class="card-desc">Tratamento Regenerativo e Integrativo de estrias.</p>
+            </div>
+          </a>
 
-<!-- ================================================
-  5. COMO NASCE O PLANO — missão única: materializar
-  o raciocínio antes de materializar o objeto (seção
-  seguinte). Sequência deliberada: abstrato → concreto.
-================================================ -->
-<section id="plano" class="py-20 md:py-28 px-6 md:px-12" style="background-color:#faf8f5;">
-  <div class="max-w-3xl mx-auto fade-in">
-    <p class="section-label mb-5">Depois da Investigação</p>
-    <h2 class="font-serif text-4xl md:text-5xl font-light leading-tight mb-6" style="color:#2c2420;">O plano nasce da sua investigação —<br/>não de uma prateleira.</h2>
-    <div class="terracota-rule mb-10" style="background-color:#994f20;"></div>
-    <p class="font-sans font-light leading-relaxed text-base md:text-lg mb-10" style="color:#8c8177;">
-      Dependendo do que a consulta revelar, o seu cuidado pode reunir diferentes frentes. Nenhuma delas é padrão. Todas são selecionadas de acordo com o que o seu organismo mostrou.
-    </p>
-    <ul class="space-y-5 font-sans font-light text-base leading-relaxed" style="color:#8c8177;">
-      <li class="flex items-start gap-3"><span class="mt-1 flex-shrink-0" style="color:#994f20;">—</span><span><strong class="font-medium" style="color:#2c2420;">Reequilíbrio interno</strong> — suporte direcionado às raízes identificadas na sua consulta, quando fizer sentido para o seu caso.</span></li>
-      <li class="flex items-start gap-3"><span class="mt-1 flex-shrink-0" style="color:#994f20;">—</span><span><strong class="font-medium" style="color:#2c2420;">Suporte digestivo e hepático</strong> — quando a investigação apontar essa direção como relevante.</span></li>
-      <li class="flex items-start gap-3"><span class="mt-1 flex-shrink-0" style="color:#994f20;">—</span><span><strong class="font-medium" style="color:#2c2420;">Recuperação da barreira da pele</strong> — cuidado suave, sem agressão, focado em evitar o efeito rebote.</span></li>
-      <li class="flex items-start gap-3"><span class="mt-1 flex-shrink-0" style="color:#994f20;">—</span><span><strong class="font-medium" style="color:#2c2420;">Reeducação de hábitos</strong> — ajustes de rotina, sono, fotoproteção e alimentação, conforme o que a investigação revelar.</span></li>
-      <li class="flex items-start gap-3"><span class="mt-1 flex-shrink-0" style="color:#994f20;">—</span><span><strong class="font-medium" style="color:#2c2420;">Refinamento estético pontual</strong> — apenas ao final do processo, e apenas se ainda fizer sentido para o seu caso.</span></li>
-    </ul>
-    <p class="font-serif text-xl md:text-2xl italic font-light mt-14 max-w-xl" style="color:#2c2420;">
-      O que muda de paciente para paciente não é o cuidado. É o caminho que a levou até ali.
-    </p>
-  </div>
-</section>
+          <!-- ProSkin — sem badge -->
+          <a
+            class="product-card card--blush reveal"
+            href="https://nicolecarvalhoestetica.com/proskin"
+            aria-label="ProSkin — E-book exclusivo para prevenção de estrias na gestação"
+            role="listitem"
+          >
+            <div class="card-stripe" aria-hidden="true"></div>
+            <img class="card-img" src="fotos/ebook.jpeg" alt="" aria-hidden="true" />
+            <div class="card-body">
+              <span class="card-label">E-book EXCLUSIVO</span>
+              <div class="card-arrow" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </div>
+              <h2 class="card-title"><em>ProSkin</em></h2>
+              <p class="card-desc">Guia prático para prevenção de estrias durante a gestação.</p>
+            </div>
+          </a>
 
-
-<!-- ================================================
-  6. A CAIXA — id="caixa" preservado, com a animação
-  de flutuação original. Reposicionada logo após "Como
-  Nasce o Plano": o objeto materializa imediatamente o
-  raciocínio que acabou de ser explicado (Missão 2 e 3).
-  Nunca representa protocolo fixo — é a consequência da
-  investigação, com o prazo de ~90 dias explícito.
-================================================ -->
-<section class="py-20 md:py-28 px-6 md:px-12" style="background-color:#2c2420;">
-  <div class="max-w-5xl mx-auto fade-in">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-14 items-center">
-      <div class="flex justify-center order-2 md:order-1">
-        <img id="caixa" src="melancode/imagens/caixa-oficial.png" alt="Caixa personalizada enviada após a consulta e a investigação" width="420" height="420" style="max-width:340px; width:100%; filter:drop-shadow(0 30px 45px rgba(0,0,0,0.45));"/>
-        <!-- ATENÇÃO: 'caixa-oficial.png' é um placeholder. Substitua pelo
-             caminho real da foto oficial da caixa antes de publicar. -->
-      </div>
-      <div class="order-1 md:order-2">
-        <p class="section-label mb-5" style="color:#c47a4e !important;">Depois da Consulta</p>
-        <h2 class="font-serif text-3xl md:text-4xl font-light leading-tight mb-6" style="color:#faf8f5;">O que chega até você não é um kit.<br/>É a consequência da sua investigação.</h2>
-        <p class="font-sans font-light text-base leading-relaxed mb-6" style="color:rgba(201,184,170,0.85);">
-          Depois da consulta e da investigação completa, você recebe em casa um plano pensado para o seu caso. Dependendo do que for identificado, isso pode incluir suplementação personalizada, materiais de apoio e orientações específicas — organizados para acompanhar você durante aproximadamente 90 dias.
-        </p>
-        <p class="font-sans font-light text-base leading-relaxed" style="color:rgba(201,184,170,0.85);">
-          Nenhuma caixa é igual à outra. Ela representa o que a sua investigação revelou — nunca um kit padrão.
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<!-- ================================================
-  7. A JORNADA (90 dias) — missão única: profundidade
-  temporal. Estrutura em fases, sem prometer resultado
-  em nenhuma delas.
-================================================ -->
-<section id="jornada" class="py-16 md:py-20 px-6 md:px-12" style="background-color:#faf8f5;">
-  <div class="max-w-3xl mx-auto fade-in">
-    <p class="section-label mb-5">A Jornada</p>
-    <h2 class="font-serif text-3xl md:text-4xl font-light leading-tight mb-4" style="color:#2c2420;">Um processo de aproximadamente 90 dias.</h2>
-    <p class="font-sans font-light text-base leading-relaxed mb-10 max-w-xl" style="color:#8c8177;">
-      Não é um prazo arbitrário — é, em geral, o tempo que um organismo leva para responder de forma mais estável às mudanças identificadas na investigação.
-    </p>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      <div style="border-top:2px solid #994f20; padding-top:18px;"><p class="font-sans text-xs uppercase tracking-widest mb-2" style="color:#994f20;">Fase inicial</p>
-        <p class="font-sans font-light text-sm leading-relaxed" style="color:#8c8177;">O organismo começa a responder ao que foi identificado na investigação. É quando os primeiros ajustes se estabilizam.</p></div>
-      <div style="border-top:2px solid #994f20; padding-top:18px;"><p class="font-sans text-xs uppercase tracking-widest mb-2" style="color:#994f20;">Reavaliação</p>
-        <p class="font-sans font-light text-sm leading-relaxed" style="color:#8c8177;">Revisamos juntas o que está acontecendo e ajustamos o que for necessário — o plano acompanha a sua evolução, não o contrário.</p></div>
-      <div style="border-top:2px solid #994f20; padding-top:18px;"><p class="font-sans text-xs uppercase tracking-widest mb-2" style="color:#994f20;">Fase final</p>
-        <p class="font-sans font-light text-sm leading-relaxed" style="color:#8c8177;">Quando fizer sentido, um refinamento pontual encerra o processo — nunca como ponto de partida.</p></div>
-    </div>
-  </div>
-</section>
-
-
-<!-- ================================================
-  8. ACOMPANHAMENTO + APLICATIVO — missão única:
-  materializar presença através de uma ferramenta real.
-  Avaliado na Missão 4: aumenta percepção de valor (mostra
-  organização e tecnologia proprietária), reforça
-  posicionamento premium (poucas clínicas oferecem isso) e
-  reduz uma objeção concreta ("vou esquecer/abandonar o
-  tratamento?") sem precisar declarar isso — a própria
-  existência da ferramenta comunica sofisticação (Missão 13).
-================================================ -->
-<section id="acompanhamento" class="py-20 md:py-28 px-6 md:px-12" style="background-color:#f2ece4;">
-  <div class="max-w-4xl mx-auto fade-in">
-    <div class="text-center mb-16">
-      <p class="section-label mb-5">Presença</p>
-      <h2 class="font-serif text-4xl md:text-5xl font-light leading-tight mb-5" style="color:#2c2420;">Você não segue o plano sozinha.</h2>
-      <p class="font-sans font-light max-w-xl mx-auto text-base leading-relaxed" style="color:#8c8177;">
-        Além da consulta e do canal direto comigo, você tem acesso ao aplicativo exclusivo da clínica — pensado para manter sua rotina organizada, sem esforço extra. Ele lembra os horários, registra cada etapa e mostra a sua evolução ao longo do processo.
-      </p>
-    </div>
-
-    <div class="relative flex items-center justify-center mb-8" style="height:420px;">
-      <img class="app-shot app-side app-side-left" src="melancode/imagens/app-lembretes.png" alt="Tela do aplicativo mostrando lembretes de horários" data-full="melancode/imagens/app-lembretes.png" role="button" tabindex="0" aria-label="Ampliar imagem: lembretes"/>
-      <img class="app-shot app-center" src="melancode/imagens/app-principal.png" alt="Tela principal do aplicativo com o acompanhamento do tratamento" data-full="melancode/imagens/app-principal.png" role="button" tabindex="0" aria-label="Ampliar imagem: tela principal"/>
-      <img class="app-shot app-side app-side-right" src="melancode/imagens/app-progresso.png" alt="Tela do aplicativo mostrando o progresso do tratamento" data-full="melancode/imagens/app-progresso.png" role="button" tabindex="0" aria-label="Ampliar imagem: progresso"/>
-    </div>
-
-    <p class="text-center font-sans font-light text-sm" style="color:#8c8177;">
-      Menos esquecimento. Mais consistência. O mesmo cuidado que existe na consulta, presente também no seu dia a dia.
-    </p>
-  </div>
-</section>
-
-<div id="lightbox" aria-hidden="true"><img id="lightbox-img" src="" alt=""/></div>
-
-
-<!-- ================================================
-  9. QUEM SOU EU — autoridade implícita
-  Raciocínio primeiro, credencial por último e discreta.
-================================================ -->
-<section id="confianca" class="py-20 md:py-28 px-6 md:px-12" style="background-color:#faf8f5;">
-  <div class="max-w-5xl mx-auto">
-    <div class="flex flex-col md:flex-row gap-12 md:gap-16 items-center fade-in">
-      <div class="flex-shrink-0 w-full md:w-80">
-        <div class="w-full md:w-80 overflow-hidden" style="height:500px; border-radius:12px; background-color:rgba(153,79,32,0.1);">
-          <img src="melancode/imagens/Minhafoto.jpeg" alt="Nicole Carvalho, especialista responsável pela investigação" width="746" height="1016" style="width:100%; height:100%; object-fit:cover; object-position:center top; display:block;"/>
         </div>
-      </div>
-      <div class="flex-1">
-        <p class="section-label mb-5">Por Trás da Investigação</p>
-        <h2 class="font-serif text-3xl md:text-4xl font-light leading-tight mb-6" style="color:#2c2420;">Nicole Carvalho</h2>
-        <div class="terracota-rule mb-8" style="background-color:#994f20;"></div>
-        <div class="prose-body space-y-5 font-sans font-light leading-relaxed text-base md:text-[17px]" style="color:#8c8177;">
-          <p>Durante muito tempo, eu também procurei respostas olhando principalmente para a pele. Mas, quanto mais eu estudava, mais percebia que perguntas importantes continuavam sem resposta: por que mulheres com manchas praticamente iguais evoluíam de formas tão diferentes?</p>
-          <p>Foi isso que me fez deixar de procurar apenas procedimentos — e passar a procurar conexões entre os diferentes sistemas do organismo e a saúde da pele. Hoje, antes de pensar em qualquer estratégia, eu procuro entender a história daquela paciente.</p>
-          <p class="font-serif text-xl italic font-light no-indent" style="color:#2c2420; text-indent:0; text-align:left;">O meu maior resultado não é o antes e depois na foto. É quando a mulher me diz que voltou a sair sem maquiagem.</p>
-        </div>
-        <p class="font-sans text-xs tracking-widest uppercase mt-8 pt-6" style="color:#8c8177; letter-spacing:0.16em; border-top:1px solid rgba(201,184,170,0.3);">Biomédica (UFJ) · Estética Integrativa · CRBM 26343</p>
-      </div>
-    </div>
-  </div>
-</section>
+      </section>
 
+      <!-- CONTACT -->
+      <div class="contact-row reveal" aria-label="Redes sociais e contato">
 
-<!-- ================================================
-  10. HISTÓRIAS — provar o mecanismo
-================================================ -->
-<section id="historias" class="py-20 md:py-28 px-6 md:px-12" style="background-color:#2c2420;">
-  <div class="max-w-5xl mx-auto fade-in">
-    <div class="text-center mb-12">
-      <p class="section-label mb-5" style="color:#c47a4e !important;">Histórias, Não Fórmulas</p>
-      <h2 class="font-serif text-4xl md:text-5xl font-light leading-tight mb-5" style="color:#faf8f5;">Três mulheres. Manchas parecidas.<br/>Três biologias diferentes.</h2>
-      <p class="font-sans font-light max-w-xl mx-auto text-base leading-relaxed" style="color:rgba(201,184,170,0.8); text-align:justify; text-indent:2em;">A pele conta apenas parte da história. Foi investigando o que estava por trás dela que cada um desses casos encontrou um caminho diferente.</p>
-    </div>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-      <div class="space-y-3"><div class="flex gap-3"><div class="ba-card flex-1 flex items-center justify-center" style="background-color:rgba(232,221,212,0.15);">
-        <img src="melancode/imagens/provasocial1.jpg" alt="Caso acompanhado com investigação de contexto hormonal" width="746" height="1016" style="width:100%; height:100%; object-fit:cover; object-position:center top; display:block;"/></div></div>
-        <p class="text-xs tracking-widest text-center uppercase font-sans" style="color:rgba(201,184,170,0.6);">Um processo mais ligado ao equilíbrio hormonal</p></div>
-      <div class="space-y-3"><div class="flex gap-3"><div class="ba-card flex-1 flex items-center justify-center" style="background-color:rgba(232,221,212,0.15);">
-        <img src="melancode/imagens/provasocial2.jpg" alt="Caso acompanhado com investigação de saúde intestinal" width="746" height="1016" style="width:100%; height:100%; object-fit:cover; object-position:center top; display:block;"/></div></div>
-        <p class="text-xs tracking-widest text-center uppercase font-sans" style="color:rgba(201,184,170,0.6);">Um intestino que precisava ser tratado antes da pele</p></div>
-      <div class="space-y-3"><div class="flex gap-3"><div class="ba-card flex-1 flex items-center justify-center" style="background-color:rgba(232,221,212,0.15);">
-        <img src="melancode/imagens/provasocial3.jpg" alt="Caso acompanhado com investigação de estresse fisiológico" width="746" height="1016" style="width:100%; height:100%; object-fit:cover; object-position:center top; display:block;"/></div></div>
-        <p class="text-xs tracking-widest text-center uppercase font-sans" style="color:rgba(201,184,170,0.6);">Um padrão de estresse fisiológico sustentando a inflamação</p></div>
-    </div>
-    <p class="text-center text-xs tracking-wider font-sans font-light" style="color:rgba(201,184,170,0.5);">Resultados individuais. Cada evolução é consequência da investigação — nunca o ponto de partida dela.</p>
-  </div>
-</section>
+        <a class="contact-link" href="https://www.instagram.com/dranicolecarvalho.estetica?igsh=aHpjNjdsNTl6M3F3&utm_source=qr" target="_blank" rel="noopener" aria-label="Instagram de Nicole Carvalho">
+          <div class="contact-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+              <circle cx="12" cy="12" r="4"/>
+              <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"/>
+            </svg>
+          </div>
+          <span class="contact-label">Instagram</span>
+        </a>
 
+        <a class="contact-link" href="https://wa.me/message/SBPULBCTHU4VC1" target="_blank" rel="noopener" aria-label="WhatsApp de Nicole Carvalho">
+          <div class="contact-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+          </div>
+          <span class="contact-label">WhatsApp</span>
+        </a>
 
-<!-- ================================================
-  11. PERTENCIMENTO — identidade, versão silenciosa
-================================================ -->
-<section id="pertencimento" class="py-16 md:py-20 px-6 md:px-12" style="background-color:#f2ece4;">
-  <div class="max-w-3xl mx-auto fade-in">
-    <p class="section-label mb-5 text-center">Antes do Convite</p>
-    <h2 class="font-serif text-3xl md:text-4xl font-light leading-tight mb-12 text-center" style="color:#2c2420;">Para quem essa investigação faz sentido.</h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-14">
-      <div><p class="font-sans text-xs uppercase tracking-widest mb-4" style="color:#8c8177; letter-spacing:0.1em;">Talvez ainda não seja o caminho, se...</p>
-        <p class="font-serif text-lg italic font-light leading-relaxed" style="color:#8c8177;">Você procura uma resposta imediata para uma ocasião específica. Ou acredita que existe um único procedimento capaz de resolver todos os casos.</p></div>
-      <div><p class="font-sans text-xs uppercase tracking-widest mb-4" style="color:#994f20; letter-spacing:0.1em;">Faz sentido, se...</p>
-        <p class="font-serif text-lg italic font-light leading-relaxed" style="color:#2c2420;">Você já percebeu que repetir o mesmo caminho provavelmente leva ao mesmo resultado — e está pronta para investigar a raiz, mesmo que isso exija tempo.</p></div>
-    </div>
-  </div>
-</section>
-
-
-<!-- ================================================
-  12. FAQ — objeções logísticas e de confiança
-  Missão 6: "avaliação" → "consulta".
-================================================ -->
-<section id="faq" class="py-20 md:py-28 px-6 md:px-12" style="background-color:#faf8f5;">
-  <div class="max-w-3xl mx-auto">
-    <div class="fade-in mb-12 text-center">
-      <p class="section-label mb-5">Antes de Decidir</p>
-      <h2 class="font-serif text-4xl md:text-5xl font-light leading-tight" style="color:#2c2420;">Perguntas Frequentes</h2>
-    </div>
-    <div class="fade-in space-y-0" style="border-top:1px solid rgba(201,184,170,0.3);">
-
-      <div class="accordion-item" style="border-bottom:1px solid rgba(201,184,170,0.3);">
-        <button class="accordion-btn w-full flex items-center justify-between py-5 text-left gap-4" aria-expanded="false" style="background:transparent; border:none; cursor:pointer;">
-          <span class="font-sans font-light text-base md:text-lg" style="color:#2c2420;">Vou precisar fazer exames antes da consulta?</span>
-          <span class="accordion-icon flex-shrink-0 text-2xl font-light leading-none" style="color:#994f20; line-height:1;">+</span></button>
-        <div class="accordion-content"><div class="prose-body pb-6 font-sans font-light text-base leading-relaxed" style="color:#8c8177;">
-          <p>Não necessariamente. A consulta começa pela sua história e pelos sinais que já existem. Exames complementares só entram quando fizerem sentido dentro da investigação — nunca como exigência de entrada.</p></div></div>
       </div>
 
-      <div class="accordion-item" style="border-bottom:1px solid rgba(201,184,170,0.3);">
-        <button class="accordion-btn w-full flex items-center justify-between py-5 text-left gap-4" aria-expanded="false" style="background:transparent; border:none; cursor:pointer;">
-          <span class="font-sans font-light text-base md:text-lg" style="color:#2c2420;">Funciona mesmo estando longe? Moro em outra cidade ou país.</span>
-          <span class="accordion-icon flex-shrink-0 text-2xl font-light leading-none" style="color:#994f20; line-height:1;">+</span></button>
-        <div class="accordion-content"><div class="prose-body pb-6 font-sans font-light text-base leading-relaxed" style="color:#8c8177;">
-          <p>Sim. Todo o processo — consulta, acompanhamento e envio — foi desenhado para funcionar 100% à distância, com o mesmo nível de atenção de um atendimento presencial.</p></div></div>
+      <div class="app-access reveal">
+        <a class="app-access-btn" href="/app/" aria-label="Abrir área do paciente — acompanhamento do tratamento">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="5" y="2" width="14" height="20" rx="2"/>
+            <path d="M12 18h.01"/>
+          </svg>
+          Área do paciente
+        </a>
+        <p class="app-access-hint">Acompanhe seu protocolo</p>
       </div>
+    </main>
 
-      <div class="accordion-item" style="border-bottom:1px solid rgba(201,184,170,0.3);">
-        <button class="accordion-btn w-full flex items-center justify-between py-5 text-left gap-4" aria-expanded="false" style="background:transparent; border:none; cursor:pointer;">
-          <span class="font-sans font-light text-base md:text-lg" style="color:#2c2420;">Isso substitui o acompanhamento com o meu médico de rotina?</span>
-          <span class="accordion-icon flex-shrink-0 text-2xl font-light leading-none" style="color:#994f20; line-height:1;">+</span></button>
-        <div class="accordion-content"><div class="prose-body pb-6 font-sans font-light text-base leading-relaxed" style="color:#8c8177;">
-          <p>Não. Este é um cuidado especializado em melasma, focado na investigação da raiz do quadro. Ele trabalha em conjunto com o seu acompanhamento médico geral, não no lugar dele.</p></div></div>
-      </div>
+    <!-- ══ FOOTER ══════════════════════════════ -->
+    <footer class="reveal" aria-label="Informações legais e institucionais">
+      <span class="footer-wordmark">Nicole Carvalho</span>
 
-      <div class="accordion-item" style="border-bottom:1px solid rgba(201,184,170,0.3);">
-        <button class="accordion-btn w-full flex items-center justify-between py-5 text-left gap-4" aria-expanded="false" style="background:transparent; border:none; cursor:pointer;">
-          <span class="font-sans font-light text-base md:text-lg" style="color:#2c2420;">Quanto tempo até eu perceber alguma mudança?</span>
-          <span class="accordion-icon flex-shrink-0 text-2xl font-light leading-none" style="color:#994f20; line-height:1;">+</span></button>
-        <div class="accordion-content"><div class="prose-body pb-6 font-sans font-light text-base leading-relaxed" style="color:#8c8177;">
-          <p>Varia de caso para caso — e é exatamente por isso que a investigação vem antes de qualquer estimativa. Ao longo dos 90 dias, existem momentos de reavaliação para acompanhar juntas essa evolução.</p></div></div>
-      </div>
+      <p class="footer-line">CNPJ: 610.960.840/0001-01</p>
+      <p class="footer-line">© 2026 · Todos os direitos reservados.</p>
+      <p class="footer-name-line">Nicole Carvalho · Biomédica · CRBM 26343</p>
+      <p class="footer-spec-line">Estética Integrativa &amp; Regenerativa</p>
 
-      <div class="accordion-item" style="border-bottom:1px solid rgba(201,184,170,0.3);">
-        <button class="accordion-btn w-full flex items-center justify-between py-5 text-left gap-4" aria-expanded="false" style="background:transparent; border:none; cursor:pointer;">
-          <span class="font-sans font-light text-base md:text-lg" style="color:#2c2420;">Por que não há um valor fixo divulgado na página?</span>
-          <span class="accordion-icon flex-shrink-0 text-2xl font-light leading-none" style="color:#994f20; line-height:1;">+</span></button>
-        <div class="accordion-content"><div class="prose-body pb-6 font-sans font-light text-base leading-relaxed" style="color:#8c8177;">
-          <p>Pelo mesmo motivo pelo qual não existe um plano fixo: o investimento depende do que a sua consulta revelar. O valor é apresentado com clareza durante a própria consulta, já direcionado ao que faz sentido para o seu caso.</p></div></div>
-      </div>
-
-      <div class="accordion-item" style="border-bottom:1px solid rgba(201,184,170,0.3);">
-        <button class="accordion-btn w-full flex items-center justify-between py-5 text-left gap-4" aria-expanded="false" style="background:transparent; border:none; cursor:pointer;">
-          <span class="font-sans font-light text-base md:text-lg" style="color:#2c2420;">O que acontece depois dos 90 dias?</span>
-          <span class="accordion-icon flex-shrink-0 text-2xl font-light leading-none" style="color:#994f20; line-height:1;">+</span></button>
-        <div class="accordion-content"><div class="prose-body pb-6 font-sans font-light text-base leading-relaxed" style="color:#8c8177;">
-          <p>Reavaliamos juntas o que o seu organismo mostrou até ali. Para algumas mulheres, isso significa manter apenas os hábitos consolidados. Para outras, pode significar aprofundar uma investigação específica que surgiu no caminho.</p></div></div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-
-<!-- ================================================
-  13. CITAÇÃO DE FECHAMENTO — continuidade
-  Exceção deliberada à Missão 6: a palavra "avaliação"
-  é mantida aqui porque a frase é o encerramento literal
-  do vídeo. Trocá-la quebraria o eco exato que sustenta
-  a continuidade psicológica — o princípio que a própria
-  Missão 6 pede para não prejudicar.
-================================================ -->
-<section class="py-24 md:py-36 px-6 md:px-12 relative overflow-hidden" style="background-color:#2c2420;">
-  <div class="absolute inset-0 flex items-center justify-center pointer-events-none select-none" aria-hidden="true" style="opacity:0.03;">
-    <span class="font-serif leading-none" style="font-size:clamp(200px,40vw,400px); color:#faf8f5; font-family:'Cormorant Garamond',serif;">"</span>
-  </div>
-  <div class="max-w-3xl mx-auto text-center relative fade-in" style="z-index:1;">
-    <div class="terracota-rule mx-auto mb-10" style="background-color:#994f20;"></div>
-    <blockquote class="font-serif font-light italic leading-snug mb-10" style="color:#faf8f5; font-size:clamp(1.3rem,3.5vw,2.6rem);">
-      "Durante muito tempo, nós aprendemos a olhar para o melasma apenas pela superfície. O meu convite é para que você olhe para ele com mais profundidade. Porque, quando a pergunta muda, as possibilidades também mudam."
-    </blockquote>
-    <div class="terracota-rule mx-auto mt-10" style="background-color:#994f20;"></div>
-    <p class="mt-8 font-sans text-xs tracking-widest uppercase" style="color:rgba(201,184,170,0.6);">Nicole Carvalho · Biomédica &amp; Expert em Melasma</p>
-  </div>
-</section>
-
-
-<!-- ================================================
-  14. CONVITE — único ponto de ação
-  Missão 6: CTA renomeado para "consulta".
-================================================ -->
-<section id="convite" class="py-24 md:py-32 px-6 md:px-12" style="background-color:#f5ede6;">
-  <div class="max-w-2xl mx-auto text-center fade-in">
-    <p class="section-label mb-6">O Próximo Passo</p>
-    <h2 class="font-serif font-light italic leading-tight mb-6" style="color:#2c2420; font-size:clamp(2rem,6vw,3.2rem);">Talvez seja hora de entender<br/>a sua própria história.</h2>
-    <div class="prose-body max-w-lg mx-auto mb-12">
-      <p class="font-sans font-light text-base leading-relaxed" style="color:#8c8177;">
-        Se você sente que chegou o momento de entender a sua história antes de escolher o próximo tratamento, a avaliação é o lugar onde essa investigação começa.
+      <p class="footer-disclaimer">
+        As informações contidas nestas páginas têm caráter informativo e não substituem
+        a consulta profissional individualizada. Resultados podem variar conforme as
+        características biológicas de cada paciente. Reprodução proibida sem autorização.
       </p>
-    </div>
-    <a href="https://wa.me/message/SBPULBCTHU4VC1" target="_blank" rel="noopener"
-       class="inline-flex items-center gap-4 font-sans font-light text-sm uppercase px-12 py-5 rounded-lg transition-colors duration-300"
-       style="background-color:#2c2420; color:#faf8f5; letter-spacing:0.18em;">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-      Falar Sobre a Minha Consulta
-    </a>
-    <p class="mt-6 font-sans font-light text-sm leading-relaxed max-w-sm mx-auto" style="color:#8c8177;">Você vai falar com a nossa equipe, que vai entender um pouco da sua história antes de organizar a sua consulta com a Nicole.</p>
-    <p class="mt-3 text-xs tracking-widest uppercase font-sans" style="color:rgba(140,129,119,0.6);">Conversa inicial por vídeo · 100% à distância</p>
-  </div>
-</section>
+    </footer>
 
+  </div><!-- /.page-wrap -->
 
-<!-- FOOTER -->
-<footer class="py-10 md:py-12 px-6 md:px-12" style="background-color:#2c2420;">
-  <div class="max-w-5xl mx-auto">
-    <div class="flex flex-col md:flex-row items-center justify-between gap-6">
-      <div class="text-center md:text-left">
-        <p class="font-serif text-base tracking-widest" style="color:rgba(250,248,245,0.9);">Investigação Integrativa</p>
-        <p class="font-sans text-xs tracking-widest uppercase mt-1" style="color:rgba(201,184,170,0.5); font-size:10px; letter-spacing:0.18em;">Método Matriz do Melasma</p>
-      </div>
-      <div class="text-center font-sans font-light text-xs space-y-1" style="color:rgba(201,184,170,0.4);">
-        <p>CNPJ: 610.960.840/0001-01</p>
-        <p>© 2026 Nicole Carvalho · Todos os direitos reservados.</p>
-      </div>
-      <div class="text-center md:text-right">
-        <p class="font-sans tracking-widest uppercase" style="color:rgba(201,184,170,0.3); font-size:10px;">Nicole Carvalho · Biomédica · CRBM 26343</p>
-        <p class="font-sans tracking-widest uppercase mt-1" style="color:rgba(201,184,170,0.2); font-size:9px;">Estética Integrativa &amp; Avançada</p>
-      </div>
-    </div>
-    <div class="mt-8 pt-6 text-center" style="border-top:1px solid rgba(201,184,170,0.1);">
-      <p class="font-sans font-light leading-relaxed max-w-2xl mx-auto" style="color:rgba(201,184,170,0.25); font-size:10px;">
-        As informações contidas nesta página têm caráter informativo e não substituem a consulta profissional individualizada. Resultados podem variar conforme as características biológicas de cada paciente.
-      </p>
-    </div>
-  </div>
-</footer>
-
-
-<!-- SCRIPTS -->
-<script>
-  (function () {
-    var header = document.querySelector('.site-header');
-    if (!header) return;
-    function onScroll() {
-      if ((window.scrollY || document.documentElement.scrollTop) > 10) header.classList.add('is-solid');
-      else header.classList.remove('is-solid');
-    }
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-  })();
-
-  document.querySelectorAll('.accordion-btn').forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      var content = this.nextElementSibling;
-      var icon = this.querySelector('.accordion-icon');
-      var isOpen = content.classList.contains('open');
-      document.querySelectorAll('.accordion-content').forEach(function(c) { c.classList.remove('open'); });
-      document.querySelectorAll('.accordion-icon').forEach(function(i) { i.classList.remove('open'); });
-      document.querySelectorAll('.accordion-btn').forEach(function(b) { b.setAttribute('aria-expanded', 'false'); });
-      if (!isOpen) { content.classList.add('open'); icon.classList.add('open'); this.setAttribute('aria-expanded', 'true'); }
-    });
-  });
-
-  if ('IntersectionObserver' in window) {
-    var observer = new IntersectionObserver(function(entries) {
-      entries.forEach(function(entry) { if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); } });
-    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-    document.querySelectorAll('.fade-in').forEach(function(el) { observer.observe(el); });
-  } else {
-    document.querySelectorAll('.fade-in').forEach(function(el) { el.classList.add('visible'); });
-  }
-
-  (function () {
-    var lightbox = document.getElementById('lightbox');
-    var lightboxImg = document.getElementById('lightbox-img');
-    if (!lightbox || !lightboxImg) return;
-    function openLightbox(src, alt) {
-      lightboxImg.src = src;
-      lightboxImg.alt = alt || '';
-      lightbox.style.display = 'flex';
-      lightbox.setAttribute('aria-hidden', 'false');
-    }
-    function closeLightbox() {
-      lightbox.style.display = 'none';
-      lightbox.setAttribute('aria-hidden', 'true');
-    }
-    document.querySelectorAll('.app-shot').forEach(function (img) {
-      img.addEventListener('click', function () { openLightbox(img.getAttribute('data-full') || img.src, img.alt); });
-      img.addEventListener('keydown', function (e) {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLightbox(img.getAttribute('data-full') || img.src, img.alt); }
-      });
-    });
-    lightbox.addEventListener('click', closeLightbox);
-    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeLightbox(); });
-  })();
-</script>
-
-<script>
-(function () {
-  'use strict';
-  window.dataLayer = window.dataLayer || [];
-  function track(eventName, params, isStandard) {
-    params = params || {};
-    var payload = { event: eventName };
-    for (var k in params) { if (params.hasOwnProperty(k)) payload[k] = params[k]; }
-    window.dataLayer.push(payload);
-    if (typeof window.fbq === 'function') window.fbq(isStandard ? 'track' : 'trackCustom', eventName, params);
-  }
-  (function () {
-    var marks = [25, 50, 75, 90]; var fired = {}; var ticking = false;
-    function check() {
-      ticking = false;
-      var doc = document.documentElement;
-      var scrollable = doc.scrollHeight - window.innerHeight;
-      if (scrollable <= 0) return;
-      var pct = (window.scrollY || doc.scrollTop) / scrollable * 100;
-      for (var i = 0; i < marks.length; i++) { var m = marks[i]; if (pct >= m && !fired[m]) { fired[m] = true; track('ScrollDepth', { percent: m }, false); } }
-      if (fired[90]) window.removeEventListener('scroll', onScroll);
-    }
-    function onScroll() { if (!ticking) { ticking = true; window.requestAnimationFrame(check); } }
-    window.addEventListener('scroll', onScroll, { passive: true });
-    check();
-  })();
-  (function () {
-    var links = document.querySelectorAll('a[href*="wa.me"], a[href*="api.whatsapp.com"]');
-    Array.prototype.forEach.call(links, function (a) {
-      a.addEventListener('click', function () { track('Lead', { source: 'whatsapp', location: (a.textContent || '').trim().slice(0, 40) }, true); });
-    });
-  })();
-  (function () {
-    var iframe = document.getElementById('hero-video');
-    if (!iframe) return;
-    var fired = { play: false, 50: false, 75: false, 100: false };
-    var milestones = [50, 75, 100]; var poll = null;
-    function fireMilestone(pct) { for (var i = 0; i < milestones.length; i++) { var m = milestones[i]; if (pct >= m && !fired[m]) { fired[m] = true; track('VideoProgress', { percent: m }, false); } } }
-    var tag = document.createElement('script'); tag.src = 'https://www.youtube.com/iframe_api'; document.head.appendChild(tag);
-    window.onYouTubeIframeAPIReady = function () {
-      new YT.Player('hero-video', {
-        events: {
-          onStateChange: function (e) {
-            var p = e.target;
-            if (e.data === YT.PlayerState.PLAYING) {
-              if (!fired.play) { fired.play = true; track('VideoPlay', {}, false); }
-              if (!poll) { poll = setInterval(function () { var d = p.getDuration(); if (d > 0) fireMilestone(p.getCurrentTime() / d * 100); }, 1000); }
-            } else {
-              if (poll) { clearInterval(poll); poll = null; }
-              if (e.data === YT.PlayerState.ENDED) fireMilestone(100);
-            }
-          }
+  <script>
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
         }
       });
-    };
-  })();
-})();
-</script>
+    }, { threshold: 0.06, rootMargin: '0px 0px -16px 0px' });
+
+    document.querySelectorAll('.reveal').forEach((el, i) => {
+      el.style.transitionDelay = (i * 0.07) + 's';
+      io.observe(el);
+    });
+  </script>
 
 </body>
 </html>
