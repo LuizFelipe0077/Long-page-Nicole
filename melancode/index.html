@@ -822,43 +822,109 @@ Assim, você não precisa lembrar de tudo sozinha. O próprio tratamento passa a
     if (e.key === 'ArrowRight') { e.preventDefault(); next(); }
   });
 
-  // Arrastar/deslizar — Pointer Events cobrem mouse, trackpad e toque
-  // com a mesma lógica, sem precisar de biblioteca.
-  var dragging = false, startX = 0, activeCardEl = null, lastDragDx = 0;
-  var DRAG_THRESHOLD = 40;
+  // Arrastar/deslizar — só troca slide no gesto horizontal.
+  // Scroll vertical na imagem não deve avançar o carrossel.
+  var dragging = false, startX = 0, startY = 0, activeCardEl = null, lastDragDx = 0;
+  var dragAxis = null; // null | 'x' | 'y'
+  var capturedId = null;
+  var DRAG_THRESHOLD = 48;
+  var AXIS_LOCK = 10;
+
+  function resetCardTransform() {
+    if (activeCardEl) {
+      activeCardEl.style.transition = '';
+      activeCardEl.style.transform = '';
+    }
+  }
+
+  function releaseCapture(e) {
+    if (capturedId != null && stack.releasePointerCapture) {
+      try { stack.releasePointerCapture(capturedId); } catch (err) {}
+    }
+    capturedId = null;
+  }
 
   stack.addEventListener('pointerdown', function (e) {
     if (e.target.closest && e.target.closest('.app-arrow')) return;
     if (e.pointerType === 'mouse' && e.button !== 0) return;
-    dragging = true; startX = e.clientX; lastDragDx = 0;
-    stack.classList.add('is-dragging');
+    dragging = true;
+    dragAxis = null;
+    startX = e.clientX;
+    startY = e.clientY;
+    lastDragDx = 0;
     activeCardEl = cards[active];
-    if (activeCardEl) activeCardEl.style.transition = 'none';
-    stack.setPointerCapture && stack.setPointerCapture(e.pointerId);
+    // Não captura ainda — deixa o browser decidir scroll vertical até travar o eixo X
   });
 
   stack.addEventListener('pointermove', function (e) {
     if (!dragging || !activeCardEl) return;
     var dx = e.clientX - startX;
+    var dy = e.clientY - startY;
+
+    if (!dragAxis) {
+      if (Math.abs(dx) < AXIS_LOCK && Math.abs(dy) < AXIS_LOCK) return;
+      // Dominância clara: vertical = scroll da página; horizontal = carrossel
+      if (Math.abs(dy) > Math.abs(dx)) {
+        dragAxis = 'y';
+        dragging = false;
+        resetCardTransform();
+        activeCardEl = null;
+        stack.classList.remove('is-dragging');
+        return;
+      }
+      dragAxis = 'x';
+      stack.classList.add('is-dragging');
+      activeCardEl.style.transition = 'none';
+      if (stack.setPointerCapture) {
+        stack.setPointerCapture(e.pointerId);
+        capturedId = e.pointerId;
+      }
+      if (e.cancelable) e.preventDefault();
+    }
+
+    if (dragAxis !== 'x') return;
+    if (e.cancelable) e.preventDefault();
     lastDragDx = dx;
     var clamped = Math.max(-90, Math.min(90, dx));
     activeCardEl.style.transform = 'translate(calc(-50% + ' + clamped + 'px), -50%) scale(1)';
-  });
+  }, { passive: false });
 
   function endDrag(e) {
-    if (!dragging) return;
+    if (!dragging && dragAxis !== 'x') {
+      dragging = false;
+      dragAxis = null;
+      activeCardEl = null;
+      return;
+    }
+    var wasHorizontal = dragAxis === 'x';
     dragging = false;
     stack.classList.remove('is-dragging');
-    var dx = (e && typeof e.clientX === 'number' ? e.clientX : startX) - startX;
+    releaseCapture(e);
+    var dx = wasHorizontal
+      ? ((e && typeof e.clientX === 'number' ? e.clientX : startX) - startX)
+      : 0;
     lastDragDx = dx;
-    if (activeCardEl) { activeCardEl.style.transition = ''; activeCardEl.style.transform = ''; }
-    if (dx <= -DRAG_THRESHOLD) next();
-    else if (dx >= DRAG_THRESHOLD) prev();
+    resetCardTransform();
+    if (wasHorizontal) {
+      if (dx <= -DRAG_THRESHOLD) next();
+      else if (dx >= DRAG_THRESHOLD) prev();
+    }
+    dragAxis = null;
     activeCardEl = null;
   }
   stack.addEventListener('pointerup', endDrag);
   stack.addEventListener('pointercancel', endDrag);
-  stack.addEventListener('pointerleave', function (e) { if (dragging) endDrag(e); });
+  // pointerleave no mobile dispara com scroll — só finaliza se já for swipe horizontal
+  stack.addEventListener('pointerleave', function (e) {
+    if (dragAxis === 'x') endDrag(e);
+    else if (dragging) {
+      dragging = false;
+      dragAxis = null;
+      resetCardTransform();
+      activeCardEl = null;
+      stack.classList.remove('is-dragging');
+    }
+  });
 
   render();
 })();
