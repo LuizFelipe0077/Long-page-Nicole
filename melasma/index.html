@@ -253,7 +253,7 @@
         <div class="hero-video-frame" style="position:relative; width:100%; padding-bottom:56.25%; border-radius:14px; overflow:hidden; border:1px solid rgba(196,122,78,0.35); box-shadow:0 24px 60px -20px rgba(0,0,0,0.6); background-color:#1a1512;">
           <iframe
             id="hero-video"
-            src="https://www.youtube.com/embed/KYi1ledXbUQ?si=sYRck2QfNvz0ZR2n&enablejsapi=1&rel=0&modestbranding=1&playsinline=1"
+            src="https://www.youtube.com/embed/KYi1ledXbUQ?si=sYRck2QfNvz0ZR2n&enablejsapi=1&rel=0&modestbranding=1&playsinline=1&cc_load_policy=0"
             title="Método Matriz do Melasma — Introdução"
             style="position:absolute; inset:0; width:100%; height:100%; border:0;"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -1036,10 +1036,27 @@ Assim, você não precisa lembrar de tudo sozinha. O próprio tratamento passa a
     var tag = document.createElement('script'); tag.src = 'https://www.youtube.com/iframe_api'; document.head.appendChild(tag);
     window.onYouTubeIframeAPIReady = function () {
       new YT.Player('hero-video', {
+        playerVars: {
+          rel: 0,
+          modestbranding: 1,
+          playsinline: 1,
+          cc_load_policy: 0
+        },
         events: {
+          onReady: function (e) {
+            try {
+              // Tenta desligar legendas/CC ao iniciar (quando o YouTube permitir)
+              e.target.unloadModule('captions');
+              e.target.unloadModule('cc');
+            } catch (err) {}
+          },
           onStateChange: function (e) {
             var p = e.target;
             if (e.data === YT.PlayerState.PLAYING) {
+              try {
+                p.unloadModule('captions');
+                p.unloadModule('cc');
+              } catch (err) {}
               if (!fired.play) { fired.play = true; track('VideoPlay', {}, false); }
               if (!poll) { poll = setInterval(function () { var d = p.getDuration(); if (d > 0) fireMilestone(p.getCurrentTime() / d * 100); }, 1000); }
             } else {
