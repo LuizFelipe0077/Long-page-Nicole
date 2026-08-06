@@ -7,7 +7,7 @@
 <title>Melasma — Investigação Integrativa · Nicole Carvalho</title>
 <meta name="description" content="Uma consulta que investiga a raiz biológica do melasma antes de qualquer plano. Acompanhamento individualizado de aproximadamente 90 dias, 100% à distância, com Nicole Carvalho." />
 <script src="https://cdn.tailwindcss.com"></script>
-<link rel="icon" href="melancode/imagens/fivecon.png" type="image/png">
+<link rel="icon" href="/melasma/imagens/fivecon.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
@@ -25,7 +25,7 @@
     }
   }
 </script>
-<link rel="stylesheet" href="melancode/estilo/style.css" />
+<link rel="stylesheet" href="/melasma/estilo/style.css" />
 
 <!-- ================================================
   Animação da caixa + composição do app — definidas
@@ -157,6 +157,37 @@
 
   #lightbox { position:fixed; inset:0; background:rgba(20,16,13,0.92); z-index:100; display:none; align-items:center; justify-content:center; padding:24px; cursor:zoom-out; }
   #lightbox img { max-width:90vw; max-height:88vh; border-radius:16px; box-shadow:0 30px 80px -20px rgba(0,0,0,0.6); }
+
+  /* CTA secundário — Início + Instagram (mesmo espírito da home) */
+  .cta-social-row {
+    display:flex; justify-content:center; align-items:center; gap:28px;
+    margin-top:28px;
+  }
+  .cta-social-link {
+    display:flex; flex-direction:column; align-items:center; gap:8px;
+    text-decoration:none; color:#8c8177;
+    transition: color .28s ease, transform .28s ease;
+    min-height:44px;
+  }
+  .cta-social-link:hover { color:#994f20; transform:translateY(-3px); }
+  .cta-social-link:focus-visible { outline:2px solid #994f20; outline-offset:3px; border-radius:8px; }
+  .cta-social-icon {
+    width:52px; height:52px; border-radius:50%;
+    border:1px solid rgba(153,79,32,0.18);
+    background:#fff;
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 2px 10px rgba(100,60,30,0.07);
+    transition: border-color .28s ease, box-shadow .28s ease;
+  }
+  .cta-social-link:hover .cta-social-icon {
+    border-color:rgba(153,79,32,0.35);
+    box-shadow:0 6px 20px rgba(100,60,30,0.12);
+  }
+  .cta-social-icon svg { width:22px; height:22px; }
+  .cta-social-label {
+    font-family:Jost,sans-serif; font-size:10px; font-weight:400;
+    letter-spacing:0.18em; text-transform:uppercase;
+  }
 </style>
 
 <!-- ================================================
@@ -389,7 +420,7 @@
   <div class="max-w-5xl mx-auto fade-in">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-14 items-center">
       <div class="flex justify-center order-2 md:order-1">
-        <img id="caixa" src="/melancode/imagens/LOGONICOLE.png" alt="Caixa personalizada enviada após a consulta e a investigação" width="420" height="420" style="max-width:340px; width:100%; filter:drop-shadow(0 30px 45px rgba(0,0,0,0.45));"/>
+        <img id="caixa" src="/melasma/imagens/LOGONICOLE.png" alt="Caixa personalizada enviada após a consulta e a investigação" width="420" height="420" style="max-width:340px; width:100%; filter:drop-shadow(0 30px 45px rgba(0,0,0,0.45));"/>
         <!-- ATENÇÃO: 'caixa-oficial.png' é um placeholder. Substitua pelo
              caminho real da foto oficial da caixa antes de publicar. -->
       </div>
@@ -463,9 +494,9 @@ Assim, você não precisa lembrar de tudo sozinha. O próprio tratamento passa a
     <div class="app-stack-wrap">
       <button type="button" class="app-arrow app-arrow-prev" aria-label="Tela anterior">‹</button>
       <div class="app-stack" id="appStack" tabindex="0" aria-roledescription="carrossel" aria-label="Telas do aplicativo">
-        <img class="app-card" data-key="lembretes" src="/melancode/imagens/IMAGEM 1.jpeg" alt="Tela do aplicativo mostrando lembretes de horários" data-full="/melancode/imagens/IMAGEM 1.jpeg"/>
-        <img class="app-card" data-key="principal" src="/melancode/imagens/IMAGEM 2.jpeg" alt="Tela principal do aplicativo com o acompanhamento do tratamento" data-full="/melancode/imagens/IMAGEM 2.jpeg"/>
-        <img class="app-card" data-key="progresso" src="/melancode/imagens/IMAGEM 3.jpeg" alt="Tela do aplicativo mostrando o progresso do tratamento" data-full="/melancode/imagens/IMAGEM 3.jpeg"/>
+        <img class="app-card" data-key="lembretes" src="/melasma/imagens/IMAGEM 1.jpeg" alt="Tela do aplicativo mostrando lembretes de horários" data-full="/melasma/imagens/IMAGEM 1.jpeg"/>
+        <img class="app-card" data-key="principal" src="/melasma/imagens/IMAGEM 2.jpeg" alt="Tela principal do aplicativo com o acompanhamento do tratamento" data-full="/melasma/imagens/IMAGEM 2.jpeg"/>
+        <img class="app-card" data-key="progresso" src="/melasma/imagens/IMAGEM 3.jpeg" alt="Tela do aplicativo mostrando o progresso do tratamento" data-full="/melasma/imagens/IMAGEM 3.jpeg"/>
       </div>
       <button type="button" class="app-arrow app-arrow-next" aria-label="Próxima tela">›</button>
       <div class="app-dots" role="tablist" aria-label="Selecionar tela">
@@ -493,7 +524,7 @@ Assim, você não precisa lembrar de tudo sozinha. O próprio tratamento passa a
     <div class="flex flex-col md:flex-row gap-12 md:gap-16 items-center fade-in">
       <div class="flex-shrink-0 w-full md:w-80">
         <div class="w-full md:w-80 overflow-hidden" style="height:500px; border-radius:12px; background-color:rgba(153,79,32,0.1);">
-          <img src="/melancode/imagens/Minhafoto.jpeg" alt="Nicole Carvalho, especialista responsável pela investigação" width="746" height="1016" style="width:100%; height:100%; object-fit:cover; object-position:center top; display:block;"/>
+          <img src="/melasma/imagens/Minhafoto.jpeg" alt="Nicole Carvalho, especialista responsável pela investigação" width="746" height="1016" style="width:100%; height:100%; object-fit:cover; object-position:center top; display:block;"/>
         </div>
       </div>
       <div class="flex-1">
@@ -526,13 +557,13 @@ Assim, você não precisa lembrar de tudo sozinha. O próprio tratamento passa a
     </div>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
       <div class="space-y-3"><div class="flex gap-3"><div class="ba-card flex-1 flex items-center justify-center" style="background-color:rgba(232,221,212,0.15);">
-        <img src="/melancode/imagens/provasocial1.jpg" alt="Caso acompanhado com investigação de contexto hormonal" width="746" height="1016" style="width:100%; height:100%; object-fit:cover; object-position:center top; display:block;"/></div></div>
+        <img src="/melasma/imagens/provasocial1.jpg" alt="Caso acompanhado com investigação de contexto hormonal" width="746" height="1016" style="width:100%; height:100%; object-fit:cover; object-position:center top; display:block;"/></div></div>
         <p class="text-xs tracking-widest text-center uppercase font-sans" style="color:rgba(201,184,170,0.6);">Tratamento conduzido através do Método Matriz do Melasma.</p></div>
       <div class="space-y-3"><div class="flex gap-3"><div class="ba-card flex-1 flex items-center justify-center" style="background-color:rgba(232,221,212,0.15);">
-        <img src="/melancode/imagens/provasocial2.jpg" alt="Caso acompanhado com investigação de saúde intestinal" width="746" height="1016" style="width:100%; height:100%; object-fit:cover; object-position:center top; display:block;"/></div></div>
+        <img src="/melasma/imagens/provasocial2.jpg" alt="Caso acompanhado com investigação de saúde intestinal" width="746" height="1016" style="width:100%; height:100%; object-fit:cover; object-position:center top; display:block;"/></div></div>
         <p class="text-xs tracking-widest text-center uppercase font-sans" style="color:rgba(201,184,170,0.6);">Cada plano foi desenvolvido de acordo com a investigação individual do organismo.</p></div>
       <div class="space-y-3"><div class="flex gap-3"><div class="ba-card flex-1 flex items-center justify-center" style="background-color:rgba(232,221,212,0.15);">
-        <img src="/melancode/imagens/provasocial3.jpg" alt="Caso acompanhado com investigação de estresse fisiológico" width="746" height="1016" style="width:100%; height:100%; object-fit:cover; object-position:center top; display:block;"/></div></div>
+        <img src="/melasma/imagens/provasocial3.jpg" alt="Caso acompanhado com investigação de estresse fisiológico" width="746" height="1016" style="width:100%; height:100%; object-fit:cover; object-position:center top; display:block;"/></div></div>
         <p class="text-xs tracking-widest text-center uppercase font-sans" style="color:rgba(201,184,170,0.6);">Evoluções obtidas com uma abordagem individualizada.</p></div>
     </div>
     <p class="text-center text-xs tracking-wider font-sans font-light" style="color:rgba(201,184,170,0.5);">Resultados individuais. Cada evolução é consequência da investigação, nunca o ponto de partida dela.</p>
@@ -658,12 +689,37 @@ Assim, você não precisa lembrar de tudo sozinha. O próprio tratamento passa a
         A consulta é o momento em que começamos a compreender o seu organismo. Somente depois dela é possível definir, com segurança, qual é o caminho mais adequado para o seu caso.
       </p>
     </div>
-    <a href="https://wa.me/message/SBPULBCTHU4VC1" target="_blank" rel="noopener"
+    <a href="https://wa.me/5562982119250?text=Ol%C3%A1%21%20Vim%20pela%20p%C3%A1gina%20de%20Melasma%20e%20gostaria%20de%20falar%20sobre%20a%20minha%20consulta."
+       target="_blank" rel="noopener"
        class="inline-flex items-center gap-4 font-sans font-light text-sm uppercase px-12 py-5 rounded-lg transition-colors duration-300"
-       style="background-color:#2c2420; color:#faf8f5; letter-spacing:0.18em;">
+       style="background-color:#2c2420; color:#faf8f5; letter-spacing:0.18em;"
+       data-lead-source="melasma">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
       Falar Sobre a Minha Consulta
     </a>
+
+    <div class="cta-social-row" role="group" aria-label="Navegação e redes">
+      <a class="cta-social-link" href="/" aria-label="Voltar para a página inicial">
+        <span class="cta-social-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 10.5 12 3l9 7.5"/>
+            <path d="M5 9.5V20h5.5v-5.5h3V20H19V9.5"/>
+          </svg>
+        </span>
+        <span class="cta-social-label">Início</span>
+      </a>
+      <a class="cta-social-link" href="https://www.instagram.com/dranicolecarvalho.estetica?igsh=aHpjNjdsNTl6M3F3&utm_source=qr" target="_blank" rel="noopener" aria-label="Instagram de Nicole Carvalho">
+        <span class="cta-social-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+            <circle cx="12" cy="12" r="4"/>
+            <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"/>
+          </svg>
+        </span>
+        <span class="cta-social-label">Instagram</span>
+      </a>
+    </div>
+
     <p class="mt-6 font-sans font-light text-sm leading-relaxed max-w-sm mx-auto" style="color:#8c8177;">Você vai falar com a nossa equipe, que vai entender um pouco da sua história antes de organizar a sua consulta com a Nicole.</p>
     <p class="mt-3 text-xs tracking-widest uppercase font-sans" style="color:rgba(140,129,119,0.6);">Consulta por vídeo · 100% à distância</p>
   </div>
@@ -679,7 +735,7 @@ Assim, você não precisa lembrar de tudo sozinha. O próprio tratamento passa a
         <p class="font-sans text-xs tracking-widest uppercase mt-1" style="color:rgba(201,184,170,0.5); font-size:10px; letter-spacing:0.18em;">Método Matriz do Melasma</p>
       </div>
       <div class="text-center font-sans font-light text-xs space-y-1" style="color:rgba(201,184,170,0.4);">
-        <p>CNPJ: 610.960.840/0001-01</p>
+        <p>CNPJ: 61.096.084/0001-01</p>
         <p>© 2026 Nicole Carvalho · Todos os direitos reservados.</p>
       </div>
       <div class="text-center md:text-right">
