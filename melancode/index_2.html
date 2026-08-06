@@ -70,10 +70,10 @@
        a proporção real de um print de celular (mais alto que a estimativa
        anterior), então altura e largura sempre crescem/encolhem juntas. */
     height:calc(var(--card-w) * 2.2);
-    /* Largura do card ativo: fluida entre um piso e um teto, nunca em
-       valores fixos de breakpoint — escala com o viewport (30vw) e
-       satura nos extremos (min 130px, max 230px). */
-    --card-w: clamp(130px, 30vw, 230px);
+    /* Largura do card ativo: fluida entre um piso e um teto.
+       Desktop: escala com vw e satura no teto.
+       Mobile: sobrescrito no media query abaixo (maior presença). */
+    --card-w: clamp(160px, 28vw, 250px);
     --side-scale: 0.86;
     /* peek é uma FRAÇÃO da largura do card (0.672), não um pixel fixo —
        por isso a composição mantém sempre ~70% visível / ~30% escondido
@@ -90,6 +90,7 @@
     -webkit-user-drag:none;
     transition:transform .65s cubic-bezier(.19,1,.22,1), filter .65s cubic-bezier(.19,1,.22,1), opacity .65s cubic-bezier(.19,1,.22,1), box-shadow .65s cubic-bezier(.19,1,.22,1);
     will-change:transform; max-width:100%;
+    height:auto; display:block;
   }
   .app-card[data-role="active"] {
     transform:translate(-50%,-50%) scale(1); z-index:3; opacity:1; filter:none; cursor:zoom-in;
@@ -122,10 +123,32 @@
   .app-arrow:focus-visible { outline:2px solid #994f20; outline-offset:3px; }
   .app-arrow-prev { left:4px; }
   .app-arrow-next { right:4px; }
-  /* Mobile: só swipe — setas escondidas */
+
+  /* Mobile: cards maiores + setas ocultas (só swipe) */
   @media (max-width:640px){
     .app-arrow { display:none; }
-    .app-stack-wrap { padding:28px 12px 44px; }
+    .app-stack-wrap {
+      padding:20px 0 40px;
+      max-width:100%;
+    }
+    .app-stack {
+      /* ~48vw deixa o mockup bem presente; piso evita telas muito estreitas */
+      --card-w: clamp(172px, 48vw, 220px);
+      /* peek um pouco menor para as laterais caberem sem “quebrar” a composição */
+      --peek: calc(var(--card-w) * 0.56);
+      --side-scale: 0.84;
+      height: calc(var(--card-w) * 2.15);
+    }
+    .app-card { border-radius: 22px; }
+  }
+
+  /* Telas bem estreitas: prioriza o card central sem estourar */
+  @media (max-width:360px){
+    .app-stack {
+      --card-w: clamp(156px, 52vw, 190px);
+      --peek: calc(var(--card-w) * 0.50);
+      --side-scale: 0.82;
+    }
   }
 
   .app-dots { position:absolute; bottom:0; left:0; right:0; display:flex; justify-content:center; gap:7px; }
