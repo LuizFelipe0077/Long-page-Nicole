@@ -78,15 +78,27 @@ self.addEventListener('push', (event) => {
   }
 
   const title = data.title || 'Nicole Carvalho';
-  // Prefer server-provided actions; fall back so Android always shows
-  // "✅ Tomei agora" for dose notifications even if an older sender omitted them.
+  // Actions resolution:
+  // 1) Explicit `actions` array from server wins — including [] (no buttons).
+  //    DailyCompletionNotifier sends actions:[] for conclusão; treating [] as
+  //    "missing" used to incorrectly inject "✅ Tomei agora" on Android.
+  // 2) If omitted, fall back by kind so older dose payloads still get the button;
+  //    all conclusão_* / ack kinds stay button-free.
   const kind = data.kind || 'dose';
-  const defaultActions = kind === 'conclusao_dia' || kind === 'ack'
-    ? []
-    : [{ action: 'tomar', title: '✅ Tomei agora' }];
-  const actions = Array.isArray(data.actions) && data.actions.length > 0
-    ? data.actions
-    : defaultActions;
+  const isCompletionOrAck =
+    kind === 'ack' ||
+    kind === 'conclusao_dia' ||
+    kind === 'conclusao_dia_perfeito' ||
+    kind === 'conclusao_dia_imperfeito' ||
+    String(kind).indexOf('conclusao_dia') === 0;
+  let actions;
+  if (Array.isArray(data.actions)) {
+    actions = data.actions;
+  } else if (isCompletionOrAck) {
+    actions = [];
+  } else {
+    actions = [{ action: 'tomar', title: '✅ Tomei agora' }];
+  }
 
   const options = {
     body: data.body || '',
@@ -223,8 +235,14 @@ self.addEventListener('notificationclick', (event) => {
 
   if (nData.kind === 'ack') return;
 
+  const isCompletionKind =
+    nData.kind === 'conclusao_dia' ||
+    nData.kind === 'conclusao_dia_perfeito' ||
+    nData.kind === 'conclusao_dia_imperfeito' ||
+    String(nData.kind || '').indexOf('conclusao_dia') === 0;
   const shouldPrimeCheckin =
-    nData.kind !== 'conclusao_dia' &&
+    !isCompletionKind &&
+    nData.kind !== 'ack' &&
     nData.suplementoId &&
     nData.dataHoraPrescrita &&
     isIosLike();
