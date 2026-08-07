@@ -6,7 +6,7 @@
 <meta name="color-scheme" content="light only" />
 <title>Melasma — Investigação Integrativa · Nicole Carvalho</title>
 <meta name="description" content="Uma consulta que investiga a raiz biológica do melasma antes de qualquer plano. Acompanhamento individualizado de aproximadamente 90 dias, 100% à distância, com Nicole Carvalho." />
-<!-- Tráfego pago / WebView IG-FB: trava o topo no load (não mexe em query nem Pixel) -->
+<!-- Tráfego pago / WebView IG-FB: trava topo + bloqueia clique fantasma em #âncoras (não mexe em query/Pixel) -->
 <script>
 (function () {
   try {
@@ -28,6 +28,9 @@
     var rafId = 0;
     var touching = false;
     var lastY = 0;
+    // Clique fantasma do "Saiba mais" costuma chegar <1s; margem após o load
+    var ghostGuardUntil = Date.now() + 3500;
+    var allowHashOnce = false;
 
     function cleanUrl() {
       // Mantém pathname + search (fbclid/UTMs intactos). Só remove hash.
@@ -49,7 +52,6 @@
       if (rafId) { cancelAnimationFrame(rafId); rafId = 0; }
       html.style.scrollBehavior = prevBehavior;
       window.removeEventListener('scroll', onScrollGuard, true);
-      window.removeEventListener('hashchange', onHashGuard);
     }
 
     function markUserMoved() {
@@ -62,16 +64,42 @@
       if (!locking || userMoved) return;
       var y = window.scrollY || html.scrollTop || 0;
       if (y <= 2) { lastY = y; return; }
-      // Dedo/gesto do usuário → libera. Salto brusco do WebView → volta ao topo.
       if (touching) { markUserMoved(); return; }
       if (y - lastY > 120 || y > 200) forceTop();
       else lastY = y;
     }
 
     function onHashGuard() {
-      if (!locking || userMoved) return;
-      cleanUrl();
-      forceTop();
+      // Navegação âncora liberada (toque real em Consulta etc.)
+      if (allowHashOnce) {
+        allowHashOnce = false;
+        return;
+      }
+      // Qualquer #convite / hash no período de guarda = fantasma ou restore → desfaz
+      if (Date.now() < ghostGuardUntil || (locking && !userMoved)) {
+        cleanUrl();
+        forceTop();
+      }
+    }
+
+    function onAnchorClick(e) {
+      var t = e.target;
+      var a = t && t.closest ? t.closest('a[href^="#"]') : null;
+      if (!a) return;
+
+      // Bloqueia clique fantasma (ex.: Consulta → #convite) no open do WebView
+      if (Date.now() < ghostGuardUntil) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (typeof e.stopImmediatePropagation === 'function') e.stopImmediatePropagation();
+        cleanUrl();
+        forceTop();
+        return;
+      }
+
+      // Toque real depois da guarda: deixa ir ao # e libera trava de scroll
+      allowHashOnce = true;
+      markUserMoved();
     }
 
     function tick() {
@@ -93,11 +121,14 @@
 
     window.addEventListener('scroll', onScrollGuard, true);
     window.addEventListener('hashchange', onHashGuard);
+    document.addEventListener('click', onAnchorClick, true);
+
     document.addEventListener('DOMContentLoaded', function () { forceTop(); });
     window.addEventListener('load', function () {
       cleanUrl();
       forceTop();
       lockUntil = Date.now() + 5000;
+      ghostGuardUntil = Math.max(ghostGuardUntil, Date.now() + 2500);
       if (!rafId) rafId = requestAnimationFrame(tick);
     });
 
@@ -111,11 +142,6 @@
     window.addEventListener('keydown', function (e) {
       if (e.key === ' ' || /^(Arrow|Page|Home|End)/.test(e.key)) markUserMoved();
     }, { passive: true });
-    document.addEventListener('click', function (e) {
-      var t = e.target;
-      var a = t && t.closest ? t.closest('a[href^="#"]') : null;
-      if (a) markUserMoved();
-    }, true);
 
     rafId = requestAnimationFrame(tick);
   } catch (e) {}
