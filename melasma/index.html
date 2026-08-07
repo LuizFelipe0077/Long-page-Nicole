@@ -6,6 +6,48 @@
 <meta name="color-scheme" content="light only" />
 <title>Melasma — Investigação Integrativa · Nicole Carvalho</title>
 <meta name="description" content="Uma consulta que investiga a raiz biológica do melasma antes de qualquer plano. Acompanhamento individualizado de aproximadamente 90 dias, 100% à distância, com Nicole Carvalho." />
+<!-- Tráfego pago (IG/FB): trava o topo — WebView às vezes “pula” no load -->
+<script>
+(function () {
+  try {
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    var q = window.location.search || '';
+    var fromPaid = /(?:^|[?&])fbclid=/.test(q) ||
+      /[?&]utm_medium=paid(?:&|$)/i.test(q) ||
+      /[?&]utm_source=(?:ig|fb|facebook|instagram)(?:&|$)/i.test(q);
+    if (!fromPaid) return;
+
+    // Remove âncora se o WebView injetar/ restaurar hash
+    if (window.location.hash) {
+      history.replaceState(null, '', window.location.pathname + window.location.search);
+    }
+
+    var html = document.documentElement;
+    var prevBehavior = html.style.scrollBehavior;
+    html.style.scrollBehavior = 'auto';
+
+    function forceTop() {
+      window.scrollTo(0, 0);
+      html.scrollTop = 0;
+      if (document.body) document.body.scrollTop = 0;
+    }
+
+    forceTop();
+    document.addEventListener('DOMContentLoaded', forceTop);
+    window.addEventListener('load', function () {
+      forceTop();
+      // WebView do Instagram às vezes reposiciona após paint / iframe
+      setTimeout(forceTop, 50);
+      setTimeout(forceTop, 250);
+      setTimeout(forceTop, 800);
+      setTimeout(function () {
+        forceTop();
+        html.style.scrollBehavior = prevBehavior;
+      }, 1500);
+    });
+  } catch (e) {}
+})();
+</script>
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="icon" href="/melasma/imagens/fivecon.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com" />
