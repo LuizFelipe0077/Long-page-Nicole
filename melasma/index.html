@@ -6,45 +6,118 @@
 <meta name="color-scheme" content="light only" />
 <title>Melasma — Investigação Integrativa · Nicole Carvalho</title>
 <meta name="description" content="Uma consulta que investiga a raiz biológica do melasma antes de qualquer plano. Acompanhamento individualizado de aproximadamente 90 dias, 100% à distância, com Nicole Carvalho." />
-<!-- Tráfego pago (IG/FB): trava o topo — WebView às vezes “pula” no load -->
+<!-- Tráfego pago / WebView IG-FB: trava o topo no load (não mexe em query nem Pixel) -->
 <script>
 (function () {
   try {
     if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+
     var q = window.location.search || '';
+    var ua = navigator.userAgent || '';
     var fromPaid = /(?:^|[?&])fbclid=/.test(q) ||
       /[?&]utm_medium=paid(?:&|$)/i.test(q) ||
       /[?&]utm_source=(?:ig|fb|facebook|instagram)(?:&|$)/i.test(q);
-    if (!fromPaid) return;
-
-    // Remove âncora se o WebView injetar/ restaurar hash
-    if (window.location.hash) {
-      history.replaceState(null, '', window.location.pathname + window.location.search);
-    }
+    var inMetaWebView = /Instagram|FBAN|FBAV|FB_IAB|Facebook/i.test(ua);
+    if (!fromPaid && !inMetaWebView) return;
 
     var html = document.documentElement;
     var prevBehavior = html.style.scrollBehavior;
-    html.style.scrollBehavior = 'auto';
+    var locking = true;
+    var userMoved = false;
+    var lockUntil = 0;
+    var rafId = 0;
+    var touching = false;
+    var lastY = 0;
+
+    function cleanUrl() {
+      // Mantém pathname + search (fbclid/UTMs intactos). Só remove hash.
+      if (window.location.hash) {
+        history.replaceState(null, '', window.location.pathname + window.location.search);
+      }
+    }
 
     function forceTop() {
       window.scrollTo(0, 0);
       html.scrollTop = 0;
       if (document.body) document.body.scrollTop = 0;
+      lastY = 0;
     }
 
-    forceTop();
-    document.addEventListener('DOMContentLoaded', forceTop);
-    window.addEventListener('load', function () {
+    function releaseLock() {
+      if (!locking) return;
+      locking = false;
+      if (rafId) { cancelAnimationFrame(rafId); rafId = 0; }
+      html.style.scrollBehavior = prevBehavior;
+      window.removeEventListener('scroll', onScrollGuard, true);
+      window.removeEventListener('hashchange', onHashGuard);
+    }
+
+    function markUserMoved() {
+      if (userMoved) return;
+      userMoved = true;
+      releaseLock();
+    }
+
+    function onScrollGuard() {
+      if (!locking || userMoved) return;
+      var y = window.scrollY || html.scrollTop || 0;
+      if (y <= 2) { lastY = y; return; }
+      // Dedo/gesto do usuário → libera. Salto brusco do WebView → volta ao topo.
+      if (touching) { markUserMoved(); return; }
+      if (y - lastY > 120 || y > 200) forceTop();
+      else lastY = y;
+    }
+
+    function onHashGuard() {
+      if (!locking || userMoved) return;
+      cleanUrl();
       forceTop();
-      // WebView do Instagram às vezes reposiciona após paint / iframe
-      setTimeout(forceTop, 50);
-      setTimeout(forceTop, 250);
-      setTimeout(forceTop, 800);
-      setTimeout(function () {
+    }
+
+    function tick() {
+      if (!locking || userMoved) return;
+      if (Date.now() < lockUntil) {
+        var y = window.scrollY || html.scrollTop || 0;
+        if (y > 2 && !touching) forceTop();
+        rafId = requestAnimationFrame(tick);
+      } else {
         forceTop();
-        html.style.scrollBehavior = prevBehavior;
-      }, 1500);
+        releaseLock();
+      }
+    }
+
+    cleanUrl();
+    forceTop();
+    html.style.scrollBehavior = 'auto';
+    lockUntil = Date.now() + 8000;
+
+    window.addEventListener('scroll', onScrollGuard, true);
+    window.addEventListener('hashchange', onHashGuard);
+    document.addEventListener('DOMContentLoaded', function () { forceTop(); });
+    window.addEventListener('load', function () {
+      cleanUrl();
+      forceTop();
+      lockUntil = Date.now() + 5000;
+      if (!rafId) rafId = requestAnimationFrame(tick);
     });
+
+    document.addEventListener('touchstart', function () { touching = true; }, { passive: true });
+    document.addEventListener('touchend', function () {
+      setTimeout(function () { touching = false; }, 150);
+    }, { passive: true });
+    document.addEventListener('touchcancel', function () { touching = false; }, { passive: true });
+
+    window.addEventListener('wheel', markUserMoved, { passive: true, once: true });
+    window.addEventListener('keydown', function (e) {
+      if (e.key === ' ' || /^(Arrow|Page|Home|End)/.test(e.key)) markUserMoved();
+    }, { passive: true });
+    document.addEventListener('click', function (e) {
+      var t = e.target;
+      var a = t && t.closest ? t.closest('a[href^="#"]') : null;
+      if (a) markUserMoved();
+    }, true);
+
+    rafId = requestAnimationFrame(tick);
   } catch (e) {}
 })();
 </script>
