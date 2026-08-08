@@ -12,14 +12,13 @@
   :root { color-scheme: light only; }
   html, body, * { -webkit-text-size-adjust: 100%; }
 
-  html { scroll-behavior: smooth; background-color: #faf8f5 !important; overflow-anchor: none; }
+  html { scroll-behavior: smooth; background-color: #faf8f5 !important; }
   body {
     background-color: #faf8f5 !important;
     color: #2c2420 !important;
     font-family: 'Jost', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    overflow-anchor: none;
   }
 
   /* Forçar cores explícitas em todos os elementos para bloquear dark mode do SO */
