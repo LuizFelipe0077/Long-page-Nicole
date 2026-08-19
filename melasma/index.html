@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="color-scheme" content="light only" />
-<title>Melasma — CTA Variante A · Nicole Carvalho</title>
+<title>Melasma — Investigação Integrativa · Nicole Carvalho</title>
 <meta name="description" content="Uma consulta que investiga a raiz biológica do melasma antes de qualquer plano. Acompanhamento individualizado de aproximadamente 90 dias, 100% à distância, com Nicole Carvalho." />
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="icon" href="/melasma/imagens/fivecon.png" type="image/png">
@@ -209,6 +209,13 @@
       0 28px 56px -32px rgba(44,36,32,0.28),
       0 8px 24px -12px rgba(153,79,32,0.12);
   }
+  /* Anula recuo/justificado do .prose-body externo — só neste cartão */
+  .prose-body .cta-invite-card p {
+    text-align:left;
+    text-indent:0;
+    -webkit-hyphens:manual;
+    hyphens:manual;
+  }
   .cta-invite-seal {
     position:absolute;
     top:0; left:1.5rem; right:1.5rem;
@@ -311,7 +318,7 @@
     line-height:1.55;
     color:#8c8177;
     margin:0 0 1.25rem;
-    text-align:center;
+    text-align:left;
   }
   .cta-pillars {
     display:grid;
@@ -366,7 +373,7 @@
     line-height:1.55;
     color:#8c8177;
     margin:0;
-    text-align:center;
+    text-align:left;
     font-style:italic;
   }
   .cta-consent {
@@ -1029,7 +1036,7 @@ Assim, você não precisa lembrar de tudo sozinha. O próprio tratamento passa a
           <div class="cta-invite-head-text">
             <p class="cta-invite-kicker" id="ctaInviteTitle">Consulta investigativa · online</p>
             <p class="cta-invite-name">Nicole Carvalho</p>
-            <p class="cta-invite-cred">Biomédica · CRBM 26343 · vídeo · cerca de 2h</p>
+            <p class="cta-invite-cred">Biomédica · CRBM 26343</p>
           </div>
         </header>
 
