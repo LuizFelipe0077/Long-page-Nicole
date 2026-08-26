@@ -509,25 +509,30 @@
   /* ============================================
      INTRO VIDEO GATE — 30s assistidos
      Isolado: não redefine tokens/seletores do shell.
-     Durante o lock: scroll permitido só até #vgScrollHint.
+     Durante o lock: scroll só até o fim do hero (#vgScrollHint).
+     #vgRest some do layout (display:none) — sem faixa creme,
+     sem overscroll puxando o restante. Player usa svh (estável)
+     para não crescer quando a barra do browser some no scroll.
   ============================================ */
   html.vg-locked,
   html.vg-locked body {
-    overscroll-behavior: none;
+    overscroll-behavior-y: none;
+    overscroll-behavior-x: none;
+    /* body tem background inline (#faf8f5) — precisa !important no lock */
+    background: #2c2420 !important;
   }
   html.vg-locked body {
     width: 100%;
+    overflow-x: hidden;
   }
   html.vg-locked .site-header .vg-nav-lock {
     pointer-events: none;
     opacity: .42;
     cursor: not-allowed;
   }
+  /* Hard cut: zero altura no documento até os 30s */
   html.vg-locked #vgRest {
-    visibility: hidden;
-    pointer-events: none;
-    user-select: none;
-    -webkit-user-select: none;
+    display: none !important;
   }
   /* Durante o gate: seta indica que dá para deslizar até o timer */
   html.vg-locked #vgScrollHint {
@@ -537,8 +542,8 @@
   }
 
   #inicio.vg-hero {
+    /* svh = viewport “pequeno” (barra visível) — não muda ao rolar */
     min-height: 100svh;
-    min-height: 100dvh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -583,7 +588,8 @@
   */
   .vg-player {
     position: relative;
-    width: min(100%, 26.5rem, calc((100dvh - 13.5rem) * 9 / 16));
+    /* svh trava o tamanho ao abrir a página (não cresce no scroll) */
+    width: min(100%, 26.5rem, calc((100svh - 13.5rem) * 9 / 16));
     margin-inline: auto;
     aspect-ratio: 9 / 16;
     border-radius: 18px;
@@ -593,6 +599,10 @@
     box-shadow:
       0 28px 64px -22px rgba(0,0,0,.62),
       0 0 0 1px rgba(250,248,245,.04);
+  }
+  /* Congelamento explícito via JS (inline width) durante o gate */
+  html.vg-locked .vg-player.is-size-frozen {
+    max-width: none;
   }
   .vg-player video {
     display: block;
@@ -805,7 +815,7 @@
       padding-inline: 0;
     }
     .vg-player {
-      width: min(100%, calc((100dvh - 12.5rem) * 9 / 16));
+      width: min(100%, calc((100svh - 12.5rem) * 9 / 16));
       border-radius: 14px;
     }
     .vg-overlay-play-btn { width: 64px; height: 64px; }
@@ -817,7 +827,7 @@
   @media (min-width: 1024px) {
     .vg-shell { max-width: 27rem; }
     .vg-player {
-      width: min(100%, 27rem, calc((100dvh - 14rem) * 9 / 16));
+      width: min(100%, 27rem, calc((100svh - 14rem) * 9 / 16));
       border-radius: 20px;
     }
   }
@@ -1563,6 +1573,7 @@ Assim, você não precisa lembrar de tudo sozinha. O próprio tratamento passa a
   var seekingGuard = false;
   var lockScrollY = 0;
   var scrollbarComp = 0;
+  var touchStartY = 0;
   var milestones = { 10: false, 20: false, 30: false, complete: false };
   var impressionFired = false;
 
@@ -1622,13 +1633,38 @@ Assim, você não precisa lembrar de tudo sozinha. O próprio tratamento passa a
     }
   }
 
-  /** Scroll máximo durante o gate: fundo do #vgScrollHint (ou do hero). */
+  /** Congela a largura do player no 1º paint — imuniza contra dvh/svh/layout thrash. */
+  function freezePlayerSize() {
+    if (!player || unlocked) return;
+    player.classList.remove('is-size-frozen');
+    player.style.width = '';
+    player.style.maxWidth = '';
+    // Força reflow com a regra CSS (svh) antes de medir
+    void player.offsetWidth;
+    var w = player.getBoundingClientRect().width;
+    if (w > 0) {
+      var px = Math.round(w * 100) / 100 + 'px';
+      player.style.width = px;
+      player.style.maxWidth = px;
+      player.classList.add('is-size-frozen');
+    }
+  }
+
+  function unfreezePlayerSize() {
+    if (!player) return;
+    player.classList.remove('is-size-frozen');
+    player.style.width = '';
+    player.style.maxWidth = '';
+  }
+
+  /**
+   * Scroll máximo durante o gate = fim natural do documento
+   * (#vgRest está display:none — não há “resto” para puxar).
+   */
   function getGateScrollMax() {
-    var el = scrollHint || document.getElementById('inicio');
-    if (!el) return 0;
-    var absTop = el.getBoundingClientRect().top + (window.scrollY || window.pageYOffset || 0);
-    var bottom = absTop + el.offsetHeight;
-    return Math.max(0, Math.ceil(bottom - window.innerHeight + 8));
+    var doc = document.documentElement;
+    var sh = Math.max(doc.scrollHeight, document.body ? document.body.scrollHeight : 0);
+    return Math.max(0, Math.ceil(sh - window.innerHeight));
   }
 
   function clampGateScroll() {
@@ -1643,13 +1679,16 @@ Assim, você não precisa lembrar de tudo sozinha. O próprio tratamento passa a
     lockScrollY = window.scrollY || window.pageYOffset || 0;
     html.classList.add('vg-locked');
     html.classList.remove('vg-unlocked');
-    // Sem position:fixed — permite deslizar até o timer / #vgScrollHint
     if (rest) {
       rest.setAttribute('aria-hidden', 'true');
       try { rest.inert = true; } catch (e) {}
     }
     if (scrollHint) scrollHint.setAttribute('aria-hidden', 'false');
-    clampGateScroll();
+    // Medir depois do display:none do #vgRest (próximo frame)
+    requestAnimationFrame(function () {
+      freezePlayerSize();
+      clampGateScroll();
+    });
   }
 
   function unlockPage(fromStorage) {
@@ -1660,6 +1699,7 @@ Assim, você não precisa lembrar de tudo sozinha. O próprio tratamento passa a
     html.classList.remove('vg-locked');
     html.classList.add('vg-unlocked');
     applyScrollbarCompensation(false);
+    unfreezePlayerSize();
 
     if (rest) {
       rest.removeAttribute('aria-hidden');
@@ -1698,8 +1738,29 @@ Assim, você não precisa lembrar de tudo sozinha. O próprio tratamento passa a
     if (unlocked) return;
     var max = getGateScrollMax();
     var y = window.scrollY || window.pageYOffset || 0;
-    if (e.deltaY > 0 && y >= max - 0.5) e.preventDefault();
+    if (e.deltaY > 0 && y >= max - 0.5) {
+      e.preventDefault();
+      if (y > max) window.scrollTo(0, max);
+    }
     if (e.deltaY < 0 && y <= 0) e.preventDefault();
+  }
+
+  function onTouchStartGate(e) {
+    if (unlocked || !e.touches || !e.touches[0]) return;
+    touchStartY = e.touches[0].clientY;
+  }
+
+  function onTouchMoveGate(e) {
+    if (unlocked || !e.touches || !e.touches[0]) return;
+    var max = getGateScrollMax();
+    var y = window.scrollY || window.pageYOffset || 0;
+    var dy = touchStartY - e.touches[0].clientY; // >0 = scroll down
+    if (dy > 2 && y >= max - 0.5) {
+      e.preventDefault();
+      if (y !== max) window.scrollTo(0, max);
+    } else if (dy < -2 && y <= 0) {
+      e.preventDefault();
+    }
   }
 
   function onKeyGate(e) {
@@ -1717,25 +1778,34 @@ Assim, você não precisa lembrar de tudo sozinha. O próprio tratamento passa a
       window.scrollTo(0, 0);
       return;
     }
-    // Arrow/Page/Space: deixa o browser rolar e o clamp corrige
     var scrollKeys = ['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', ' ', 'Spacebar'];
     if (scrollKeys.indexOf(e.key) !== -1) {
       requestAnimationFrame(clampGateScroll);
     }
   }
 
+  function onResizeGate() {
+    if (unlocked) return;
+    freezePlayerSize();
+    clampGateScroll();
+  }
+
   function bindLockListeners() {
     window.addEventListener('scroll', clampGateScroll, { passive: true });
     window.addEventListener('wheel', onWheelGate, { passive: false });
+    window.addEventListener('touchstart', onTouchStartGate, { passive: true });
+    window.addEventListener('touchmove', onTouchMoveGate, { passive: false });
     window.addEventListener('keydown', onKeyGate, { passive: false });
-    window.addEventListener('resize', clampGateScroll, { passive: true });
+    window.addEventListener('resize', onResizeGate, { passive: true });
   }
 
   function unbindLockListeners() {
     window.removeEventListener('scroll', clampGateScroll);
     window.removeEventListener('wheel', onWheelGate);
+    window.removeEventListener('touchstart', onTouchStartGate);
+    window.removeEventListener('touchmove', onTouchMoveGate);
     window.removeEventListener('keydown', onKeyGate);
-    window.removeEventListener('resize', clampGateScroll);
+    window.removeEventListener('resize', onResizeGate);
   }
 
   function blockNav(e) {
