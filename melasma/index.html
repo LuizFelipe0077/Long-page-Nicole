@@ -543,6 +543,14 @@
     flex-direction: column;
     justify-content: center;
   }
+  .vg-hero-inner {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    min-height: 0;
+  }
   .vg-shell {
     width: 100%;
     /* Peça editorial vertical — não um stage 16:9 largo */
@@ -570,14 +578,14 @@
     max-width: 26rem;
   }
   /*
-    Arquivo real: 1440×2560 (9:16). As faixas pretas vinham do
-    container 16:9 + object-fit:contain — não do master.
-    Container agora segue a proporção nativa, com teto de altura
-    para caber no viewport junto com kicker/controles.
+    Arquivo real: 9:16. Reserva de chrome (header + copy +
+    controles + timer) precisa caber no viewport — senão, com
+    scroll lock, o contador some abaixo da dobra no mobile.
   */
   .vg-player {
     position: relative;
-    width: min(100%, 26.5rem, calc((100dvh - 13.5rem) * 9 / 16));
+    width: min(100%, 26.5rem, calc((100svh - 16rem) * 9 / 16));
+    max-height: calc(100svh - 16rem);
     margin-inline: auto;
     aspect-ratio: 9 / 16;
     border-radius: 18px;
@@ -592,8 +600,6 @@
     display: block;
     width: 100%;
     height: 100%;
-    /* Proporção do container = proporção do arquivo (9:16):
-       contain e cover equivalem; contain garante zero crop. */
     object-fit: contain;
     object-position: center center;
     background: #1a1512;
@@ -796,25 +802,99 @@
     .vg-overlay-play-btn { transition: none; }
   }
   @media (max-width: 640px) {
+    /*
+      Mobile / Instagram WebView: o player 9:16 não pode
+      ocupar a tela inteira — controles + timer do gate
+      precisam ficar na primeira dobra (scroll está lockado).
+    */
+    #inicio.vg-hero {
+      height: 100svh;
+      height: 100dvh;
+      max-height: 100svh;
+      max-height: 100dvh;
+      min-height: 100svh;
+      justify-content: stretch;
+      overflow: hidden;
+    }
+    .vg-hero-inner {
+      justify-content: flex-start;
+      padding: 4.25rem 1rem max(0.5rem, env(safe-area-inset-bottom, 0px)) !important;
+      box-sizing: border-box;
+      max-height: 100%;
+    }
     .vg-shell {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       max-width: 100%;
+      max-height: 100%;
+      min-height: 0;
       padding-inline: 0;
+      flex: 1 1 auto;
+    }
+    .vg-kicker {
+      margin: 0 0 .35rem;
+      flex: 0 0 auto;
+    }
+    .vg-lead {
+      margin: 0 0 .5rem;
+      font-size: clamp(1.05rem, 4.4vw, 1.3rem);
+      line-height: 1.28;
+      flex: 0 0 auto;
     }
     .vg-player {
-      /* Quase full-bleed horizontal; altura limitada pelo viewport útil */
-      width: min(100%, calc((100dvh - 12.5rem) * 9 / 16));
+      /* Altura limitada primeiro; largura segue o 9:16 */
+      flex: 0 1 auto;
+      width: auto;
+      height: min(46svh, calc(100svh - 19.5rem));
+      max-height: min(46svh, calc(100svh - 19.5rem));
+      max-width: 100%;
+      aspect-ratio: 9 / 16;
       border-radius: 14px;
     }
-    .vg-overlay-play-btn { width: 64px; height: 64px; }
-    .vg-lead { margin-bottom: .85rem; font-size: clamp(1.15rem, 5.2vw, 1.5rem); }
-    .vg-controls { gap: .55rem; }
+    .vg-overlay-play-btn { width: 58px; height: 58px; }
+    .vg-controls {
+      margin-top: .55rem;
+      gap: .5rem;
+      flex: 0 0 auto;
+    }
     .vg-btn { letter-spacing: .08em; font-size: 11px; }
-    .vg-scrub { max-width: 100%; }
+    .vg-scrub {
+      max-width: 100%;
+      margin-top: .45rem;
+      flex: 0 0 auto;
+    }
+    .vg-gate-status {
+      margin-top: .55rem;
+      min-height: 0;
+      gap: .2rem;
+      flex: 0 0 auto;
+    }
+    .vg-gate-timer {
+      font-size: clamp(1.35rem, 6.5vw, 1.75rem);
+    }
+    .vg-gate-hint {
+      font-size: 11px;
+      margin-top: 0;
+    }
+    #vgScrollHint {
+      padding: .35rem 0 .5rem;
+      flex: 0 0 auto;
+    }
+  }
+  @media (max-width: 640px) and (max-height: 720px) {
+    /* Telas curtas / Instagram com chrome alto */
+    .vg-lead { display: none; } /* kicker já comunica; prioriza timer */
+    .vg-player {
+      height: min(50svh, calc(100svh - 15.5rem));
+      max-height: min(50svh, calc(100svh - 15.5rem));
+    }
   }
   @media (min-width: 1024px) {
     .vg-shell { max-width: 27rem; }
     .vg-player {
-      width: min(100%, 27rem, calc((100dvh - 14rem) * 9 / 16));
+      width: min(100%, 27rem, calc((100svh - 15rem) * 9 / 16));
+      max-height: calc(100svh - 15rem);
       border-radius: 20px;
     }
   }
@@ -883,7 +963,7 @@
   nos primeiros 30s assistidos reais; scroll liberado após.
 ================================================ -->
 <section id="inicio" class="vg-hero hero-bg texture-overlay relative overflow-hidden" style="background: linear-gradient(160deg, #2c2420 0%, #3d2e26 40%, #4a3428 70%, #994f20 100%);" aria-label="Vídeo de introdução">
-  <div class="flex-1 flex items-center justify-center px-4 sm:px-6 md:px-12 pt-24 pb-10 md:pt-28 md:pb-12">
+  <div class="vg-hero-inner flex-1 flex items-center justify-center px-4 sm:px-6 md:px-12 pt-24 pb-10 md:pt-28 md:pb-12">
     <div id="hero-content" class="vg-shell fade-in">
       <p class="vg-kicker">Controle duradouro do melasma</p>
       <h2 class="vg-lead">Antes de decidir se este protocolo é para você, entenda isso.</h2>
