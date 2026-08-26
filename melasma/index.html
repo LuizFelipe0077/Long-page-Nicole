@@ -509,12 +509,11 @@
   /* ============================================
      INTRO VIDEO GATE — 30s assistidos
      Isolado: não redefine tokens/seletores do shell.
+     Durante o lock: scroll permitido só até #vgScrollHint.
   ============================================ */
   html.vg-locked,
   html.vg-locked body {
-    overflow: hidden !important;
     overscroll-behavior: none;
-    touch-action: none;
   }
   html.vg-locked body {
     width: 100%;
@@ -530,9 +529,10 @@
     user-select: none;
     -webkit-user-select: none;
   }
+  /* Durante o gate: seta indica que dá para deslizar até o timer */
   html.vg-locked #vgScrollHint {
-    opacity: 0;
-    visibility: hidden;
+    opacity: .75;
+    visibility: visible;
     pointer-events: none;
   }
 
@@ -549,7 +549,6 @@
     flex-direction: column;
     justify-content: center;
     width: 100%;
-    min-height: 0;
   }
   .vg-shell {
     width: 100%;
@@ -578,14 +577,13 @@
     max-width: 26rem;
   }
   /*
-    Arquivo real: 9:16. Reserva de chrome (header + copy +
-    controles + timer) precisa caber no viewport — senão, com
-    scroll lock, o contador some abaixo da dobra no mobile.
+    Arquivo real: 1440×2560 (9:16). As faixas pretas vinham do
+    container 16:9 + object-fit:contain — não do master.
+    Container segue a proporção nativa.
   */
   .vg-player {
     position: relative;
-    width: min(100%, 26.5rem, calc((100svh - 16rem) * 9 / 16));
-    max-height: calc(100svh - 16rem);
+    width: min(100%, 26.5rem, calc((100dvh - 13.5rem) * 9 / 16));
     margin-inline: auto;
     aspect-ratio: 9 / 16;
     border-radius: 18px;
@@ -802,99 +800,24 @@
     .vg-overlay-play-btn { transition: none; }
   }
   @media (max-width: 640px) {
-    /*
-      Mobile / Instagram WebView: o player 9:16 não pode
-      ocupar a tela inteira — controles + timer do gate
-      precisam ficar na primeira dobra (scroll está lockado).
-    */
-    #inicio.vg-hero {
-      height: 100svh;
-      height: 100dvh;
-      max-height: 100svh;
-      max-height: 100dvh;
-      min-height: 100svh;
-      justify-content: stretch;
-      overflow: hidden;
-    }
-    .vg-hero-inner {
-      justify-content: flex-start;
-      padding: 4.25rem 1rem max(0.5rem, env(safe-area-inset-bottom, 0px)) !important;
-      box-sizing: border-box;
-      max-height: 100%;
-    }
     .vg-shell {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
       max-width: 100%;
-      max-height: 100%;
-      min-height: 0;
       padding-inline: 0;
-      flex: 1 1 auto;
-    }
-    .vg-kicker {
-      margin: 0 0 .35rem;
-      flex: 0 0 auto;
-    }
-    .vg-lead {
-      margin: 0 0 .5rem;
-      font-size: clamp(1.05rem, 4.4vw, 1.3rem);
-      line-height: 1.28;
-      flex: 0 0 auto;
     }
     .vg-player {
-      /* Altura limitada primeiro; largura segue o 9:16 */
-      flex: 0 1 auto;
-      width: auto;
-      height: min(46svh, calc(100svh - 19.5rem));
-      max-height: min(46svh, calc(100svh - 19.5rem));
-      max-width: 100%;
-      aspect-ratio: 9 / 16;
+      width: min(100%, calc((100dvh - 12.5rem) * 9 / 16));
       border-radius: 14px;
     }
-    .vg-overlay-play-btn { width: 58px; height: 58px; }
-    .vg-controls {
-      margin-top: .55rem;
-      gap: .5rem;
-      flex: 0 0 auto;
-    }
+    .vg-overlay-play-btn { width: 64px; height: 64px; }
+    .vg-lead { margin-bottom: .85rem; font-size: clamp(1.15rem, 5.2vw, 1.5rem); }
+    .vg-controls { gap: .55rem; }
     .vg-btn { letter-spacing: .08em; font-size: 11px; }
-    .vg-scrub {
-      max-width: 100%;
-      margin-top: .45rem;
-      flex: 0 0 auto;
-    }
-    .vg-gate-status {
-      margin-top: .55rem;
-      min-height: 0;
-      gap: .2rem;
-      flex: 0 0 auto;
-    }
-    .vg-gate-timer {
-      font-size: clamp(1.35rem, 6.5vw, 1.75rem);
-    }
-    .vg-gate-hint {
-      font-size: 11px;
-      margin-top: 0;
-    }
-    #vgScrollHint {
-      padding: .35rem 0 .5rem;
-      flex: 0 0 auto;
-    }
-  }
-  @media (max-width: 640px) and (max-height: 720px) {
-    /* Telas curtas / Instagram com chrome alto */
-    .vg-lead { display: none; } /* kicker já comunica; prioriza timer */
-    .vg-player {
-      height: min(50svh, calc(100svh - 15.5rem));
-      max-height: min(50svh, calc(100svh - 15.5rem));
-    }
+    .vg-scrub { max-width: 100%; }
   }
   @media (min-width: 1024px) {
     .vg-shell { max-width: 27rem; }
     .vg-player {
-      width: min(100%, 27rem, calc((100svh - 15rem) * 9 / 16));
-      max-height: calc(100svh - 15rem);
+      width: min(100%, 27rem, calc((100dvh - 14rem) * 9 / 16));
       border-radius: 20px;
     }
   }
@@ -1699,21 +1622,34 @@ Assim, você não precisa lembrar de tudo sozinha. O próprio tratamento passa a
     }
   }
 
+  /** Scroll máximo durante o gate: fundo do #vgScrollHint (ou do hero). */
+  function getGateScrollMax() {
+    var el = scrollHint || document.getElementById('inicio');
+    if (!el) return 0;
+    var absTop = el.getBoundingClientRect().top + (window.scrollY || window.pageYOffset || 0);
+    var bottom = absTop + el.offsetHeight;
+    return Math.max(0, Math.ceil(bottom - window.innerHeight + 8));
+  }
+
+  function clampGateScroll() {
+    if (unlocked) return;
+    var max = getGateScrollMax();
+    var y = window.scrollY || window.pageYOffset || 0;
+    if (y > max) window.scrollTo(0, max);
+    else if (y < 0) window.scrollTo(0, 0);
+  }
+
   function lockPage() {
     lockScrollY = window.scrollY || window.pageYOffset || 0;
     html.classList.add('vg-locked');
     html.classList.remove('vg-unlocked');
-    applyScrollbarCompensation(true);
-    document.body.style.position = 'fixed';
-    document.body.style.top = '-' + lockScrollY + 'px';
-    document.body.style.left = '0';
-    document.body.style.right = '0';
-    document.body.style.width = '100%';
+    // Sem position:fixed — permite deslizar até o timer / #vgScrollHint
     if (rest) {
       rest.setAttribute('aria-hidden', 'true');
       try { rest.inert = true; } catch (e) {}
     }
-    if (scrollHint) scrollHint.setAttribute('aria-hidden', 'true');
+    if (scrollHint) scrollHint.setAttribute('aria-hidden', 'false');
+    clampGateScroll();
   }
 
   function unlockPage(fromStorage) {
@@ -1723,14 +1659,7 @@ Assim, você não precisa lembrar de tudo sozinha. O próprio tratamento passa a
 
     html.classList.remove('vg-locked');
     html.classList.add('vg-unlocked');
-
-    document.body.style.position = '';
-    document.body.style.top = '';
-    document.body.style.left = '';
-    document.body.style.right = '';
-    document.body.style.width = '';
     applyScrollbarCompensation(false);
-    window.scrollTo(0, lockScrollY);
 
     if (rest) {
       rest.removeAttribute('aria-hidden');
@@ -1765,36 +1694,48 @@ Assim, você não precisa lembrar de tudo sozinha. O próprio tratamento passa a
     }
   }
 
-  function preventScrollKeys(e) {
+  function onWheelGate(e) {
     if (unlocked) return;
-    var keys = ['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' ', 'Spacebar'];
-    if (keys.indexOf(e.key) !== -1) {
-      var tag = (e.target && e.target.tagName) || '';
-      if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'BUTTON' || tag === 'SELECT') return;
+    var max = getGateScrollMax();
+    var y = window.scrollY || window.pageYOffset || 0;
+    if (e.deltaY > 0 && y >= max - 0.5) e.preventDefault();
+    if (e.deltaY < 0 && y <= 0) e.preventDefault();
+  }
+
+  function onKeyGate(e) {
+    if (unlocked) return;
+    var tag = (e.target && e.target.tagName) || '';
+    if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'BUTTON' || tag === 'SELECT') return;
+    var max = getGateScrollMax();
+    if (e.key === 'End') {
       e.preventDefault();
+      window.scrollTo(0, max);
+      return;
+    }
+    if (e.key === 'Home') {
+      e.preventDefault();
+      window.scrollTo(0, 0);
+      return;
+    }
+    // Arrow/Page/Space: deixa o browser rolar e o clamp corrige
+    var scrollKeys = ['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', ' ', 'Spacebar'];
+    if (scrollKeys.indexOf(e.key) !== -1) {
+      requestAnimationFrame(clampGateScroll);
     }
   }
 
-  function preventWheel(e) {
-    if (!unlocked) e.preventDefault();
-  }
-
-  function preventTouchScroll(e) {
-    if (unlocked) return;
-    if (e.target && player.contains(e.target)) return;
-    e.preventDefault();
-  }
-
   function bindLockListeners() {
-    window.addEventListener('wheel', preventWheel, { passive: false });
-    window.addEventListener('touchmove', preventTouchScroll, { passive: false });
-    window.addEventListener('keydown', preventScrollKeys, { passive: false });
+    window.addEventListener('scroll', clampGateScroll, { passive: true });
+    window.addEventListener('wheel', onWheelGate, { passive: false });
+    window.addEventListener('keydown', onKeyGate, { passive: false });
+    window.addEventListener('resize', clampGateScroll, { passive: true });
   }
 
   function unbindLockListeners() {
-    window.removeEventListener('wheel', preventWheel);
-    window.removeEventListener('touchmove', preventTouchScroll);
-    window.removeEventListener('keydown', preventScrollKeys);
+    window.removeEventListener('scroll', clampGateScroll);
+    window.removeEventListener('wheel', onWheelGate);
+    window.removeEventListener('keydown', onKeyGate);
+    window.removeEventListener('resize', clampGateScroll);
   }
 
   function blockNav(e) {
