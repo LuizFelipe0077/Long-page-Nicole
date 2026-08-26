@@ -505,6 +505,319 @@
     #ctaMainBtn.cta-ready-pulse { animation:none; }
     .cta-pillar:hover { box-shadow:none; }
   }
+
+  /* ============================================
+     INTRO VIDEO GATE — 30s assistidos
+     Isolado: não redefine tokens/seletores do shell.
+  ============================================ */
+  html.vg-locked,
+  html.vg-locked body {
+    overflow: hidden !important;
+    overscroll-behavior: none;
+    touch-action: none;
+  }
+  html.vg-locked body {
+    width: 100%;
+  }
+  html.vg-locked .site-header .vg-nav-lock {
+    pointer-events: none;
+    opacity: .42;
+    cursor: not-allowed;
+  }
+  html.vg-locked #vgRest {
+    visibility: hidden;
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  html.vg-locked #vgScrollHint {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  #inicio.vg-hero {
+    min-height: 100svh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .vg-shell {
+    width: 100%;
+    /* Peça editorial vertical — não um stage 16:9 largo */
+    max-width: min(100%, 26.5rem);
+    margin: 0 auto;
+    text-align: center;
+  }
+  .vg-kicker {
+    font-family: Jost, sans-serif;
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: #c47a4e !important;
+    margin: 0 0 .85rem;
+  }
+  .vg-lead {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-style: italic;
+    font-size: clamp(1.25rem, 3.6vw, 1.85rem);
+    line-height: 1.35;
+    color: #e8ddd4;
+    margin: 0 auto 1.1rem;
+    max-width: 26rem;
+  }
+  /*
+    Arquivo real: 1440×2560 (9:16). As faixas pretas vinham do
+    container 16:9 + object-fit:contain — não do master.
+    Container agora segue a proporção nativa, com teto de altura
+    para caber no viewport junto com kicker/controles.
+  */
+  .vg-player {
+    position: relative;
+    width: min(100%, 26.5rem, calc((100dvh - 13.5rem) * 9 / 16));
+    margin-inline: auto;
+    aspect-ratio: 9 / 16;
+    border-radius: 18px;
+    overflow: hidden;
+    background: #1a1512;
+    border: 1px solid rgba(196,122,78,.35);
+    box-shadow:
+      0 28px 64px -22px rgba(0,0,0,.62),
+      0 0 0 1px rgba(250,248,245,.04);
+  }
+  .vg-player video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    /* Proporção do container = proporção do arquivo (9:16):
+       contain e cover equivalem; contain garante zero crop. */
+    object-fit: contain;
+    object-position: center center;
+    background: #1a1512;
+  }
+  .vg-overlay-play {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(180deg, rgba(26,21,18,.15), rgba(26,21,18,.45));
+    border: 0;
+    cursor: pointer;
+    padding: 0;
+    z-index: 3;
+    transition: opacity .35s ease, visibility .35s ease;
+  }
+  .vg-overlay-play[hidden] {
+    display: none !important;
+  }
+  .vg-overlay-play-btn {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    border: 1px solid rgba(250,248,245,.35);
+    background: rgba(44,36,32,.72);
+    color: #faf8f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 12px 28px -10px rgba(0,0,0,.5);
+    transition: transform .25s ease, background .25s ease;
+  }
+  .vg-overlay-play:hover .vg-overlay-play-btn,
+  .vg-overlay-play:focus-visible .vg-overlay-play-btn {
+    transform: scale(1.05);
+    background: rgba(153,79,32,.88);
+  }
+  .vg-overlay-play:focus-visible {
+    outline: none;
+  }
+  .vg-overlay-play:focus-visible .vg-overlay-play-btn {
+    outline: 2px solid #c47a4e;
+    outline-offset: 3px;
+  }
+  .vg-overlay-play-btn svg { width: 28px; height: 28px; margin-left: 3px; }
+  .vg-loading,
+  .vg-error {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    text-align: center;
+    font-family: Jost, sans-serif;
+    font-size: 13px;
+    font-weight: 300;
+    letter-spacing: .04em;
+    color: rgba(250,248,245,.78);
+    background: rgba(26,21,18,.82);
+    z-index: 4;
+  }
+  .vg-loading[hidden],
+  .vg-error[hidden] { display: none !important; }
+  .vg-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .75rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+  }
+  .vg-btn {
+    appearance: none;
+    border: 1px solid rgba(196,122,78,.4);
+    background: rgba(250,248,245,.06);
+    color: #faf8f5;
+    border-radius: 999px;
+    min-height: 44px;
+    min-width: 44px;
+    padding: .55rem 1.1rem;
+    font-family: Jost, sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background .25s ease, border-color .25s ease, opacity .25s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .vg-btn:hover,
+  .vg-btn:focus-visible {
+    background: rgba(153,79,32,.85);
+    border-color: rgba(196,122,78,.7);
+    outline: none;
+  }
+  .vg-btn:focus-visible {
+    outline: 2px solid #c47a4e;
+    outline-offset: 2px;
+  }
+  .vg-btn[aria-pressed="true"] {
+    background: #994f20;
+    border-color: #c47a4e;
+  }
+  .vg-btn svg { width: 18px; height: 18px; display: block; }
+  .vg-btn-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: .55rem;
+  }
+  .vg-speed {
+    display: none;
+    align-items: center;
+    gap: .4rem;
+  }
+  html.vg-unlocked .vg-speed { display: inline-flex; }
+  .vg-scrub {
+    display: none;
+    width: 100%;
+    max-width: 520px;
+    margin: .85rem auto 0;
+    accent-color: #994f20;
+    height: 4px;
+    cursor: pointer;
+  }
+  html.vg-unlocked .vg-scrub { display: block; }
+  .vg-gate-status {
+    margin-top: 1.1rem;
+    min-height: 3.2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: .35rem;
+  }
+  .vg-gate-label {
+    font-family: Jost, sans-serif;
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: rgba(201,184,170,.78);
+    margin: 0;
+  }
+  .vg-gate-timer {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 5vw, 2.4rem);
+    font-weight: 400;
+    letter-spacing: .06em;
+    color: #faf8f5;
+    margin: 0;
+    font-variant-numeric: tabular-nums;
+  }
+  .vg-gate-done {
+    font-family: Jost, sans-serif;
+    font-size: 13px;
+    font-weight: 300;
+    letter-spacing: .08em;
+    color: #c47a4e;
+    margin: 0;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity .45s ease, transform .45s ease;
+  }
+  .vg-gate-done.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .vg-gate-hint {
+    font-family: Jost, sans-serif;
+    font-size: 12px;
+    font-weight: 300;
+    color: rgba(201,184,170,.7);
+    margin: .15rem 0 0;
+  }
+  #vgScrollHint {
+    display: flex;
+    justify-content: center;
+    padding: 1.25rem 0 1.5rem;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .5s ease, visibility .5s ease;
+  }
+  html.vg-unlocked #vgScrollHint {
+    opacity: 1;
+    visibility: visible;
+  }
+  #vgScrollHint svg {
+    animation: vgBounce 1.6s ease-in-out infinite;
+  }
+  @keyframes vgBounce {
+    0%, 100% { transform: translateY(0); opacity: .7; }
+    50% { transform: translateY(6px); opacity: 1; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #vgScrollHint svg { animation: none; }
+    .vg-gate-done { transition: none; }
+    .vg-overlay-play-btn { transition: none; }
+  }
+  @media (max-width: 640px) {
+    .vg-shell {
+      max-width: 100%;
+      padding-inline: 0;
+    }
+    .vg-player {
+      /* Quase full-bleed horizontal; altura limitada pelo viewport útil */
+      width: min(100%, calc((100dvh - 12.5rem) * 9 / 16));
+      border-radius: 14px;
+    }
+    .vg-overlay-play-btn { width: 64px; height: 64px; }
+    .vg-lead { margin-bottom: .85rem; font-size: clamp(1.15rem, 5.2vw, 1.5rem); }
+    .vg-controls { gap: .55rem; }
+    .vg-btn { letter-spacing: .08em; font-size: 11px; }
+    .vg-scrub { max-width: 100%; }
+  }
+  @media (min-width: 1024px) {
+    .vg-shell { max-width: 27rem; }
+    .vg-player {
+      width: min(100%, 27rem, calc((100dvh - 14rem) * 9 / 16));
+      border-radius: 20px;
+    }
+  }
 </style>
 
 <!-- ================================================
@@ -531,6 +844,19 @@
 <script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body class="antialiased" style="background-color:#faf8f5; color:#2c2420;">
+<script>
+(function () {
+  try {
+    if (sessionStorage.getItem('up_melasma_vg_unlocked_v1') === '1') {
+      document.documentElement.classList.add('vg-unlocked');
+    } else {
+      document.documentElement.classList.add('vg-locked');
+    }
+  } catch (e) {
+    document.documentElement.classList.add('vg-locked');
+  }
+})();
+</script>
 
 <!-- NAV -->
 <header class="site-header fixed top-0 inset-x-0 z-50">
@@ -541,63 +867,84 @@
     </a>
     <div class="flex items-center gap-6">
       <ul class="hidden md:flex items-center gap-7 text-sm font-sans font-light tracking-wide">
-        <li><a href="#consulta" class="nav-link tap inline-flex items-center transition-colors">Como Funciona</a></li>
-        <li><a href="#historias" class="nav-link tap inline-flex items-center transition-colors">Histórias</a></li>
-        <li><a href="#faq" class="nav-link tap inline-flex items-center transition-colors">Perguntas</a></li>
+        <li><a href="#consulta" class="nav-link tap inline-flex items-center transition-colors vg-nav-lock" data-vg-nav>Como Funciona</a></li>
+        <li><a href="#historias" class="nav-link tap inline-flex items-center transition-colors vg-nav-lock" data-vg-nav>Histórias</a></li>
+        <li><a href="#faq" class="nav-link tap inline-flex items-center transition-colors vg-nav-lock" data-vg-nav>Perguntas</a></li>
       </ul>
-      <a href="#cta-consulta" class="tap inline-flex items-center gap-2 font-sans font-light text-xs uppercase tracking-widest px-5 py-2.5 rounded-lg transition-colors duration-300"
+      <a href="#cta-consulta" class="tap inline-flex items-center gap-2 font-sans font-light text-xs uppercase tracking-widest px-5 py-2.5 rounded-lg transition-colors duration-300 vg-nav-lock" data-vg-nav
          style="background-color:#994f20; color:#faf8f5; letter-spacing:0.14em;">Consulta</a>
     </div>
   </nav>
 </header>
 
 <!-- ================================================
-  1. HERO — Continuidade
-  Missão 5: título reescrito para eliminar a
-  ambiguidade "o tratamento também falha?". Agora nomeia
-  explicitamente "tratamentos estéticos tradicionais"
-  como sujeito da pergunta — a curiosidade permanece,
-  mas sem risco de má interpretação.
+  1. HERO + INTRO VIDEO GATE
+  Vídeo HTML5 customizado (não YouTube): seek bloqueado
+  nos primeiros 30s assistidos reais; scroll liberado após.
 ================================================ -->
-<section id="inicio" class="hero-bg texture-overlay min-h-screen flex flex-col relative overflow-hidden" style="background: linear-gradient(160deg, #2c2420 0%, #3d2e26 40%, #4a3428 70%, #994f20 100%);">
-  <div class="flex-1 flex items-center justify-center px-6 md:px-12 pt-28 pb-16 md:pt-32 md:pb-20">
-    <div id="hero-content" class="max-w-3xl mx-auto text-center fade-in">
-      <p class="section-label mb-6" style="color:#c47a4e !important;">Tratamento 100% à distância para o mundo inteiro </p>
-      <div class="terracota-rule mx-auto mb-8" style="background-color:#994f20;"></div>
-      <h2 class="font-serif text-2xl md:text-3xl font-light italic leading-relaxed mb-6" style="color:#e8ddd4;">
-        Por que o melasma volta depois que os tratamentos<br/>estéticos tradicionais parecem funcionar?
-      </h2>
-      <p class="font-sans font-light text-base md:text-lg leading-relaxed max-w-xl mx-auto mb-10" style="color:#c9b8aa; text-align:justify; text-indent:2em;">
-        Você provavelmente já ouviu explicações diferentes para essa pergunta. Neste vídeo, eu mostro por que elas contam apenas parte da história e por que compreender o melasma exige olhar além da pele.
-      </p>
-      <div class="hero-video-wrap mx-auto mb-6" style="max-width:600px; width:100%;">
-        <p class="section-label mb-4" style="color:#c47a4e !important;">Assista antes de continuar</p>
-        <div class="hero-video-frame" style="position:relative; width:100%; padding-bottom:56.25%; border-radius:14px; overflow:hidden; border:1px solid rgba(196,122,78,0.35); box-shadow:0 24px 60px -20px rgba(0,0,0,0.6); background-color:#1a1512;">
-          <iframe
-            id="hero-video"
-            src="https://www.youtube.com/embed/KYi1ledXbUQ?si=sYRck2QfNvz0ZR2n&enablejsapi=1&rel=0&modestbranding=1&playsinline=1&cc_load_policy=0"
-            title="Método Matriz do Melasma — Introdução"
-            style="position:absolute; inset:0; width:100%; height:100%; border:0;"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen
-            loading="lazy"
-          ></iframe>
+<section id="inicio" class="vg-hero hero-bg texture-overlay relative overflow-hidden" style="background: linear-gradient(160deg, #2c2420 0%, #3d2e26 40%, #4a3428 70%, #994f20 100%);" aria-label="Vídeo de introdução">
+  <div class="flex-1 flex items-center justify-center px-4 sm:px-6 md:px-12 pt-24 pb-10 md:pt-28 md:pb-12">
+    <div id="hero-content" class="vg-shell fade-in">
+      <p class="vg-kicker">Controle duradouro do melasma</p>
+      <h2 class="vg-lead">Antes de decidir se este protocolo é para você, entenda isso.</h2>
+
+      <div class="vg-player" id="vgPlayer" data-gate-seconds="30">
+        <video
+          id="vgVideo"
+          playsinline
+          webkit-playsinline
+          preload="metadata"
+          poster="/melasma/videos/intro-protocolo-poster.jpeg"
+          controlslist="nodownload noplaybackrate noremoteplayback"
+          disablePictureInPicture
+          disableRemotePlayback
+          aria-label="Vídeo de introdução ao protocolo de melasma">
+          <source src="/melasma/videos/intro-protocolo.mp4" type="video/mp4" />
+        </video>
+
+        <div class="vg-loading" id="vgLoading" hidden>Preparando o vídeo…</div>
+        <div class="vg-error" id="vgError" hidden role="alert">
+          Não foi possível carregar o vídeo. Verifique se o arquivo existe em /melasma/videos/intro-protocolo.mp4
         </div>
+
+        <button type="button" class="vg-overlay-play" id="vgBigPlay" aria-label="Assistir ao vídeo">
+          <span class="vg-overlay-play-btn" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </span>
+        </button>
+      </div>
+
+      <div class="vg-controls" id="vgControls">
+        <button type="button" class="vg-btn vg-btn-icon" id="vgPlayPause" aria-label="Reproduzir">
+          <svg id="vgIconPlay" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+          <svg id="vgIconPause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" hidden><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>
+        </button>
+        <div class="vg-speed" id="vgSpeed" role="group" aria-label="Velocidade de reprodução" hidden>
+          <button type="button" class="vg-btn" data-rate="1" aria-pressed="true">1x</button>
+          <button type="button" class="vg-btn" data-rate="1.25" aria-pressed="false">1.25x</button>
+          <button type="button" class="vg-btn" data-rate="1.5" aria-pressed="false">1.5x</button>
+        </div>
+      </div>
+
+      <input type="range" class="vg-scrub" id="vgScrub" min="0" max="0" step="0.1" value="0" aria-label="Progresso do vídeo" hidden disabled />
+
+      <div class="vg-gate-status" id="vgGateStatus" aria-live="polite">
+        <p class="vg-gate-label" id="vgGateLabel">Continue assistindo — liberação em</p>
+        <p class="vg-gate-timer" id="vgGateTimer">00:30</p>
+        <p class="vg-gate-done" id="vgGateDone" hidden>✓ Conteúdo liberado</p>
+        <p class="vg-gate-hint" id="vgGateHint">O tempo conta apenas enquanto o vídeo está em reprodução.</p>
       </div>
     </div>
   </div>
-  <div class="flex justify-center pb-8 animate-bounce">
+  <div id="vgScrollHint" aria-hidden="true">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c9b8aa" stroke-width="1.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
   </div>
 </section>
 
+<div id="vgRest">
 
 <!-- ================================================
   2. RECONHECIMENTO — missão única: identificação
-  Missão 9: reconhecimento real, não agitação. Frases
-  factuais, sem dramatização, sem cadência de copy de
-  resposta direta. Nenhuma exploração da dor.
 ================================================ -->
 <section id="reconhecimento" class="py-16 md:py-20 px-6 md:px-12" style="background-color:#f2ece4;">
   <div class="max-w-2xl mx-auto text-center fade-in">
@@ -1174,6 +1521,395 @@ Assim, você não precisa lembrar de tudo sozinha. O próprio tratamento passa a
   </div>
 </footer>
 
+</div><!-- /#vgRest -->
+
+<!-- ================================================
+  INTRO VIDEO GATE — player HTML5 + bloqueio 30s
+  Modular: não depende dos outros scripts além de
+  dataLayer/fbq já existentes na página.
+================================================ -->
+<script>
+(function () {
+  'use strict';
+
+  var GATE_SECONDS = 30;
+  var STORAGE_KEY = 'up_melasma_vg_unlocked_v1';
+  var html = document.documentElement;
+  var video = document.getElementById('vgVideo');
+  var player = document.getElementById('vgPlayer');
+  var rest = document.getElementById('vgRest');
+  if (!video || !player) return;
+
+  var bigPlay = document.getElementById('vgBigPlay');
+  var playPause = document.getElementById('vgPlayPause');
+  var iconPlay = document.getElementById('vgIconPlay');
+  var iconPause = document.getElementById('vgIconPause');
+  var speedWrap = document.getElementById('vgSpeed');
+  var scrub = document.getElementById('vgScrub');
+  var gateLabel = document.getElementById('vgGateLabel');
+  var gateTimer = document.getElementById('vgGateTimer');
+  var gateDone = document.getElementById('vgGateDone');
+  var gateHint = document.getElementById('vgGateHint');
+  var loadingEl = document.getElementById('vgLoading');
+  var errorEl = document.getElementById('vgError');
+  var scrollHint = document.getElementById('vgScrollHint');
+
+  var unlocked = false;
+  var watchedMax = 0;
+  var lastValidTime = 0;
+  var seekingGuard = false;
+  var lockScrollY = 0;
+  var scrollbarComp = 0;
+  var milestones = { 10: false, 20: false, 30: false, complete: false };
+  var impressionFired = false;
+
+  function track(eventName, params, isStandard) {
+    params = params || {};
+    window.dataLayer = window.dataLayer || [];
+    var payload = { event: eventName };
+    for (var k in params) {
+      if (Object.prototype.hasOwnProperty.call(params, k)) payload[k] = params[k];
+    }
+    window.dataLayer.push(payload);
+    if (typeof window.fbq === 'function') {
+      try {
+        window.fbq(isStandard ? 'track' : 'trackCustom', eventName, params);
+      } catch (err) {}
+    }
+  }
+
+  function pad2(n) {
+    return (n < 10 ? '0' : '') + n;
+  }
+
+  function formatRemain(sec) {
+    var s = Math.max(0, Math.ceil(sec));
+    return pad2(Math.floor(s / 60)) + ':' + pad2(s % 60);
+  }
+
+  function updateTimerUI() {
+    if (unlocked) return;
+    var remain = Math.max(0, GATE_SECONDS - watchedMax);
+    if (gateTimer) gateTimer.textContent = formatRemain(remain);
+  }
+
+  function setPlayingUI(isPlaying) {
+    if (iconPlay) iconPlay.hidden = !!isPlaying;
+    if (iconPause) iconPause.hidden = !isPlaying;
+    if (playPause) playPause.setAttribute('aria-label', isPlaying ? 'Pausar' : 'Reproduzir');
+    if (bigPlay) {
+      if (isPlaying) bigPlay.hidden = true;
+      else if (!unlocked || video.paused) bigPlay.hidden = false;
+    }
+  }
+
+  function applyScrollbarCompensation(on) {
+    if (on) {
+      scrollbarComp = Math.max(0, window.innerWidth - html.clientWidth);
+      if (scrollbarComp > 0) {
+        document.body.style.paddingRight = scrollbarComp + 'px';
+        var header = document.querySelector('.site-header');
+        if (header) header.style.paddingRight = scrollbarComp + 'px';
+      }
+    } else {
+      document.body.style.paddingRight = '';
+      var headerOff = document.querySelector('.site-header');
+      if (headerOff) headerOff.style.paddingRight = '';
+      scrollbarComp = 0;
+    }
+  }
+
+  function lockPage() {
+    lockScrollY = window.scrollY || window.pageYOffset || 0;
+    html.classList.add('vg-locked');
+    html.classList.remove('vg-unlocked');
+    applyScrollbarCompensation(true);
+    document.body.style.position = 'fixed';
+    document.body.style.top = '-' + lockScrollY + 'px';
+    document.body.style.left = '0';
+    document.body.style.right = '0';
+    document.body.style.width = '100%';
+    if (rest) {
+      rest.setAttribute('aria-hidden', 'true');
+      try { rest.inert = true; } catch (e) {}
+    }
+    if (scrollHint) scrollHint.setAttribute('aria-hidden', 'true');
+  }
+
+  function unlockPage(fromStorage) {
+    if (unlocked) return;
+    unlocked = true;
+    unbindLockListeners();
+
+    html.classList.remove('vg-locked');
+    html.classList.add('vg-unlocked');
+
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.left = '';
+    document.body.style.right = '';
+    document.body.style.width = '';
+    applyScrollbarCompensation(false);
+    window.scrollTo(0, lockScrollY);
+
+    if (rest) {
+      rest.removeAttribute('aria-hidden');
+      try { rest.inert = false; } catch (e2) {}
+    }
+    if (scrollHint) scrollHint.setAttribute('aria-hidden', 'false');
+
+    if (speedWrap) {
+      speedWrap.hidden = false;
+    }
+    if (scrub) {
+      scrub.hidden = false;
+      scrub.disabled = false;
+    }
+    if (gateLabel) gateLabel.hidden = true;
+    if (gateTimer) gateTimer.hidden = true;
+    if (gateHint) gateHint.hidden = true;
+    if (gateDone) {
+      gateDone.hidden = false;
+      requestAnimationFrame(function () {
+        gateDone.classList.add('is-visible');
+      });
+    }
+
+    try {
+      sessionStorage.setItem(STORAGE_KEY, '1');
+    } catch (err) {}
+
+    if (!fromStorage) {
+      track('video_30s_unlocked', { watched: Math.round(watchedMax) }, false);
+      track('scroll_unlocked', {}, false);
+    }
+  }
+
+  function preventScrollKeys(e) {
+    if (unlocked) return;
+    var keys = ['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' ', 'Spacebar'];
+    if (keys.indexOf(e.key) !== -1) {
+      var tag = (e.target && e.target.tagName) || '';
+      if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'BUTTON' || tag === 'SELECT') return;
+      e.preventDefault();
+    }
+  }
+
+  function preventWheel(e) {
+    if (!unlocked) e.preventDefault();
+  }
+
+  function preventTouchScroll(e) {
+    if (unlocked) return;
+    if (e.target && player.contains(e.target)) return;
+    e.preventDefault();
+  }
+
+  function bindLockListeners() {
+    window.addEventListener('wheel', preventWheel, { passive: false });
+    window.addEventListener('touchmove', preventTouchScroll, { passive: false });
+    window.addEventListener('keydown', preventScrollKeys, { passive: false });
+  }
+
+  function unbindLockListeners() {
+    window.removeEventListener('wheel', preventWheel);
+    window.removeEventListener('touchmove', preventTouchScroll);
+    window.removeEventListener('keydown', preventScrollKeys);
+  }
+
+  function blockNav(e) {
+    if (unlocked) return;
+    e.preventDefault();
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll('[data-vg-nav]'), function (a) {
+    a.addEventListener('click', blockNav);
+  });
+
+  function playVideo() {
+    var p = video.play();
+    if (p && typeof p.then === 'function') {
+      p.then(function () {
+        setPlayingUI(true);
+        if (bigPlay) bigPlay.hidden = true;
+      }).catch(function () {
+        setPlayingUI(false);
+        if (bigPlay) bigPlay.hidden = false;
+      });
+    }
+  }
+
+  function togglePlay() {
+    if (video.paused) playVideo();
+    else video.pause();
+  }
+
+  if (bigPlay) bigPlay.addEventListener('click', function () { playVideo(); });
+  if (playPause) playPause.addEventListener('click', togglePlay);
+
+  video.addEventListener('play', function () {
+    setPlayingUI(true);
+    track('video_play', { t: Math.round(video.currentTime) }, false);
+  });
+  video.addEventListener('pause', function () {
+    setPlayingUI(false);
+    if (!video.ended) track('video_pause', { t: Math.round(video.currentTime) }, false);
+  });
+  video.addEventListener('ended', function () {
+    setPlayingUI(false);
+    if (!milestones.complete) {
+      milestones.complete = true;
+      track('video_complete', {}, false);
+    }
+  });
+
+  video.addEventListener('loadedmetadata', function () {
+    if (loadingEl) loadingEl.hidden = true;
+    if (scrub) {
+      scrub.max = String(video.duration || 0);
+    }
+    if (!impressionFired) {
+      impressionFired = true;
+      track('video_impression', { duration: Math.round(video.duration || 0) }, false);
+    }
+  });
+
+  video.addEventListener('waiting', function () {
+    if (loadingEl && !unlocked) loadingEl.hidden = false;
+  });
+  video.addEventListener('canplay', function () {
+    if (loadingEl) loadingEl.hidden = true;
+  });
+  video.addEventListener('error', function () {
+    if (loadingEl) loadingEl.hidden = true;
+    if (errorEl) errorEl.hidden = false;
+    if (bigPlay) bigPlay.hidden = true;
+  });
+
+  video.addEventListener('timeupdate', function () {
+    var t = video.currentTime || 0;
+
+    if (!unlocked) {
+      if (!seekingGuard && t > lastValidTime + 0.55) {
+        seekingGuard = true;
+        video.currentTime = lastValidTime;
+        seekingGuard = false;
+        return;
+      }
+      if (t >= lastValidTime - 0.05) {
+        lastValidTime = Math.max(lastValidTime, t);
+        watchedMax = Math.max(watchedMax, t);
+      }
+
+      updateTimerUI();
+
+      if (!milestones[10] && watchedMax >= 10) {
+        milestones[10] = true;
+        track('video_10s', {}, false);
+      }
+      if (!milestones[20] && watchedMax >= 20) {
+        milestones[20] = true;
+        track('video_20s', {}, false);
+      }
+      if (watchedMax >= GATE_SECONDS - 0.05) {
+        milestones[30] = true;
+        unlockPage(false);
+      }
+    }
+
+    if (unlocked && scrub && !scrub.matches(':active')) {
+      scrub.value = String(t);
+    }
+  });
+
+  video.addEventListener('seeking', function () {
+    if (unlocked || seekingGuard) return;
+    if (video.currentTime > lastValidTime + 0.15) {
+      seekingGuard = true;
+      video.currentTime = lastValidTime;
+      seekingGuard = false;
+    }
+  });
+
+  // Bloquear atalhos de seek do player enquanto locked
+  video.addEventListener('keydown', function (e) {
+    if (unlocked) return;
+    if (['ArrowRight', 'ArrowLeft', 'j', 'l', 'J', 'L'].indexOf(e.key) !== -1) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  });
+
+  if (scrub) {
+    scrub.addEventListener('input', function () {
+      if (!unlocked) return;
+      var v = parseFloat(scrub.value);
+      if (!isNaN(v)) video.currentTime = v;
+    });
+  }
+
+  if (speedWrap) {
+    Array.prototype.forEach.call(speedWrap.querySelectorAll('[data-rate]'), function (btn) {
+      btn.addEventListener('click', function () {
+        if (!unlocked) return;
+        var rate = parseFloat(btn.getAttribute('data-rate'));
+        if (!rate || rate > 1.5) return;
+        video.playbackRate = rate;
+        Array.prototype.forEach.call(speedWrap.querySelectorAll('[data-rate]'), function (b) {
+          b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
+        });
+        track('video_speed_changed', { rate: rate }, false);
+      });
+    });
+  }
+
+  // Clique no WhatsApp após unlock
+  Array.prototype.forEach.call(document.querySelectorAll('a[href*="wa.me"], a[href*="api.whatsapp.com"]'), function (a) {
+    a.addEventListener('click', function () {
+      if (unlocked) track('whatsapp_click_after_unlock', {}, false);
+    });
+  });
+
+  // Init
+  try {
+    if (sessionStorage.getItem(STORAGE_KEY) === '1') {
+      watchedMax = GATE_SECONDS;
+      lastValidTime = GATE_SECONDS;
+      unlocked = true;
+      html.classList.add('vg-unlocked');
+      html.classList.remove('vg-locked');
+      if (rest) {
+        rest.removeAttribute('aria-hidden');
+        try { rest.inert = false; } catch (e3) {}
+      }
+      if (speedWrap) speedWrap.hidden = false;
+      if (scrub) { scrub.hidden = false; scrub.disabled = false; }
+      if (gateLabel) gateLabel.hidden = true;
+      if (gateTimer) gateTimer.hidden = true;
+      if (gateHint) gateHint.hidden = true;
+      if (gateDone) {
+        gateDone.hidden = false;
+        gateDone.classList.add('is-visible');
+        gateDone.textContent = 'Você pode continuar explorando a página.';
+      }
+      if (scrollHint) scrollHint.setAttribute('aria-hidden', 'false');
+      return;
+    }
+  } catch (errStorage) {}
+
+  try {
+    if (location.hash && location.hash !== '#inicio') {
+      history.replaceState(null, '', location.pathname + location.search);
+    }
+  } catch (eHash) {}
+  window.scrollTo(0, 0);
+
+  lockPage();
+  bindLockListeners();
+  updateTimerUI();
+  if (loadingEl) loadingEl.hidden = false;
+})();
+</script>
 
 <!-- SCRIPTS -->
 <script>
@@ -1471,47 +2207,7 @@ Assim, você não precisa lembrar de tudo sozinha. O próprio tratamento passa a
       a.addEventListener('click', function () { track('Lead', { source: 'whatsapp', location: (a.textContent || '').trim().slice(0, 40) }, true); });
     });
   })();
-  (function () {
-    var iframe = document.getElementById('hero-video');
-    if (!iframe) return;
-    var fired = { play: false, 50: false, 75: false, 100: false };
-    var milestones = [50, 75, 100]; var poll = null;
-    function fireMilestone(pct) { for (var i = 0; i < milestones.length; i++) { var m = milestones[i]; if (pct >= m && !fired[m]) { fired[m] = true; track('VideoProgress', { percent: m }, false); } } }
-    var tag = document.createElement('script'); tag.src = 'https://www.youtube.com/iframe_api'; document.head.appendChild(tag);
-    window.onYouTubeIframeAPIReady = function () {
-      new YT.Player('hero-video', {
-        playerVars: {
-          rel: 0,
-          modestbranding: 1,
-          playsinline: 1,
-          cc_load_policy: 0
-        },
-        events: {
-          onReady: function (e) {
-            try {
-              // Tenta desligar legendas/CC ao iniciar (quando o YouTube permitir)
-              e.target.unloadModule('captions');
-              e.target.unloadModule('cc');
-            } catch (err) {}
-          },
-          onStateChange: function (e) {
-            var p = e.target;
-            if (e.data === YT.PlayerState.PLAYING) {
-              try {
-                p.unloadModule('captions');
-                p.unloadModule('cc');
-              } catch (err) {}
-              if (!fired.play) { fired.play = true; track('VideoPlay', {}, false); }
-              if (!poll) { poll = setInterval(function () { var d = p.getDuration(); if (d > 0) fireMilestone(p.getCurrentTime() / d * 100); }, 1000); }
-            } else {
-              if (poll) { clearInterval(poll); poll = null; }
-              if (e.data === YT.PlayerState.ENDED) fireMilestone(100);
-            }
-          }
-        }
-      });
-    };
-  })();
+  // Progresso de vídeo: eventos video_* são disparados pelo Intro Video Gate (HTML5).
 })();
 </script>
 
