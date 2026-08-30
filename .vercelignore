@@ -1,0 +1,3 @@
+# App servido via proxy para VPS (Node/PostgreSQL) — não publicar bundle estático aqui
+app/
+app-backup-pre-node-*/
