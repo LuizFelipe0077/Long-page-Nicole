@@ -1,3 +1,2 @@
-# App servido via proxy para VPS (Node/PostgreSQL) — não publicar bundle estático aqui
-app/
+# Backups locais — não publicar na Vercel
 app-backup-pre-node-*/

@@ -4,14 +4,6 @@
     {
       "source": "/api/:path*",
       "destination": "http://2.25.120.153/api/:path*"
-    },
-    {
-      "source": "/app",
-      "destination": "http://2.25.120.153/app/"
-    },
-    {
-      "source": "/app/:path*",
-      "destination": "http://2.25.120.153/app/:path*"
     }
   ]
 }

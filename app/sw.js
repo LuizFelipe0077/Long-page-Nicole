@@ -5,14 +5,14 @@
  * so a cache-first index.html would keep pointing at a hash the server no
  * longer has after the next deploy, permanently freezing returning visitors
  * on the build that was live on their first visit. Hashed static assets stay
- * cache-first (safe — a changed file is always a new URL). The GAS API is
+ * cache-first (safe — a changed file is always a new URL). The /api backend is
  * always network-only (never cache mutations/dashboard data).
  */
 // Renamed + version bump on the rebrand: the `activate` handler below already
 // deletes any cache key that doesn't match CACHE_NAME, so this also purges
 // returning visitors' stale cached HTML/icons/manifest from before the
 // rebrand, not just a cosmetic rename.
-const CACHE_NAME = 'nicole-carvalho-v5-session';
+const CACHE_NAME = 'nicole-carvalho-v6-node';
 
 self.addEventListener('install', (event) => {
   self.skipWaiting();
@@ -267,7 +267,12 @@ const AUTH_STORE_NAME = 'session';
 const AUTH_RECORD_KEY = 'current';
 /** Must match frontend/src/utils/silentRefreshSession.js AUTH_REFRESH_LOCK. */
 const AUTH_REFRESH_LOCK = 'nicole-carvalho-auth-refresh';
-const API_BASE_URL = 'https://script.google.com/macros/s/AKfycby_E0a6SOkGz3zOScWyTVNVsH3SicSt6OEZMWISRk2wJLYlCYg2ugu1W3SkvNGlX1hG/exec';
+function apiBaseUrl() {
+  if (typeof self !== 'undefined' && self.location && self.location.origin) {
+    return `${self.location.origin}/api`;
+  }
+  return '/api';
+}
 
 let refreshInflight = null;
 
@@ -381,7 +386,7 @@ async function refreshAccessFromIndexedDb() {
 }
 
 async function callGasAction(action, payload) {
-  const response = await fetch(API_BASE_URL, {
+  const response = await fetch(apiBaseUrl(), {
     method: 'POST',
     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
     body: JSON.stringify({ action, ...payload })
