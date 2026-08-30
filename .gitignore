@@ -1,0 +1,3 @@
+.vercel
+.env*
+app-backup-pre-node-*/
