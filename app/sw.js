@@ -12,7 +12,7 @@
 // deletes any cache key that doesn't match CACHE_NAME, so this also purges
 // returning visitors' stale cached HTML/icons/manifest from before the
 // rebrand, not just a cosmetic rename.
-const CACHE_NAME = 'nicole-carvalho-v7-checkin-serial';
+const CACHE_NAME = 'nicole-carvalho-v8-checkin-visual';
 
 self.addEventListener('install', (event) => {
   self.skipWaiting();
